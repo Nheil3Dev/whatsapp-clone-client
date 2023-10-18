@@ -19,7 +19,7 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
 
   return (
     <li className={className}>
-      {!isMyMessage && (
+      {!isMyMessage && isFirstMessage && (
         <>
           <img src="random-img.jpg" alt="user image" />
           <small>{msg.user}</small>
