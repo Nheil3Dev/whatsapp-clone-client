@@ -1,5 +1,6 @@
-import { MenuIcon } from './icons/MenuIcon'
-import { SearchIcon } from './icons/SearchIcon'
+import { MenuIcon } from '../icons/MenuIcon'
+import { SearchIcon } from '../icons/SearchIcon'
+import './ChatHeader.css'
 
 interface ChatHeaderProps {
   setVisibleInfo: (visible: boolean) => void;
@@ -22,10 +23,10 @@ export function ChatHeader ({ setVisibleInfo }: ChatHeaderProps) {
         </h4>
       </div>
       <div className="icon-container-header">
-        <button className="form-button" title="Buscar">
+        <button className="icon-button" title="Buscar">
           <SearchIcon />
         </button>
-        <button className="form-button" title="Menú">
+        <button className="icon-button" title="Menú">
           <MenuIcon />
         </button>
       </div>

@@ -1,8 +1,10 @@
 import EmojiPicker from 'emoji-picker-react'
 import { useState } from 'react'
-import { EmojiIcon } from './icons/EmojiIcon'
-import { PlusIcon } from './icons/PlusIcon'
-import { SendIcon } from './icons/SendIcon'
+import { EmojiIcon } from '../icons/EmojiIcon'
+import { PlusIcon } from '../icons/PlusIcon'
+import { SendIcon } from '../icons/SendIcon'
+import './ChatForm.css'
+
 export function ChatForm () {
   const [active, setActive] = useState(false)
   return (
@@ -19,7 +21,7 @@ export function ChatForm () {
       <form>
         <div className="icon-container">
           <button
-            className="form-button"
+            className="icon-button"
             type="button"
             onClick={() => setActive(!active)}
           >
@@ -33,7 +35,7 @@ export function ChatForm () {
           placeholder="Escribe un mensaje"
           autoComplete="off"
         />
-        <button className="form-button" type="submit">
+        <button className="icon-button" type="submit">
           <SendIcon />
         </button>
       </form>

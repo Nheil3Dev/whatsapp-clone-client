@@ -1,50 +1,14 @@
-import { FilterIcon } from '../icons/FilterIcon'
-import { SearchIcon } from '../icons/SearchIcon'
-import { ChatItem } from './ChatItem'
+import { useState } from 'react'
+import './AsideLeft.css'
+import { ChatList } from './ChatList'
+import { UserInfo } from './UserInfo'
 
 export function AsideLeft () {
+  const [visibleProfile, setVisibleProfile] = useState(false)
   return (
-    <aside>
-      <header>
-        <img
-          className="img"
-          src="random-img.jpg"
-          alt="Foto de perfil de usuario"
-        />
-        <h3 className="title-group">Claudio</h3>
-      </header>
-      <search>
-        <label htmlFor="search">
-          <SearchIcon />
-        </label>
-        <input
-          id="search"
-          type="text"
-          placeholder="Busca un chat"
-          autoComplete="off"
-        />
-        <button className="form-button" title="Filtro de chats no leídos">
-          <FilterIcon />
-        </button>
-      </search>
-      <section className="chat-list-container">
-        <ul className="chat-list">
-          <ChatItem isSelected />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-        </ul>
-      </section>
+    <aside className='left-container'>
+      <ChatList setVisibleProfile={setVisibleProfile} />
+      <UserInfo visibleProfile={visibleProfile} setVisibleProfile={setVisibleProfile} />
     </aside>
   )
 }

@@ -1,4 +1,4 @@
-import { type IMessage } from '../types/types'
+import { type IMessage } from '../../types/types'
 
 interface MessageProps {
   msg: IMessage

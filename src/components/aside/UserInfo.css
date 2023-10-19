@@ -1,0 +1,40 @@
+.secondary-aside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  overflow-y: hidden;
+  opacity: 0;
+  height: 100%;
+  background-color: var(--button-text-color);
+}
+
+.secondary-aside.visible-profile {
+  opacity: 1;
+  width: 100%;
+  transition: width linear 0.1s;
+
+  & .profle-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    padding: 2rem;
+
+    & > img {
+      width: 200px;
+      border-radius: 50%;
+      margin-bottom: 2rem;
+    }
+
+    & > p {
+      width: 100%;
+
+      &.profile-info-label {
+        font-size: 0.8rem;
+        color: var(--button-bg-color);
+      }
+    }
+  }
+}

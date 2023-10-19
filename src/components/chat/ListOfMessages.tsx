@@ -1,4 +1,5 @@
-import { IMessage } from '../types/types'
+import { IMessage } from '../../types/types'
+import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 
 interface ListOfMessagesProps {
