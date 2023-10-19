@@ -1,10 +1,20 @@
 import { MenuIcon } from './icons/MenuIcon'
 import { SearchIcon } from './icons/SearchIcon'
 
-export function ChatHeader () {
+interface ChatHeaderProps {
+  setVisibleInfo: (visible: boolean) => void;
+}
+
+export function ChatHeader ({ setVisibleInfo }: ChatHeaderProps) {
   return (
     <header>
-      <img className="img" src="./foto_grupo.jpg" alt="imagen del grupo" />
+      <img
+        onClick={() => setVisibleInfo(true)}
+        className="img"
+        src="./foto_grupo.jpg"
+        alt="imagen del grupo"
+        title="Detalles del perfil"
+      />
       <div>
         <h3 className="title-group">¡Al cielo con ella!</h3>
         <h4 className="members">
@@ -12,8 +22,12 @@ export function ChatHeader () {
         </h4>
       </div>
       <div className="icon-container-header">
-        <SearchIcon />
-        <MenuIcon />
+        <button className="form-button" title="Buscar">
+          <SearchIcon />
+        </button>
+        <button className="form-button" title="Menú">
+          <MenuIcon />
+        </button>
       </div>
     </header>
   )

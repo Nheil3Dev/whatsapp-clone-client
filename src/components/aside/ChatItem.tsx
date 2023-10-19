@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { IMessage } from '../../types/types'
+import { ArrowDownIcon } from '../icons/ArrowDownIcon'
 
 interface ChatItemProps {
   isSelected?: boolean
@@ -22,7 +23,10 @@ export function ChatItem ({ isSelected }: ChatItemProps) {
       <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
       <div>
         <h3 className="title-chat-list">¡Al cielo con ella!</h3>
-        <p>{lastMsg?.user}: {lastMsg?.content}</p>
+        <div className='last-msg-container'>
+          <p>{lastMsg?.user}: {lastMsg?.content}</p>
+          <button className='form-button'><ArrowDownIcon /></button>
+        </div>
       </div>
     </li>
   )

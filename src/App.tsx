@@ -3,13 +3,16 @@ import './App.css'
 import { ChatForm } from './components/ChatForm'
 import { ChatHeader } from './components/ChatHeader'
 import { ListOfMessages } from './components/ListOfMessages'
-import { ChatItem } from './components/aside/ChatItem'
-import { FilterIcon } from './components/icons/FilterIcon'
+import { AsideLeft } from './components/aside/AsideLeft'
+import { OutIcon } from './components/icons/OutIcon'
 import { SearchIcon } from './components/icons/SearchIcon'
+import { XIcon } from './components/icons/XIcon'
+import { InfoUserItem } from './components/info/InfoUserItem'
 import { IMessage } from './types/types'
 
 function App () {
   const [messages, setMessages] = useState<IMessage[]>([])
+  const [visibleInfo, setVisibleInfo] = useState(true)
   useEffect(() => {
     fetch('http://localhost:1234/api/messages')
       .then(res => res.json())
@@ -18,43 +21,50 @@ function App () {
 
   return (
     <>
-      <aside>
-        <header>
-          <img className='img' src="random-img.jpg" alt="Foto de perfil de usuario" />
-          <h3 className='title-group'>Claudio</h3>
-        </header>
-         <search>
-          <label htmlFor='search'>
-            <SearchIcon />
-          </label>
-            <input id='search' type="text" placeholder='Busca un chat' autoComplete='off' />
-           <button className='form-button'>
-            <FilterIcon />
-           </button>
-         </search>
-        <section className='chat-list-container'>
-          <ul className='chat-list'>
-            <ChatItem isSelected />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-            <ChatItem />
-          </ul>
-        </section>
-      </aside>
+      <AsideLeft />
       <main>
-        <ChatHeader />
-        <ListOfMessages messages={messages} />
-        <ChatForm />
+        <div className='chat-container'>
+          <ChatHeader setVisibleInfo={setVisibleInfo} />
+          <ListOfMessages messages={messages} />
+          <ChatForm />
+        </div>
+          <aside className={visibleInfo ? 'chat-info visible-info' : 'chat-info'}>
+            <header>
+              <button onClick={() => setVisibleInfo(false)} className='form-button'>
+                <XIcon />
+              </button>
+              <h3 className='info-title'>Info. del grupo</h3>
+            </header>
+            <section className='info-container'>
+              <article className='info-group'>
+                <img src="foto_grupo.jpg" alt="Foto de grupo" />
+                <h5 className='info-group-title'>¡Al cielo con ella!</h5>
+                <p className='info-group-description'>Grupo · 9 participantes</p>
+              </article>
+              <article className='info-users'>
+                <div className='info-users-header'>
+                  <p className='info-users-title'>9 participantes</p>
+                  <button className='form-button'>
+                    <SearchIcon />
+                  </button>
+                </div>
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+                <InfoUserItem />
+              </article>
+              <button className='info-button'>
+                <OutIcon />
+                Salir del grupo
+              </button>
+            </section>
+          </aside>
       </main>
     </>
   )
