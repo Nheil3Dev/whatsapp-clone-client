@@ -21,11 +21,6 @@ main {
   }
 }
 
-.EmojiPickerReact {
-  --epr-bg-color: #202c33;
-  --epr-category-label-bg-color: #202c33;
-}
-
 .icon-button {
   display: flex;
   align-items: center;
