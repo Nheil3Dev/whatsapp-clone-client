@@ -13,7 +13,15 @@
   opacity: 1;
   border-left: 1px solid rgba(233, 237, 239, 0.12);
 
-  & > header {
+  & .chat-info-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding: 10px 16px;
+    background-color: var(--bg-color-options);
+    border-left: 1px solid rgba(134, 150, 160, 0.15);
+
     & .info-title {
       font-weight: 400;
       font-size: 1rem;

@@ -9,7 +9,7 @@ interface UserInfoProps {
 export function UserInfo ({ visibleProfile, setVisibleProfile }: UserInfoProps) {
   return (
         <section className={visibleProfile ? 'secondary-aside visible-profile' : 'secondary-aside'}>
-        <header>
+        <header className='profile-info-header'>
           <button className='icon-button' onClick={() => setVisibleProfile(false)}>
             <BackArrow />
           </button>

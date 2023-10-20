@@ -12,7 +12,7 @@ interface ChatInfoProps {
 export function ChatInfo ({ visibleInfo, setVisibleInfo }: ChatInfoProps) {
   return (
     <aside className={visibleInfo ? 'chat-info visible-info' : 'chat-info'}>
-      <header>
+      <header className='chat-info-header'>
         <button onClick={() => setVisibleInfo(false)} className="icon-button">
           <XIcon />
         </button>

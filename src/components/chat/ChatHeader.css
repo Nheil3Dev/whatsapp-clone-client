@@ -1,4 +1,4 @@
-header {
+.chat-header-container {
   display: flex;
   align-items: center;
   width: 100%;
@@ -7,12 +7,17 @@ header {
   background-color: var(--bg-color-options);
   border-left: 1px solid rgba(134, 150, 160, 0.15);
 
-  & > .img {
-    margin-right: 16px;
+  & > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1rem;
     cursor: pointer;
   }
 
   & .title-group {
+    font-size: 1rem;
+    font-weight: 500;
     margin: 0;
     color: var(--heading-color);
   }

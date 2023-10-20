@@ -8,10 +8,9 @@ interface ChatHeaderProps {
 
 export function ChatHeader ({ setVisibleInfo }: ChatHeaderProps) {
   return (
-    <header>
+    <header className='chat-header-container'>
       <img
         onClick={() => setVisibleInfo(true)}
-        className="img"
         src="./foto_grupo.jpg"
         alt="imagen del grupo"
         title="Detalles del perfil"
