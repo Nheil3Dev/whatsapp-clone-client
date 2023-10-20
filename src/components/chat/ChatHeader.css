@@ -7,29 +7,36 @@
   background-color: var(--bg-color-options);
   border-left: 1px solid rgba(134, 150, 160, 0.15);
 
-  & > img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 1rem;
+  & .info-container-header {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
     cursor: pointer;
-  }
 
-  & .title-group {
-    font-size: 1rem;
-    font-weight: 500;
-    margin: 0;
-    color: var(--heading-color);
-  }
+    & > img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
 
-  & .members {
-    margin: 0;
-    color: var(--text-color);
-    font-weight: 400;
-    font-size: 0.8rem;
+    & .title-group {
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 0;
+      color: var(--heading-color);
+    }
+
+    & .members {
+      margin: 0;
+      color: var(--text-color);
+      font-weight: 400;
+      font-size: 0.8rem;
+    }
   }
 
   & .icon-container-header {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,5 +44,40 @@
     margin-left: auto;
     padding-left: 1rem;
     color: var(--text-color);
+
+    & > dialog {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      z-index: 10;
+      width: 0;
+      height: 0;
+      border: none;
+      box-shadow: 0 2px 5px 0 rgba(11, 20, 26, 0.26),
+        0 2px 10px 0 rgba(11, 20, 26, 0.16);
+    }
+
+    & > dialog[open] {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0;
+      left: -120px;
+      background-color: #233138;
+      color: white;
+      width: 220px;
+      height: auto;
+      border-radius: 3px;
+
+      & > p {
+        margin: 0;
+        font-size: 0.95rem;
+        cursor: pointer;
+        padding: 0.5rem 2rem;
+
+        &:hover {
+          background-color: #182229;
+        }
+      }
+    }
   }
 }

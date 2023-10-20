@@ -35,7 +35,7 @@ export function ChatForm () {
           placeholder="Escribe un mensaje"
           autoComplete="off"
         />
-        <button className="icon-button" type="submit">
+        <button onClick={(e) => e.preventDefault()} className="icon-button" type="submit">
           <SendIcon />
         </button>
       </form>
