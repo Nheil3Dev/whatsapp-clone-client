@@ -1,5 +1,6 @@
 export interface IMessage {
-  id: number
+  id?: number
   user: string
   content: string
+  date: Date
 }

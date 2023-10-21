@@ -45,18 +45,6 @@ export function ChatList ({ setVisibleProfile }: ChatListProps) {
         <ul className="chat-list">
           <ChatItem isSelected />
           <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
-          <ChatItem />
         </ul>
       </section>
     </section>

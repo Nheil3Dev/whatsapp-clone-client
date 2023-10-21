@@ -1,5 +1,6 @@
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
 import { useState } from 'react'
+import { useSocketIoConecction } from '../../hooks/useSocketIoConnection'
 import { EmojiIcon } from '../icons/EmojiIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { SendIcon } from '../icons/SendIcon'
@@ -9,6 +10,7 @@ import './ChatForm.css'
 export function ChatForm () {
   const [active, setActive] = useState(false)
   const [message, setMessage] = useState<string>('')
+  const { socket } = useSocketIoConecction()
   const handleEmoji = (emojiObject: EmojiClickData) => {
     setMessage(prevText => prevText + emojiObject.emoji)
   }
@@ -52,7 +54,16 @@ export function ChatForm () {
           onChange={(e) => setMessage(e.target.value)}
           autoComplete="off"
         />
-        <button onClick={(e) => e.preventDefault()} className="icon-button" type="submit">
+        <button onClick={async (e) => {
+          e.preventDefault()
+
+          if (message.length > 0) {
+            const date = new Date()
+            const formatDate = date.toISOString().slice(0, 19).replace('T', ' ')
+            socket?.emit('whatsapp clone msg', message, formatDate)
+            setMessage('')
+          }
+        }} className="icon-button" type="submit">
           <SendIcon />
         </button>
       </form>

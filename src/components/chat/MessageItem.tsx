@@ -17,6 +17,8 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
       ? 'message'
       : 'message same-user'
 
+  const date = new Date(msg.date)
+
   return (
     <li className={className}>
       {!isMyMessage && isFirstMessage && (
@@ -26,7 +28,7 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
         </>
       )}
       <p>{msg.content}</p>
-      <span>10:10</span>
+      <span>{date.getHours()}:{date.getMinutes()}</span>
     </li>
   )
 }
