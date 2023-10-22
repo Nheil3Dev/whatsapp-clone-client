@@ -1,6 +1,6 @@
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
 import { useState } from 'react'
-import { useSocketIoConecction } from '../../hooks/useSocketIoConnection'
+import { socket } from '../../hooks/useSocketIo'
 import { EmojiIcon } from '../icons/EmojiIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { SendIcon } from '../icons/SendIcon'
@@ -10,7 +10,6 @@ import './ChatForm.css'
 export function ChatForm () {
   const [active, setActive] = useState(false)
   const [message, setMessage] = useState<string>('')
-  const { socket } = useSocketIoConecction()
   const handleEmoji = (emojiObject: EmojiClickData) => {
     setMessage(prevText => prevText + emojiObject.emoji)
   }
@@ -60,8 +59,9 @@ export function ChatForm () {
           if (message.length > 0) {
             const date = new Date()
             const formatDate = date.toISOString().slice(0, 19).replace('T', ' ')
-            socket?.emit('whatsapp clone msg', message, formatDate)
+            socket.emit('whatsapp clone msg', message, formatDate)
             setMessage('')
+            setActive(false)
           }
         }} className="icon-button" type="submit">
           <SendIcon />

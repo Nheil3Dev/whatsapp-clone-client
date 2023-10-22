@@ -1,4 +1,5 @@
 import { type IMessage } from '../../types/types'
+import { getLocalTime } from '../../utils/getLocalTime'
 
 interface MessageProps {
   msg: IMessage
@@ -17,8 +18,6 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
       ? 'message'
       : 'message same-user'
 
-  const date = new Date(msg.date)
-
   return (
     <li className={className}>
       {!isMyMessage && isFirstMessage && (
@@ -28,7 +27,7 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
         </>
       )}
       <p>{msg.content}</p>
-      <span>{date.getHours()}:{date.getMinutes()}</span>
+      <span>{getLocalTime(msg.date)}</span>
     </li>
   )
 }

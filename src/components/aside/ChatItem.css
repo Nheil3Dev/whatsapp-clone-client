@@ -24,9 +24,21 @@
     padding: 10px 0;
     border-top: 1px solid var(--bg-color-options);
 
-    & > h3 {
-      margin: 0;
-      font-weight: 400;
+    & .title-chat-container {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+
+      & > h3 {
+        margin: 0;
+        font-weight: 400;
+      }
+
+      & .chat-list-time {
+        font-size: 0.8rem;
+        color: var(--text-color);
+        margin-right: 10px;
+      }
     }
 
     & .last-msg-container {
@@ -63,7 +75,7 @@
 .selected:hover {
   background-color: var(--bg-color-input-text);
 
-  & > div > p {
+  & > div > .last-msg-container > p {
     color: #d1d7d1;
   }
 }

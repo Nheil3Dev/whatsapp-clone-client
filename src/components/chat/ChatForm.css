@@ -18,6 +18,7 @@ footer {
       --epr-text-color: var(--text-color);
       --epr-hover-bg-color: transparent;
       --epr-emoji-size: 2rem;
+      z-index: 3;
     }
 
     & .EmojiPickerReact.epr-main {

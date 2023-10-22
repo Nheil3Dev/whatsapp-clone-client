@@ -5,15 +5,37 @@
   overflow-y: auto;
   background-color: var(--bg-color-chat-2);
   border-left: 1px solid rgba(233, 237, 239, 0.12);
+  z-index: 2;
 
-  &::before {
-    position: absolute;
+  & .bg-chat {
+    position: fixed;
     content: "";
+    max-width: 1120px;
+    width: 100%;
+    /* Aqui incluyo el padding (que puede cambiar) y la altura del header & footer*/
+    max-height: calc(100vh - 158px);
+    height: 100%;
     background-image: url("bg-chat-tile-dark.png");
+    background-size: auto;
+    opacity: 0.06;
+    z-index: -1;
+    transition: max-width linear 0.1s;
+
+    &.info-active {
+      max-width: calc(1120px - 480px);
+      transition: max-width linear 0.1s;
+    }
+  }
+
+  /* &::before {
+    position: fixed;
+    content: "";
     width: 100%;
     height: 100%;
-    opacity: 0.05;
-  }
+    background-image: url("bg-chat-tile-dark.png");
+    background-size: auto;
+    opacity: 0.06;
+  } */
 
   &::-webkit-scrollbar {
     width: 0.4rem;
@@ -44,6 +66,10 @@
 
       &:first-child {
         margin-top: 10px;
+      }
+
+      &:last-child {
+        margin-bottom: 10px;
       }
 
       & img {
@@ -109,6 +135,34 @@
     & .same-user {
       margin-top: -5px;
       border-radius: 10px;
+    }
+  }
+}
+
+@media (width < 1648px) {
+  .chat {
+    & .bg-chat {
+      max-width: calc(100vw - 19px - 19px - 480px);
+      width: 100%;
+
+      &.info-active {
+        max-width: calc(100vw - 19px - 19px - 480px - 480px);
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (width < 1440px) {
+  .chat {
+    & .bg-chat {
+      max-height: calc(100vh - 120px);
+      height: 100%;
+      max-width: 100%;
+
+      /* &.info-active {
+        max-width: 0;
+      } */
     }
   }
 }
