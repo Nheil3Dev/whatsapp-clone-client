@@ -1,4 +1,4 @@
-import { BackArrow } from '../icons/BackArrow'
+import { BackArrow } from '../../icons/BackArrow'
 import './UserInfo.css'
 
 interface UserInfoProps {

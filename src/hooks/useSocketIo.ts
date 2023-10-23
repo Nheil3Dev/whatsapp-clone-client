@@ -37,7 +37,9 @@ export function useSocketIo () {
     }
 
     function onMessages (id: number, user: string, content: string, date: Date) {
-      setMessages(previous => [...previous, { id, user, content, date }])
+      if (id > (lastMsg?.id ?? 0)) {
+        setMessages(previous => [...previous, { id, user, content, date }])
+      }
     }
 
     socket.on('connect', onConnect)

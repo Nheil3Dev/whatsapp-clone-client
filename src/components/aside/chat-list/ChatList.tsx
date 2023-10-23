@@ -1,7 +1,11 @@
 import { useState } from 'react'
-import { ArrowDown2Icon } from '../icons/ArrowDown2Icon'
-import { FilterIcon } from '../icons/FilterIcon'
-import { SearchIcon } from '../icons/SearchIcon'
+import { socket } from '../../../hooks/useSocketIo'
+import { Dialog } from '../../dialog/Dialog'
+import { ArrowDown2Icon } from '../../icons/ArrowDown2Icon'
+import { FilterIcon } from '../../icons/FilterIcon'
+import { MenuIcon } from '../../icons/MenuIcon'
+import { NewChatIcon } from '../../icons/NewChatIcon'
+import { SearchIcon } from '../../icons/SearchIcon'
 import { ChatItem } from './ChatItem'
 import './ChatList.css'
 
@@ -11,6 +15,7 @@ interface ChatListProps {
 
 export function ChatList ({ setVisibleProfile }: ChatListProps) {
   const [visibleArrow, setVisibleArrow] = useState(false)
+  const [activeDialog, setActiveDialog] = useState(false)
   return (
     <section className="principal-aside">
       <header className="chat-list-header">
@@ -20,6 +25,22 @@ export function ChatList ({ setVisibleProfile }: ChatListProps) {
           src="random-img.jpg"
           alt="Foto de perfil de usuario"
         />
+        <div className='icon-container-header-aside'>
+          <button className='icon-button'>
+            <NewChatIcon />
+          </button>
+          <button className='icon-button' onClick={(e) => {
+            e.stopPropagation()
+            setActiveDialog(!activeDialog)
+          } }>
+            <MenuIcon />
+          </button>
+          <Dialog isOpen={activeDialog} onClose={setActiveDialog}>
+            <p onClick={() => alert('Nuevo chat')}>Nuevo mensaje</p>
+            <p onClick={() => alert('Nuevo grupo')}>Nuevo grupo</p>
+            <p onClick={() => socket.disconnect() }>Cerrar sesión</p>
+          </Dialog>
+        </div>
       </header>
       <search>
         <label htmlFor="search">

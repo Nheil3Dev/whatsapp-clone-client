@@ -42,42 +42,6 @@
     justify-content: center;
     gap: 1rem;
     margin-left: auto;
-    padding-left: 1rem;
     color: var(--text-color);
-
-    & > dialog {
-      position: absolute;
-      top: 40px;
-      left: 0;
-      z-index: 10;
-      width: 0;
-      height: 0;
-      border: none;
-      box-shadow: 0 2px 5px 0 rgba(11, 20, 26, 0.26),
-        0 2px 10px 0 rgba(11, 20, 26, 0.16);
-    }
-
-    & > dialog[open] {
-      display: flex;
-      flex-direction: column;
-      padding: 0.5rem 0;
-      left: -120px;
-      background-color: #233138;
-      color: white;
-      width: 220px;
-      height: auto;
-      border-radius: 3px;
-
-      & > p {
-        margin: 0;
-        font-size: 0.95rem;
-        cursor: pointer;
-        padding: 0.5rem 2rem;
-
-        &:hover {
-          background-color: #182229;
-        }
-      }
-    }
   }
 }

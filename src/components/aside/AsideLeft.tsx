@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './AsideLeft.css'
-import { ChatList } from './ChatList'
-import { UserInfo } from './UserInfo'
+import { ChatList } from './chat-list/ChatList'
+import { UserInfo } from './user-info/UserInfo'
 
 export function AsideLeft () {
   const [visibleProfile, setVisibleProfile] = useState(false)

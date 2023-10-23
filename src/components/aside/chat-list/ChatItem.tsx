@@ -1,6 +1,6 @@
-import { useSocketIo } from '../../hooks/useSocketIo'
-import { getDate } from '../../utils/getDate'
-import { ArrowDownIcon } from '../icons/ArrowDownIcon'
+import { useSocketIo } from '../../../hooks/useSocketIo'
+import { getDate } from '../../../utils/getDate'
+import { ArrowDownIcon } from '../../icons/ArrowDownIcon'
 import './ChatItem.css'
 
 interface ChatItemProps {
