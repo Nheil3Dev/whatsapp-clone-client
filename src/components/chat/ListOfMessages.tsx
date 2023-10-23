@@ -22,7 +22,8 @@ export function ListOfMessages ({ messages, infoActive }: ListOfMessagesProps) {
     return () => clearTimeout(index)
   }, [messages])
 
-  const classNameImg = infoActive ? 'bg-chat info-active' : 'bg-chat'
+  // const classNameImg = infoActive ? 'bg-chat info-active' : 'bg-chat'
+  const classNameImg = `bg-chat ${infoActive ? 'info-active' : ''}`
   return (
     <section ref={container} className="chat" >
       <div className={classNameImg}></div>
