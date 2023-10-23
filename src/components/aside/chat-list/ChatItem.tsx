@@ -18,7 +18,7 @@ export function ChatItem ({ isSelected }: ChatItemProps) {
       <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
       <div>
         <div className='title-chat-container'>
-          <h3 className="title-chat-list">¡Al cielo con ella!</h3>
+          <h3 className="title-chat-list" title='Al cielo con ella'>¡Al cielo con ella!</h3>
           <span className='chat-list-time'>{getDate(new Date(lastMsg?.date))}</span>
         </div>
         <div className='last-msg-container'>

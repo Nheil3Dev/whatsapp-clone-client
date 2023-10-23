@@ -1,5 +1,7 @@
-import { useEffect, useRef } from 'react'
+// import { useEffect, useRef, useState } from 'react'
+import { useScrollChat } from '../../hooks/useScrollChat'
 import { IMessage } from '../../types/types'
+import { ArrowDownIcon } from '../icons/ArrowDownIcon'
 import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 
@@ -9,29 +11,28 @@ interface ListOfMessagesProps {
 }
 
 export function ListOfMessages ({ messages, infoActive }: ListOfMessagesProps) {
-  const container = useRef(null)
-
-  useEffect(() => {
-    const scrollToBottom = () => {
-      container.current.scrollTop = container.current.scrollHeight
-    }
-
-    // Un poco pirata --> Hay que arreglarlo
-    const index = setTimeout(() => scrollToBottom(), 100)
-
-    return () => clearTimeout(index)
-  }, [messages])
-
-  // const classNameImg = infoActive ? 'bg-chat info-active' : 'bg-chat'
   const classNameImg = `bg-chat ${infoActive ? 'info-active' : ''}`
+  const { showScrollButton, handleScrollButtonClick, containerRef } = useScrollChat(messages)
   return (
-    <section ref={container} className="chat" >
-      <div className={classNameImg}></div>
-      <ul className="messages-list">
-        {messages.map((msg, index, arr) => (
-          <MessageItem key={msg.id} msg={msg} prevUser={arr[index - 1]?.user} />
-        ))}
-      </ul>
-    </section>
+    <>
+      <section ref={containerRef} className="chat" >
+        <div className={classNameImg}></div>
+        <ul className="messages-list">
+          {messages.map((msg, index, arr) => (
+            <MessageItem key={msg.id} msg={msg} prevUser={arr[index - 1]?.user} />
+          ))}
+        </ul>
+      </section>
+      <div className='btn-ctn'>
+      {showScrollButton &&
+        <button
+          className='scroll-button'
+          onClick={handleScrollButtonClick}
+        >
+            <ArrowDownIcon />
+        </button>
+      }
+      </div>
+    </>
   )
 }

@@ -26,10 +26,10 @@ export function ChatList ({ setVisibleProfile }: ChatListProps) {
           alt="Foto de perfil de usuario"
         />
         <div className='icon-container-header-aside'>
-          <button className='icon-button'>
+          <button className='icon-button' title='Nuevo chat'>
             <NewChatIcon />
           </button>
-          <button className='icon-button' onClick={(e) => {
+          <button className='icon-button' title='Menú' onClick={(e) => {
             e.stopPropagation()
             setActiveDialog(!activeDialog)
           } }>
