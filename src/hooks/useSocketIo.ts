@@ -25,8 +25,6 @@ export function useSocketIo () {
   const [messages, setMessages] = useState<IMessage[]>([])
   const lastMsg = messages[messages.length - 1]
 
-  console.log('useSocket')
-
   useEffect(() => {
     // socket.connect()
 
