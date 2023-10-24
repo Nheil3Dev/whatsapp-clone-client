@@ -26,48 +26,20 @@
     }
   }
 
-  & search {
-    position: relative;
+  & .chat-list-filter {
     display: flex;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 0.4rem 10px;
-    background-color: var(--button-text-color);
+    align-items: center;
 
-    & > label {
-      position: absolute;
-      top: 0.5rem;
-      padding: 0 0px 0 10px;
-      color: var(--text-color);
-      cursor: pointer;
-
-      & .arrow-search {
-        opacity: 0;
-      }
-
-      & .arrow-search.visible-arrow2 {
-        opacity: 1;
-        color: var(--button-bg-color);
-        transform: rotate(90deg);
-        transition: transform linear 0.1s;
-      }
-
-      & svg {
-        width: 15px;
-      }
+    & > search {
+      padding-right: 0;
     }
 
-    & input {
-      width: 100%;
-      padding: 0.6rem 4rem;
-      border-radius: 10px;
-      border: none;
-      background-color: var(--bg-color-options);
-      outline: none;
+    & > .icon-button {
+      padding: 0.6rem;
 
-      &::placeholder {
-        color: var(--text-color);
-        font-size: 0.85rem;
+      & > svg {
+        width: 20px;
+        height: 20px;
       }
     }
   }

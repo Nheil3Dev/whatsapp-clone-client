@@ -1,0 +1,113 @@
+.secondary-aside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 0;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  background-color: var(--button-text-color);
+  transition: max-width linear 0.1s;
+
+  &.visible-new-chat {
+    opacity: 1;
+    max-width: 100%;
+
+    & .new-chat-container {
+      opacity: 1;
+      transition: opacity linear 0.1s 0.1s;
+    }
+  }
+
+  & .new-chat-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: var(--bg-color-options);
+    padding: 4rem 1rem 1rem;
+
+    & > h3 {
+      font-weight: 500;
+      margin: 0;
+    }
+
+    & button {
+      color: white;
+    }
+  }
+
+  & .new-chat-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 19px - 19px - 155px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 0;
+
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #374045;
+    }
+
+    & .new-group-item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      min-height: 72px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--bg-color-options);
+      }
+
+      & .icon-group-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem;
+        background-color: var(--button-bg-color);
+        color: white;
+        border-radius: 50%;
+        margin: 0 1rem;
+      }
+
+      & > h5 {
+        flex-grow: 1;
+        margin: 0;
+        font-weight: 400;
+        font-size: 1.1rem;
+      }
+    }
+
+    & .divider {
+      position: relative;
+      display: flex;
+      align-items: center;
+      align-self: start;
+      width: 100%;
+      min-height: 72px;
+      margin-left: 80px;
+      border-top: 1px solid var(--bg-color-options);
+
+      & > h4 {
+        position: absolute;
+        left: -2.5rem;
+        font-weight: 400;
+        color: var(--button-bg-color);
+      }
+    }
+  }
+}
+
+@media (width < 1440px) {
+  .secondary-aside {
+    & .new-chat-container {
+      height: calc(100vh - 155px);
+    }
+  }
+}
