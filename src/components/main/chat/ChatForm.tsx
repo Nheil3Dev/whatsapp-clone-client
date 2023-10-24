@@ -9,11 +9,14 @@ import './ChatForm.css'
 
 export function ChatForm () {
   const [message, setMessage] = useState<string>('')
-  const [emojis, setEmojis] = useState(false)
+  const [active, setActive] = useState({
+    emojis: false,
+    x: false
+  })
   const handleEmoji = (emojiObject: EmojiClickData) => {
     setMessage(prevText => prevText + emojiObject.emoji)
   }
-  const className = emojis ? 'emoji-picker-container active' : 'emoji-picker-container'
+  const className = active.emojis ? 'emoji-picker-container active' : 'emoji-picker-container'
   return (
     <footer>
         <span className={className}>
@@ -27,20 +30,24 @@ export function ChatForm () {
       <form>
         <div className="icon-container">
           <button
-            className='icon-button'
+            className={active.emojis ? 'icon-button active-x' : 'icon-button'}
             type='button'
-            onClick={() => setEmojis(false)}
+            onClick={() => {
+              setActive({ emojis: false, x: false })
+            }}
           >
             <XIcon />
           </button>
           <button
-            className={emojis ? 'icon-button active-emoji' : 'icon-button'}
+            className={active.emojis ? 'icon-button active-emoji' : 'icon-button'}
             type="button"
-            onClick={() => setEmojis(true)}
+            onClick={() => {
+              setActive({ emojis: true, x: false })
+            }}
           >
             <EmojiIcon />
           </button>
-          <button className='icon-button' type='button'>
+          <button onClick={() => setActive({ ...active, x: !active.x })} className={active.x ? 'icon-button active-x' : 'icon-button'} type='button'>
             <PlusIcon />
           </button>
         </div>
@@ -58,7 +65,7 @@ export function ChatForm () {
           if (message.length > 0) {
             sendMessage(message)
             setMessage('')
-            setEmojis(false)
+            setActive({ emojis: false, x: false })
           }
         }} className="icon-button" type="submit">
           <SendIcon />

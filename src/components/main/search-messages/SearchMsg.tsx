@@ -25,7 +25,7 @@ export function SearchMsg ({ visible, onClose, messages }: SearchMsgProps) {
         <h3 className="search-title">Buscar mensajes</h3>
       </header>
       <section className="search-container">
-        <Search placeholder='Buscar...' setFilter={setFilter} />
+        <Search placeholder='Buscar...' setFilter={setFilter} actived />
         <FilteredMsgList filteredMsg={filteredMsg(messages)} active={filter !== ''} />
       </section>
     </aside>

@@ -6,27 +6,74 @@ search {
   padding: 0.4rem 10px;
   background-color: var(--button-text-color);
 
-  & > label {
+  & .arrow-search-container {
     position: absolute;
-    top: 0.5rem;
-    padding: 0 0px 0 10px;
-    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    top: 0.75rem;
+    padding: 0 0 0 1rem;
     cursor: pointer;
 
     & .arrow-search {
+      display: flex;
+      color: var(--button-bg-color);
+      z-index: -1;
+      transition: transform linear 0.1s, z-index linear 0.1s 0.05s;
+
+      & svg {
+        display: flex;
+        width: 15px;
+      }
+
+      &.actived-search {
+        z-index: 1;
+        transform: rotateZ(0.25turn);
+        transition: transform linear 0.1s;
+      }
+    }
+  }
+
+  & > label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 0.75rem;
+    padding: 0 0px 0 1rem;
+    color: var(--text-color);
+    cursor: pointer;
+
+    & svg {
+      width: 15px;
+    }
+
+    & .search-icon {
+      display: flex;
+      z-index: 0;
+
+      transition: z-index linear 0.1s, transform linear 0.05s 0.1s;
+
+      &.actived-search {
+        z-index: -1;
+        transform: rotateZ(0.25turn);
+        transition: z-index linear 0.1s;
+      }
+    }
+
+    /* & .arrow-search {
+      color: var(--button-bg-color);
       opacity: 0;
+      transition: transform linear 0.1s;
     }
 
     & .arrow-search.visible-arrow2 {
       opacity: 1;
-      color: var(--button-bg-color);
       transform: rotate(90deg);
       transition: transform linear 0.1s;
     }
 
     & svg {
       width: 15px;
-    }
+    } */
   }
 
   & input {
