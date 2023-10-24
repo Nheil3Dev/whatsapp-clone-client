@@ -1,21 +1,22 @@
 import { useState } from 'react'
-import { Dialog } from '../dialog/Dialog'
-import { MenuIcon } from '../icons/MenuIcon'
-import { SearchIcon } from '../icons/SearchIcon'
+import { Dialog } from '../../dialog/Dialog'
+import { MenuIcon } from '../../icons/MenuIcon'
+import { SearchIcon } from '../../icons/SearchIcon'
 import './ChatHeader.css'
 
 interface ChatHeaderProps {
-  setVisibleInfo: (visible: boolean) => void;
+  openInfo: () => void;
+  openSearch: () => void
 }
 
-export function ChatHeader ({ setVisibleInfo }: ChatHeaderProps) {
+export function ChatHeader ({ openInfo, openSearch }: ChatHeaderProps) {
   const [visibleDetails, setVisibleDetails] = useState(false)
 
   return (
     <header className="chat-header-container">
       <div
         className='info-container-header'
-        onClick={() => setVisibleInfo(true)}
+        onClick={() => openInfo()}
       >
         <img
           src="./foto_grupo.jpg"
@@ -30,7 +31,7 @@ export function ChatHeader ({ setVisibleInfo }: ChatHeaderProps) {
         </div>
       </div>
       <div className="icon-container-header">
-        <button className="icon-button" title="Buscar">
+        <button className="icon-button" title="Buscar" onClick={() => openSearch()}>
           <SearchIcon />
         </button>
         <button
@@ -44,7 +45,7 @@ export function ChatHeader ({ setVisibleInfo }: ChatHeaderProps) {
           <MenuIcon />
         </button>
         <Dialog isOpen={visibleDetails} onClose={setVisibleDetails}>
-          <p onClick={() => setVisibleInfo(true)}>Info. del grupo</p>
+          <p onClick={() => openInfo()}>Info. del grupo</p>
           <p>Cerrar grupo</p>
           <p>Abandonar grupo</p>
         </Dialog>

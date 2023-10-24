@@ -1,7 +1,7 @@
 // import { useEffect, useRef, useState } from 'react'
-import { useScrollChat } from '../../hooks/useScrollChat'
-import { IMessage } from '../../types/types'
-import { ArrowDownIcon } from '../icons/ArrowDownIcon'
+import { useScrollChat } from '../../../hooks/useScrollChat'
+import { IMessage } from '../../../types/types'
+import { ArrowDownIcon } from '../../icons/ArrowDownIcon'
 import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 

@@ -1,5 +1,5 @@
-import { type IMessage } from '../../types/types'
-import { getLocalTime } from '../../utils/getLocalTime'
+import { type IMessage } from '../../../types/types'
+import { getLocalTime } from '../../../utils/getLocalTime'
 
 interface MessageProps {
   msg: IMessage

@@ -1,10 +1,10 @@
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
 import { useState } from 'react'
-import { sendMessage } from '../../services/sendMessage'
-import { EmojiIcon } from '../icons/EmojiIcon'
-import { PlusIcon } from '../icons/PlusIcon'
-import { SendIcon } from '../icons/SendIcon'
-import { XIcon } from '../icons/XIcon'
+import { sendMessage } from '../../../services/sendMessage'
+import { EmojiIcon } from '../../icons/EmojiIcon'
+import { PlusIcon } from '../../icons/PlusIcon'
+import { SendIcon } from '../../icons/SendIcon'
+import { XIcon } from '../../icons/XIcon'
 import './ChatForm.css'
 
 export function ChatForm () {

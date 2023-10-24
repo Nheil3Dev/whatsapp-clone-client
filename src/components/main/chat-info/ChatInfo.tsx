@@ -1,19 +1,19 @@
-import { OutIcon } from '../icons/OutIcon'
-import { SearchIcon } from '../icons/SearchIcon'
-import { XIcon } from '../icons/XIcon'
+import { OutIcon } from '../../icons/OutIcon'
+import { SearchIcon } from '../../icons/SearchIcon'
+import { XIcon } from '../../icons/XIcon'
 import './ChatInfo.css'
 import { InfoUserItem } from './InfoUserItem'
 
 interface ChatInfoProps {
-  visibleInfo: boolean
-  setVisibleInfo: (prop: boolean) => void
+  visible: boolean
+  onClose: () => void
 }
 
-export function ChatInfo ({ visibleInfo, setVisibleInfo }: ChatInfoProps) {
+export function ChatInfo ({ visible, onClose }: ChatInfoProps) {
   return (
-    <aside className={visibleInfo ? 'chat-info visible-info' : 'chat-info'}>
+    <aside className={visible ? 'chat-info visible-info' : 'chat-info'}>
       <header className='chat-info-header'>
-        <button onClick={() => setVisibleInfo(false)} className="icon-button">
+        <button onClick={() => onClose()} className="icon-button">
           <XIcon />
         </button>
         <h3 className="info-title">Info. del grupo</h3>
