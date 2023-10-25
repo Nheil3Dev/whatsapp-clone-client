@@ -42,7 +42,7 @@ export function SearchMsg ({ visible, onClose }: SearchMsgProps) {
       <section className="search-container">
         <Search placeholder='Buscar...' setFilter={setFilter} isLoading={isLoading} visible={visible} />
         <Suspense fallback={<p>Cargando...</p>}>
-          <FilteredMsgList filteredMsgs={deferredFilteredMsgs} active={filter.length > 1} />
+          <FilteredMsgList filteredMsgs={deferredFilteredMsgs} active={filter.length > 1} filter={filter} />
         </Suspense>
       </section>
     </aside>
