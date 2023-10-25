@@ -1,24 +1,35 @@
-import { useId, useState } from 'react'
+import { ClipLoader } from 'react-spinners'
+import { useSearch } from '../../hooks/useSearch'
 import { ArrowDown2Icon } from '../icons/ArrowDown2Icon'
 import { SearchIcon } from '../icons/SearchIcon'
+import { XIcon } from '../icons/XIcon'
 import './Search.css'
 
 interface SearchProps {
   placeholder: string;
   setFilter: (prop: string) => void;
-  actived?: boolean;
+  visible?: boolean;
+  isLoading: boolean
 }
 
-export function Search ({ placeholder, setFilter, actived }: SearchProps) {
-  const [isActive, setIsActive] = useState(actived ?? false)
-  const [text, setText] = useState<string>('')
-  const id = useId()
-  console.log('isActive', isActive)
+export function Search ({ placeholder, setFilter, visible, isLoading = false }: SearchProps) {
+  const {
+    handleArrow,
+    handleBlur,
+    clearInput,
+    handleChange,
+    id,
+    isActive,
+    inputRef,
+    setIsActive,
+    text
+  } = useSearch(visible ?? false, setFilter)
+
   return (
     <search>
       <div className='arrow-search-container'>
         <span
-          onClick={() => setIsActive(false)}
+          onClick={handleArrow}
           className={isActive ? 'arrow-search actived-search' : 'arrow-search'}
         >
           <ArrowDown2Icon />
@@ -34,20 +45,26 @@ export function Search ({ placeholder, setFilter, actived }: SearchProps) {
       </label>
       <input
         id={id}
+        ref={inputRef}
         value={text}
-        autoFocus={isActive}
         onFocus={() => setIsActive(true)}
-        onBlur={() => setIsActive(false)}
-        onChange={(e) => {
-          if (e.target.value === ' ') return
-          if (e.target.value.includes('  ')) return
-          setFilter(e.target.value)
-          setText(e.target.value)
-        }}
+        onBlur={handleBlur}
+        onChange={handleChange}
         type="text"
         placeholder={placeholder}
         autoComplete="off"
       />
+      {isLoading &&
+        <ClipLoader
+          color="#00a884"
+          cssOverride={{ position: 'absolute', top: '1rem', right: '1.5rem' }}
+          size={15}
+        />}
+      {!isLoading && text.length > 0 &&
+        <button className='clean-button' onClick={clearInput}>
+          <XIcon />
+        </button>
+      }
     </search>
   )
 }

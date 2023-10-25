@@ -11,7 +11,7 @@ export function AsideLeft () {
     <aside className='left-container'>
       <ChatList setVisibleProfile={setVisibleProfile} setVisibleNewChat={setVisibleNewChat} />
       <UserInfo visibleProfile={visibleProfile} setVisibleProfile={setVisibleProfile} />
-      <NewChat visibleNewChat={visibleNewChat} setVisibleNewChat={setVisibleNewChat} />
+      {visibleNewChat && <NewChat visibleNewChat={visibleNewChat} setVisibleNewChat={setVisibleNewChat} />}
     </aside>
   )
 }

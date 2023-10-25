@@ -37,7 +37,7 @@ function App () {
                 <ChatForm />
               </div>
               <ChatInfo visible={visible.info} onClose={close} />
-              <SearchMsg visible={visible.search} onClose={close} messages={messages} />
+              <SearchMsg visible={visible.search} onClose={close} />
             </>
           )
           }

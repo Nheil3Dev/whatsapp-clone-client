@@ -25,7 +25,7 @@ export function NewChat ({ visibleNewChat, setVisibleNewChat }: NewChatProps) {
         </button>
         <h3>Nuevo chat</h3>
       </header>
-      <Search placeholder='Busca un nombre' />
+      <Search placeholder='Busca un nombre' visible={visibleNewChat} />
       <article className="new-chat-container">
         <div className='new-group-item'>
           <span className='icon-group-container'>

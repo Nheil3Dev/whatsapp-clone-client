@@ -10,8 +10,8 @@ search {
     position: absolute;
     display: flex;
     align-items: center;
-    top: 0.75rem;
-    padding: 0 0 0 1rem;
+    top: 0.25rem;
+    padding-left: 0.5rem;
     cursor: pointer;
 
     & .arrow-search {
@@ -19,6 +19,7 @@ search {
       color: var(--button-bg-color);
       z-index: -1;
       transition: transform linear 0.1s, z-index linear 0.1s 0.05s;
+      padding: 0.5rem;
 
       & svg {
         display: flex;
@@ -58,22 +59,6 @@ search {
         transition: z-index linear 0.1s;
       }
     }
-
-    /* & .arrow-search {
-      color: var(--button-bg-color);
-      opacity: 0;
-      transition: transform linear 0.1s;
-    }
-
-    & .arrow-search.visible-arrow2 {
-      opacity: 1;
-      transform: rotate(90deg);
-      transition: transform linear 0.1s;
-    }
-
-    & svg {
-      width: 15px;
-    } */
   }
 
   & input {
@@ -87,6 +72,23 @@ search {
     &::placeholder {
       color: var(--text-color);
       font-size: 0.85rem;
+    }
+  }
+
+  & .clean-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0.75rem;
+    right: 1rem;
+    background-color: transparent;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+
+    & > svg {
+      width: 15px;
     }
   }
 }
