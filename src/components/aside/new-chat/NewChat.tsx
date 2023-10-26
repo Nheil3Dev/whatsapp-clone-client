@@ -1,3 +1,4 @@
+import { useUsers } from '../../../hooks/useUsers'
 import { BackArrow } from '../../icons/BackArrow'
 import { GroupIcon } from '../../icons/GruopIcon'
 import { Search } from '../../search/Search'
@@ -10,6 +11,8 @@ interface NewChatProps {
 }
 
 export function NewChat ({ visibleNewChat, setVisibleNewChat }: NewChatProps) {
+  const { setFilter, isLoading, filteredUsers, filter } = useUsers()
+
   return (
     <section
       className={
@@ -25,7 +28,7 @@ export function NewChat ({ visibleNewChat, setVisibleNewChat }: NewChatProps) {
         </button>
         <h3>Nuevo chat</h3>
       </header>
-      <Search placeholder='Busca un nombre' visible={visibleNewChat} />
+      <Search placeholder='Busca un nombre' setFilter={setFilter} visible={visibleNewChat} isLoading={isLoading} />
       <article className="new-chat-container">
         <div className='new-group-item'>
           <span className='icon-group-container'>
@@ -36,20 +39,11 @@ export function NewChat ({ visibleNewChat, setVisibleNewChat }: NewChatProps) {
         <span className='divider'>
           <h4>CONTACTOS EN WHATSAPP CLONE</h4>
         </span>
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
-        <UserItem />
+        {
+          filteredUsers?.map(user => (
+            <UserItem key={user.id} user={user} filter={filter} />
+          ))
+        }
       </article>
     </section>
   )

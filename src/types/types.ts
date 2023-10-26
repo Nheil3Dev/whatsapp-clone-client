@@ -22,3 +22,9 @@ export interface IMessages2 {
   conversation_id?: string
   group_id?: string
 }
+
+export interface IUser {
+  id: string
+  alias: string
+  info: string
+}
