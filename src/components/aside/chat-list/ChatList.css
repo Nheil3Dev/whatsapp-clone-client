@@ -4,28 +4,6 @@
   width: 100%;
   height: 100%;
 
-  & .chat-list-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 60px;
-    padding: 10px 16px;
-    background-color: var(--bg-color-options);
-
-    & > img {
-      width: 40px;
-      height: 40px;
-      cursor: pointer;
-    }
-
-    & .icon-container-header-aside {
-      position: relative;
-      display: flex;
-      gap: 0.5rem;
-    }
-  }
-
   & .chat-list-filter {
     display: flex;
     align-items: center;

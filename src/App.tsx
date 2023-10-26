@@ -7,6 +7,7 @@ import { ChatForm } from './components/main/chat/ChatForm'
 import { ChatHeader } from './components/main/chat/ChatHeader'
 import { ListOfMessages } from './components/main/chat/ListOfMessages'
 import { SearchMsg } from './components/main/search-messages/SearchMsg'
+import { ChatProvider } from './context/chatContext'
 import { useSocketIo } from './hooks/useSocketIo'
 
 function App () {
@@ -21,7 +22,7 @@ function App () {
   const close = () => setVisible({ info: false, search: false })
 
   return (
-    <>
+    <ChatProvider>
       <AsideLeft />
       <main>
         {
@@ -42,7 +43,7 @@ function App () {
           )
           }
       </main>
-    </>
+    </ChatProvider>
   )
 }
 

@@ -1,24 +1,32 @@
+import { useContext } from 'react'
+import { ChatContext } from '../../../context/chatContext'
 import { useSocketIo } from '../../../hooks/useSocketIo'
+import { IChat } from '../../../types/types'
 import { getDate } from '../../../utils/getDate'
+import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { ArrowDownIcon } from '../../icons/ArrowDownIcon'
 import './ChatItem.css'
 
 interface ChatItemProps {
-  isSelected?: boolean
+  chat: IChat
 }
 
-export function ChatItem ({ isSelected }: ChatItemProps) {
-  const className = isSelected ? 'chat-item selected' : 'chat-item'
+export function ChatItem ({ chat }: ChatItemProps) {
+  const { activeChat, setActiveChat } = useContext(ChatContext)
+  const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
   const { lastMsg } = useSocketIo()
   // Aqui deberia recoger el usuario de algún sitio
   const username = lastMsg?.user === 'Claudio' ? 'Tú' : lastMsg?.user
   // Habria que implementar otro con el socket para que se fuese actualizando
   return (
-    <li className={className}>
-      <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
+    <li className={className} onClick={() => setActiveChat && setActiveChat(chat.id)}>
+      {chat.admin
+        ? <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
+        : <span className='img'><UserDefaultAvatar /></span>
+      }
       <div>
         <div className='title-chat-container'>
-          <h3 className="title-chat-list" title='Al cielo con ella'>¡Al cielo con ella!</h3>
+          <h3 className="title-chat-list" title={chat.name}>{chat.name}</h3>
           <span className='chat-list-time'>{getDate(new Date(lastMsg?.date))}</span>
         </div>
         <div className='last-msg-container'>
