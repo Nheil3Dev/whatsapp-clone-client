@@ -7,7 +7,7 @@
   padding: 10px 16px;
   background-color: var(--bg-color-options);
 
-  & > img {
+  & .img {
     width: 40px;
     height: 40px;
     cursor: pointer;

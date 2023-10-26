@@ -15,9 +15,10 @@
     max-width: 100%;
 
     & .profle-info-container {
-      & > img {
+      & .profile-info-img {
         width: 200px;
-        transition: width linear 0.2s 0.1s;
+        height: 200px;
+        transition: height linear 0.2s 0.1s, width linear 0.2s 0.1s;
       }
       & > p {
         opacity: 1;
@@ -51,8 +52,9 @@
     text-align: left;
     padding: 2rem;
 
-    & > img {
+    & .profile-info-img {
       width: 0px;
+      height: 0px;
       border-radius: 50%;
       margin-bottom: 2rem;
     }

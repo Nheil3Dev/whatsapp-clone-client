@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { socket } from '../../../hooks/useSocketIo'
+import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { Dialog } from '../../dialog/Dialog'
 import { MenuIcon } from '../../icons/MenuIcon'
 import { NewChatIcon } from '../../icons/NewChatIcon'
@@ -14,12 +15,9 @@ export function ChatListHeader ({ setVisibleProfile, setVisibleNewChat }: ChatLi
   const [activeDialog, setActiveDialog] = useState<boolean>(false)
   return (
     <header className="chat-list-header">
-        <img
-          onClick={() => setVisibleProfile(true)}
-          className="img"
-          src="random-img.jpg"
-          alt="Foto de perfil de usuario"
-        />
+        <span onClick={() => setVisibleProfile(true)} className="img">
+          <UserDefaultAvatar />
+        </span>
         <div className='icon-container-header-aside'>
           <button className='icon-button' title='Nuevo chat' onClick={() => setVisibleNewChat(true)}>
             <NewChatIcon />

@@ -1,5 +1,6 @@
 import { type IMessage } from '../../../types/types'
 import { getLocalTime } from '../../../utils/getLocalTime'
+import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 
 interface MessageProps {
   msg: IMessage
@@ -22,7 +23,7 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
     <li className={className}>
       {!isMyMessage && isFirstMessage && (
         <>
-          <img src="random-img.jpg" alt="user image" />
+          <span className='msg-item-img'><UserDefaultAvatar /></span>
           <small>{msg.user}</small>
         </>
       )}

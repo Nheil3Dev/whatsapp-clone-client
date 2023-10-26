@@ -1,3 +1,4 @@
+import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { BackArrow } from '../../icons/BackArrow'
 import './UserInfo.css'
 
@@ -23,7 +24,7 @@ export function UserInfo ({ visibleProfile, setVisibleProfile }: UserInfoProps) 
         <h3>Perfil</h3>
       </header>
       <article className="profle-info-container">
-        <img src="random-img.jpg" alt="Foto de perfil del usuario" />
+        <span className='profile-info-img'><UserDefaultAvatar /></span>
         <p className="profile-info-label">Tu nombre</p>
         <p>Claudio López</p>
         <p className="profile-info-label">Info.</p>

@@ -1,5 +1,5 @@
-import { Suspense, useDeferredValue, useEffect, useState } from 'react'
-import { IMessage } from '../../../types/types'
+import { Suspense } from 'react'
+import { useMessages } from '../../../hooks/useMessages'
 import { XIcon } from '../../icons/XIcon'
 import { Search } from '../../search/Search'
 import { FilteredMsgList } from './FilteredMsgList'
@@ -11,21 +11,7 @@ interface SearchMsgProps {
 }
 
 export function SearchMsg ({ visible, onClose }: SearchMsgProps) {
-  const [filteredMsgs, setFilteredMsgs] = useState<IMessage[]>([])
-  const deferredFilteredMsgs = useDeferredValue(filteredMsgs)
-  const [filter, setFilter] = useState<string>('')
-  const [isLoading, setIsLoading] = useState(false)
-
-  useEffect(() => {
-    if (filter.length <= 1) return
-    setIsLoading(true)
-    fetch(`http://localhost:1234/api/messages?search=${filter}`)
-      .then(res => res.json())
-      .then(msgs => {
-        setFilteredMsgs(msgs)
-        setIsLoading(false)
-      })
-  }, [filter])
+  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages()
 
   // const filteredMsg = (messages: IMessage[]) => {
   //   return messages.filter(msg => msg.content.toLowerCase().includes(filter.toLowerCase()))
