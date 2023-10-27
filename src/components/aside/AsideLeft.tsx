@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useContext } from 'react'
+import { AsideContext } from '../../context/asideContext'
 import './AsideLeft.css'
 import { ChatList } from './chat-list/ChatList'
 import { NewChat } from './new-chat/NewChat'
 import { UserInfo } from './user-info/UserInfo'
 
 export function AsideLeft () {
-  const [visibleProfile, setVisibleProfile] = useState(false)
-  const [visibleNewChat, setVisibleNewChat] = useState(false)
+  const { isVisible } = useContext(AsideContext)
   return (
     <aside className='left-container'>
-      <ChatList setVisibleProfile={setVisibleProfile} setVisibleNewChat={setVisibleNewChat} />
-      <UserInfo visibleProfile={visibleProfile} setVisibleProfile={setVisibleProfile} />
-      {visibleNewChat && <NewChat visibleNewChat={visibleNewChat} setVisibleNewChat={setVisibleNewChat} />}
+      <ChatList />
+      <UserInfo />
+      {isVisible?.newChat && <NewChat />}
     </aside>
   )
 }

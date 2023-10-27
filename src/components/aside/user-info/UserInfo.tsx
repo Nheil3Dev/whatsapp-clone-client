@@ -1,23 +1,21 @@
+import { useContext } from 'react'
+import { AsideContext } from '../../../context/asideContext'
 import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { BackArrow } from '../../icons/BackArrow'
 import './UserInfo.css'
 
-interface UserInfoProps {
-  visibleProfile: boolean;
-  setVisibleProfile: (prop: boolean) => void;
-}
-
-export function UserInfo ({ visibleProfile, setVisibleProfile }: UserInfoProps) {
+export function UserInfo () {
+  const { isVisible, closeUserInfo } = useContext(AsideContext)
   return (
     <section
       className={
-        visibleProfile ? 'secondary-aside visible-profile' : 'secondary-aside'
+        isVisible?.userInfo ? 'secondary-aside visible-profile' : 'secondary-aside'
       }
     >
       <header className="profile-info-header">
         <button
           className="icon-button"
-          onClick={() => setVisibleProfile(false)}
+          onClick={closeUserInfo}
         >
           <BackArrow />
         </button>

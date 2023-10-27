@@ -6,16 +6,11 @@ import { ChatItem } from './ChatItem'
 import './ChatList.css'
 import { ChatListHeader } from './ChatListHeader'
 
-interface ChatListProps {
-  setVisibleProfile: (prop: boolean) => void;
-  setVisibleNewChat: (prop: boolean) => void
-}
-
-export function ChatList ({ setVisibleProfile, setVisibleNewChat }: ChatListProps) {
+export function ChatList () {
   const { chats } = useContext(ChatContext)
   return (
     <section className="principal-aside">
-      <ChatListHeader setVisibleProfile={setVisibleProfile} setVisibleNewChat={setVisibleNewChat} />
+      <ChatListHeader />
       <section className="chat-list-container">
         <div className='chat-list-filter'>
           <Search placeholder='Busca un chat' />

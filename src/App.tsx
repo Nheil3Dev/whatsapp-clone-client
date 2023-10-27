@@ -7,6 +7,7 @@ import { ChatForm } from './components/main/chat/ChatForm'
 import { ChatHeader } from './components/main/chat/ChatHeader'
 import { ListOfMessages } from './components/main/chat/ListOfMessages'
 import { SearchMsg } from './components/main/search-messages/SearchMsg'
+import { AsideProvider } from './context/asideContext'
 import { ChatProvider } from './context/chatContext'
 import { useSocketIo } from './hooks/useSocketIo'
 
@@ -23,7 +24,9 @@ function App () {
 
   return (
     <ChatProvider>
-      <AsideLeft />
+      <AsideProvider>
+        <AsideLeft />
+      </AsideProvider>
       <main>
         {
           !isConnected && <Welcome />
