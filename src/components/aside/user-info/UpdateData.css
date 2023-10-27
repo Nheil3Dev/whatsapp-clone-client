@@ -1,0 +1,27 @@
+.upload-form {
+  width: 100%;
+  position: relative;
+  margin: 11px 0 10px 0;
+
+  & .upload-input {
+    display: flex;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+
+    &:focus {
+      border: none;
+      border-bottom: 1px solid var(--button-bg-color);
+      outline: none;
+    }
+  }
+
+  .icon-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+  }
+}

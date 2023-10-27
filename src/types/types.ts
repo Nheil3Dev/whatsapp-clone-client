@@ -24,7 +24,7 @@ export interface IMessages2 {
 }
 
 export interface IUser {
-  id: string
+  id?: string
   alias: string
   info: string
 }

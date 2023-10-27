@@ -20,6 +20,10 @@
         height: 200px;
         transition: height linear 0.2s 0.1s, width linear 0.2s 0.1s;
       }
+      & .profile-data {
+        opacity: 1;
+        transition: opacity linear 0.1s 0.3s;
+      }
       & > p {
         opacity: 1;
         transition: opacity linear 0.1s 0.3s;
@@ -57,6 +61,14 @@
       height: 0px;
       border-radius: 50%;
       margin-bottom: 2rem;
+    }
+
+    & .profile-data {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      opacity: 0;
     }
 
     & > p {
