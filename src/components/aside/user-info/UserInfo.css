@@ -79,6 +79,11 @@
         font-size: 0.8rem;
         color: var(--button-bg-color);
       }
+
+      &.profile-info-p {
+        font-size: 0.8rem;
+        color: var(--text-color);
+      }
     }
   }
 }

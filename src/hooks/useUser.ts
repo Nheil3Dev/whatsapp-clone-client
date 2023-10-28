@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FormEventHandler, useEffect, useState } from 'react'
+import { ChangeEventHandler, FormEvent, useEffect, useState } from 'react'
 import { IUser } from '../types/types'
 
 const USER = 'cd89bf8f-e422-47f5-867d-2567caf3e476'
@@ -17,7 +17,7 @@ export function useUser (isVisible: boolean) {
     info: false
   })
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // Comprueba que no se ha cambiado el valor
     if (data.alias === formData.alias && data?.info === formData.info) return true
@@ -52,13 +52,20 @@ export function useUser (isVisible: boolean) {
     setFormData({ ...formData, info: e.target.value })
   }
   useEffect(() => {
-    fetch(`http://localhost:1234/api/user/${USER}`)
-      .then(res => res.json())
-      .then(data => {
-        setData(data[0])
-        setFormData(data[0])
+    if (isVisible === true) {
+      fetch(`http://localhost:1234/api/user/${USER}`)
+        .then(res => res.json())
+        .then(data => {
+          setData(data[0])
+          setFormData(data[0])
+        })
+    } else {
+      setVisibleInput({
+        alias: false,
+        info: false
       })
-  }, [])
+    }
+  }, [isVisible])
   const className = isVisible ? 'secondary-aside visible-profile' : 'secondary-aside'
   return {
     data,

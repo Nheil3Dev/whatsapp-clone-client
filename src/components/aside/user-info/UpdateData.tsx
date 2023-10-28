@@ -1,11 +1,11 @@
-import { ChangeEventHandler, FormEventHandler } from 'react'
+import { ChangeEventHandler, FormEvent, FormEventHandler } from 'react'
 import { CheckIcon } from '../../icons/CheckIcon'
 import './UpdateData.css'
 
 interface UpdateDataProps {
   value: string
   handleChange: ChangeEventHandler<HTMLInputElement>
-  handleSubmit: FormEventHandler<HTMLFormElement>
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => (boolean|Promise<boolean>)
   handleClick: () => void
 }
 

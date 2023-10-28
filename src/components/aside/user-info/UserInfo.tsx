@@ -41,6 +41,7 @@ export function UserInfo () {
               </div>
             : <UpdateData value={formData.alias} handleChange={onChangeAlias} handleClick={handleVisibleAlias} handleSubmit={handleSubmit}/>
         }
+        <p className='profile-info-p'>Este no es tu nombre de usuario o PIN. Este nombre será visible para tus contactos de Whatsapp Clone.</p>
         <p className="profile-info-label">Info.</p>
         {
           !visibleInput.info

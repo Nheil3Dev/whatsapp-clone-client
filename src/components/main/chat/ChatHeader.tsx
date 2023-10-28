@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ChatContext } from '../../../context/chatContext'
 import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { Dialog } from '../../dialog/Dialog'
@@ -13,19 +13,9 @@ interface ChatHeaderProps {
 
 export function ChatHeader ({ openInfo, openSearch }: ChatHeaderProps) {
   const [visibleDetails, setVisibleDetails] = useState(false)
-  const [groupUsers, setGroupUsers] = useState<string[]>()
-  const { chat } = useContext(ChatContext)
-  useEffect(() => {
-    if (chat?.admin) {
-      fetch(`http://localhost:1234/api/users/${chat.id}`)
-        .then(res => res.json())
-        .then(users => {
-          const newUsers = users.map((user: { alias: string, info: string }) => user.alias)
-          setGroupUsers(newUsers)
-        })
-    }
-  }, [chat])
+  const { chat, groupUsers } = useContext(ChatContext)
   const title = chat?.name
+  const usernames = groupUsers?.map(user => user.alias)
   return (
     <header className="chat-header-container">
       <div
@@ -47,7 +37,7 @@ export function ChatHeader ({ openInfo, openSearch }: ChatHeaderProps) {
           {chat?.admin && <h4 className="members">
             {
               groupUsers
-                ? groupUsers?.filter(user => user !== 'Claudio').join(', ').concat(', Tú')
+                ? usernames?.filter(user => user !== 'Claudio').join(', ').concat(', Tú')
                 : 'haz clic aquí para ver la información del grupo'
             }
           </h4>}

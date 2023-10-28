@@ -11,6 +11,7 @@ export interface IChat {
   info: string
   date: Date
   admin?: string
+  adminAlias?: string
 }
 
 export interface IMessages2 {
@@ -26,5 +27,10 @@ export interface IMessages2 {
 export interface IUser {
   id?: string
   alias: string
+  info: string
+}
+
+export interface IDataForm {
+  name: string
   info: string
 }
