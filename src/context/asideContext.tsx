@@ -28,7 +28,7 @@ export function AsideProvider ({ children }: { children: JSX.Element}) {
   }
 
   const openNewGroup = () => {
-    setIsVisible({ userInfo: false, newChat: false, newGroup: true })
+    setIsVisible({ userInfo: false, newChat: isVisible.newChat, newGroup: true })
   }
 
   const closeUserInfo = () => {

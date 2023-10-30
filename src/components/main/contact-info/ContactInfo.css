@@ -1,4 +1,4 @@
-.chat-info {
+.contact-info {
   height: 100%;
   max-width: 0;
   overflow: hidden;
@@ -12,19 +12,14 @@
     border-left: 1px solid rgba(233, 237, 239, 0.12);
 
     & .info-container {
-      & .info-group {
+      & .info-contact {
         opacity: 1;
         transition: opacity linear 0.1s 0.2s;
       }
 
-      & .chat-more-info-container {
+      & .contact-more-info-container {
         opacity: 1;
         transition: opacity linear 0.1s 0.25s;
-      }
-
-      & .info-users {
-        opacity: 1;
-        transition: opacity linear 0.1s 0.3s;
       }
 
       & .info-button-container {
@@ -36,7 +31,7 @@
 
   /* HEADER */
 
-  & .chat-info-header {
+  & .contact-info-header {
     display: flex;
     align-items: center;
     width: 100%;
@@ -74,9 +69,9 @@
     /* BUTTONS */
 
     & .info-button-container {
-      opacity: 0;
       display: flex;
       flex-direction: column;
+      opacity: 0;
 
       & .info-button {
         display: flex;
@@ -89,6 +84,10 @@
         cursor: pointer;
         font-size: 1.1rem;
 
+        &:nth-child(3) > svg {
+          padding: 0.1rem 0.2rem;
+        }
+
         &:hover {
           background-color: var(--bg-color-options);
         }
@@ -98,7 +97,7 @@
 }
 
 @media (width < 1440px) {
-  .chat-info.visible-info {
+  .contact-info.visible-info {
     max-width: 1120px;
   }
 }

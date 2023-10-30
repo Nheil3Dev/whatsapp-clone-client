@@ -79,11 +79,12 @@ export function NewGroup () {
             placeholder={data.members.length > 0 ? '' : 'Escribe el nombre del contacto'} />
         </search>
         <ListOfUsers filteredUsers={data.userList} addUser={addUser} />
-        <div className='arrow-icon-container'>
-          <button>
-            <ArrowDown2Icon />
-          </button>
-        </div>
+        {data.members.length > 0 &&
+          <div className='arrow-icon-container'>
+            <button>
+              <ArrowDown2Icon />
+            </button>
+          </div>}
       </article>
     </section>
   )
