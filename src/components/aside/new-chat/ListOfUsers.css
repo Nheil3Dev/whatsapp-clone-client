@@ -1,0 +1,11 @@
+.letter-users-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  gap: 2rem;
+
+  & .letter {
+    color: var(--button-bg-color);
+    padding-left: 2.1rem;
+  }
+}

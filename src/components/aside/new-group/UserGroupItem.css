@@ -1,0 +1,20 @@
+.user-group-item-container {
+  display: flex;
+  align-items: center;
+  height: 1.5rem;
+
+  & .user-group-item-img {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.5rem;
+  }
+
+  & > p {
+    font-size: 0.8rem;
+  }
+
+  & > .icon-button {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+}

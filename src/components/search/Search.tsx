@@ -26,7 +26,7 @@ export function Search ({ placeholder, setFilter, visible, isLoading = false }: 
   } = useSearch(visible ?? false, setFilter)
 
   return (
-    <search>
+    <search className='common-search'>
       <div className='arrow-search-container'>
         <span
           onClick={handleArrow}

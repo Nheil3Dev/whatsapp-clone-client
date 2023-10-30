@@ -10,12 +10,16 @@ export function useMessages () {
   useEffect(() => {
     if (filter.length <= 1) return
     setIsLoading(true)
-    fetch(`http://localhost:1234/api/messages?search=${filter}`)
-      .then(res => res.json())
-      .then(msgs => {
-        setFilteredMsgs(msgs)
-        setIsLoading(false)
-      })
+    const index = setTimeout(() => {
+      fetch(`http://localhost:1234/api/messages?search=${filter}`)
+        .then(res => res.json())
+        .then(msgs => {
+          setFilteredMsgs(msgs)
+          setIsLoading(false)
+        })
+    }, 300)
+
+    return () => clearTimeout(index)
   }, [filter])
   return { filter, setFilter, isLoading, deferredFilteredMsgs }
 }

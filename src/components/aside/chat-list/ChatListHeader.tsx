@@ -9,7 +9,7 @@ import './ChatListHeader.css'
 
 export function ChatListHeader () {
   const [activeDialog, setActiveDialog] = useState<boolean>(false)
-  const { openUserInfo, openNewChat } = useContext(AsideContext)
+  const { openUserInfo, openNewChat, openNewGroup } = useContext(AsideContext)
   return (
     <header className="chat-list-header">
         <span onClick={openUserInfo} className="img">
@@ -27,7 +27,7 @@ export function ChatListHeader () {
           </button>
           <Dialog isOpen={activeDialog} onClose={setActiveDialog}>
             <p onClick={openNewChat}>Nuevo mensaje</p>
-            <p onClick={() => alert('Nuevo grupo')}>Nuevo grupo</p>
+            <p onClick={openNewGroup}>Nuevo grupo</p>
             <p onClick={() => socket.disconnect() }>Cerrar sesión</p>
           </Dialog>
         </div>

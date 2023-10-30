@@ -34,3 +34,8 @@ export interface IDataForm {
   name: string
   info: string
 }
+
+export interface INewGroup {
+  members: IUser[],
+  userList: IUser[]
+}

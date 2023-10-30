@@ -1,0 +1,111 @@
+.secondary-aside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 0;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  background-color: var(--button-text-color);
+  transition: max-width linear 0.1s;
+  z-index: 2;
+
+  &.visible-new-group {
+    opacity: 1;
+    max-width: 100%;
+
+    & .new-group-container {
+      opacity: 1;
+      transition: opacity linear 0.1s 0.1s;
+    }
+  }
+
+  & .new-group-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: var(--bg-color-options);
+    padding: 4rem 1rem 1rem;
+
+    & > h3 {
+      font-weight: 500;
+      margin: 0;
+    }
+
+    & button {
+      color: white;
+    }
+  }
+
+  & .new-group-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 19px - 19px - 155px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 0;
+
+    &::-webkit-scrollbar {
+      width: 0.4rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #374045;
+    }
+
+    & .new-group-users {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding: 2rem 2rem 0.5rem 2rem;
+      min-height: 2rem;
+    }
+
+    & .search-group {
+      width: 100%;
+      padding: 0 2rem 2rem 2rem;
+
+      & .search-group-input {
+        width: 100%;
+        background-color: transparent;
+        border: none;
+        border-bottom: 1px solid var(--bg-color-options);
+        padding-bottom: 0.25rem;
+        font-size: 0.95rem;
+
+        &::placeholder {
+          color: var(--text-color);
+        }
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    & .arrow-icon-container {
+      margin-top: auto;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & button {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        border: none;
+        padding: 1rem;
+        background-color: var(--button-bg-color);
+        cursor: pointer;
+
+        & svg {
+          transform: rotate(-90deg);
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }
+  }
+}
