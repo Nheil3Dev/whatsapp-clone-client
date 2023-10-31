@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { getAllFilteredUsers } from '../services/getAllFilteredUsers'
 import { IUser } from '../types/types'
 
 export function useUsers () {
@@ -10,8 +11,7 @@ export function useUsers () {
   useEffect(() => {
     setIsLoading(true)
     const index = setTimeout(() => {
-      fetch(`http://localhost:1234/api/users?filter=${filter}`)
-        .then(res => res.json())
+      getAllFilteredUsers(filter)
         .then(users => {
           const newUsers = users.filter((user: IUser) => user.alias !== 'Claudio')
           setFilteredUsers(newUsers)
@@ -20,6 +20,6 @@ export function useUsers () {
     }, delay)
 
     return () => clearTimeout(index)
-  }, [filter])
+  }, [filter, delay])
   return { isLoading, filter, setFilter, filteredUsers }
 }

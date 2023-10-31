@@ -1,4 +1,6 @@
 import { ChangeEventHandler, FormEvent, useEffect, useState } from 'react'
+import { changeProfileData } from '../services/changeProfileData'
+import { getProfileData } from '../services/getProfileData'
 import { IUser } from '../types/types'
 
 const USER = 'cd89bf8f-e422-47f5-867d-2567caf3e476'
@@ -22,14 +24,7 @@ export function useProfile () {
     // Comprueba que no se ha cambiado el valor
     if (data.alias === formData.alias && data?.info === formData.info) return true
     // Si se modifica el registro de la BD devuelve true y actualiza la interfaz
-    return fetch(`http://localhost:1234/api/user/${USER}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(res => res.json())
+    return changeProfileData(USER, formData)
       .then(res => {
         if (res.rowsAffected === 1) {
           setData(formData)
@@ -52,8 +47,7 @@ export function useProfile () {
     setFormData({ ...formData, info: e.target.value })
   }
   useEffect(() => {
-    fetch(`http://localhost:1234/api/user/${USER}`)
-      .then(res => res.json())
+    getProfileData(USER)
       .then(data => {
         setData(data[0])
         setFormData(data[0])

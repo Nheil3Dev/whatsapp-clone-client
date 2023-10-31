@@ -1,4 +1,6 @@
 import { JSX, createContext, useEffect, useState } from 'react'
+import { getAllChats } from '../services/getAllChats'
+import { getAllUsersGroup } from '../services/getAllUsersGroup'
 import { IChat, IUser } from '../types/types'
 
 interface IChatContext {
@@ -10,6 +12,8 @@ interface IChatContext {
   setActiveChat: (prop: string) => void
   groupLength: number
 }
+
+const USER = 'cd89bf8f-e422-47f5-867d-2567caf3e476'
 
 export const ChatContext = createContext<Partial<IChatContext>>({})
 
@@ -27,8 +31,7 @@ export function ChatProvider ({ children }: { children: JSX.Element[] }) {
   }, [activeChat, chats])
 
   useEffect(() => {
-    fetch('http://localhost:1234/api/chats?idUser=cd89bf8f-e422-47f5-867d-2567caf3e476')
-      .then(res => res.json())
+    getAllChats(USER)
       .then(chats => {
         setChats(chats)
         setChat(chats[0])
@@ -38,8 +41,7 @@ export function ChatProvider ({ children }: { children: JSX.Element[] }) {
 
   useEffect(() => {
     if (chat?.admin) {
-      fetch(`http://localhost:1234/api/users/${chat.id}`)
-        .then(res => res.json())
+      getAllUsersGroup(chat?.id)
         .then(users => setGroupUsers(users))
     }
   }, [chat])

@@ -1,5 +1,6 @@
 import { ChangeEvent, useContext, useEffect, useState } from 'react'
 import { ChatContext } from '../context/chatContext'
+import { changeGroupInfo } from '../services/changeGroupInfo'
 import { IDataForm } from '../types/types'
 
 export function useInfoGroup () {
@@ -38,14 +39,7 @@ export function useInfoGroup () {
 
   const uploadGroupData = () => {
     if (chat?.name === formData.name && chat?.info === formData.info) return
-    return fetch(`http://localhost:1234/api/group/${chat?.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-      .then(res => res.json())
+    return changeGroupInfo(chat?.id ?? '', formData)
       .then(res => {
         if (res.rowsAffected === 1 && chat) {
           const newChat = { ...chat, ...formData }

@@ -1,4 +1,5 @@
 import { useDeferredValue, useEffect, useState } from 'react'
+import { getAllFilteredMsg } from '../services/getAllFilteredMsg'
 import { IMessage } from '../types/types'
 
 export function useMessages () {
@@ -11,8 +12,7 @@ export function useMessages () {
     if (filter.length <= 1) return
     setIsLoading(true)
     const index = setTimeout(() => {
-      fetch(`http://localhost:1234/api/messages?search=${filter}`)
-        .then(res => res.json())
+      getAllFilteredMsg(filter)
         .then(msgs => {
           setFilteredMsgs(msgs)
           setIsLoading(false)
