@@ -20,7 +20,7 @@ export function MessageItem ({ msg, prevUser }: MessageProps) {
       : 'message same-user'
 
   return (
-    <li className={className}>
+    <li id={String(msg?.id)} className={className}>
       {!isMyMessage && isFirstMessage && (
         <>
           <span className='msg-item-img'><UserDefaultAvatar /></span>
