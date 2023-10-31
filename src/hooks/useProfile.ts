@@ -3,7 +3,7 @@ import { IUser } from '../types/types'
 
 const USER = 'cd89bf8f-e422-47f5-867d-2567caf3e476'
 
-export function useUser (isVisible: boolean) {
+export function useProfile () {
   const [data, setData] = useState<IUser>({
     alias: '',
     info: ''
@@ -52,27 +52,18 @@ export function useUser (isVisible: boolean) {
     setFormData({ ...formData, info: e.target.value })
   }
   useEffect(() => {
-    if (isVisible === true) {
-      fetch(`http://localhost:1234/api/user/${USER}`)
-        .then(res => res.json())
-        .then(data => {
-          setData(data[0])
-          setFormData(data[0])
-        })
-    } else {
-      setVisibleInput({
-        alias: false,
-        info: false
+    fetch(`http://localhost:1234/api/user/${USER}`)
+      .then(res => res.json())
+      .then(data => {
+        setData(data[0])
+        setFormData(data[0])
       })
-    }
-  }, [isVisible])
-  const className = isVisible ? 'secondary-aside visible-profile' : 'secondary-aside'
+  }, [])
   return {
     data,
     formData,
     onChangeAlias,
     onChangeInfo,
-    className,
     handleVisibleAlias,
     handleVisibleInfo,
     visibleInput,

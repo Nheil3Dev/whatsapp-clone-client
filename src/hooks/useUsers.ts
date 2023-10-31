@@ -13,7 +13,8 @@ export function useUsers () {
       fetch(`http://localhost:1234/api/users?filter=${filter}`)
         .then(res => res.json())
         .then(users => {
-          setFilteredUsers(users)
+          const newUsers = users.filter((user: IUser) => user.alias !== 'Claudio')
+          setFilteredUsers(newUsers)
           setIsLoading(false)
         })
     }, delay)

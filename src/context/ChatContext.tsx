@@ -33,7 +33,6 @@ export function ChatProvider ({ children }: { children: JSX.Element[] }) {
         setChats(chats)
         setChat(chats[0])
         setActiveChat(chats[0].id)
-        console.log()
       })
   }, [])
 

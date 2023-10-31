@@ -4,8 +4,8 @@
   left: 0;
   max-width: 0;
   width: 100%;
-  overflow: hidden;
   height: 100%;
+  overflow: hidden;
   background-color: var(--button-text-color);
   transition: max-width linear 0.1s;
 
@@ -15,7 +15,8 @@
 
     & .new-chat-container {
       opacity: 1;
-      transition: opacity linear 0.1s 0.1s;
+      max-width: 100%;
+      transition: opacity linear 0.1s 0.1s, max-width linear 0.1s;
     }
   }
 
@@ -39,7 +40,7 @@
   & .new-chat-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    max-width: 0;
     height: calc(100vh - 19px - 19px - 155px);
     overflow-y: auto;
     overflow-x: hidden;

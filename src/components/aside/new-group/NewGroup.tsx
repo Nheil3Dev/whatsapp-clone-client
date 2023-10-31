@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { AsideContext } from '../../../context/asideContext'
-import { useUsers } from '../../../hooks/useUsers'
-import { INewGroup, IUser } from '../../../types/types'
+import { useCssEffects } from '../../../hooks/useCssEffects'
+import { useNewGroup } from '../../../hooks/useNewGroup'
 import { ArrowDown2Icon } from '../../icons/ArrowDown2Icon'
 import { BackArrow } from '../../icons/BackArrow'
 import { ListOfUsers } from '../new-chat/ListOfUsers'
@@ -10,53 +10,18 @@ import './NewGroup.css'
 import { UserGroupItem } from './UserGroupItem'
 
 export function NewGroup () {
-  const { setFilter, filteredUsers, filter } = useUsers()
   const { isVisible, closeNewGroup } = useContext(AsideContext)
-  const [data, setData] = useState<INewGroup>({
-    members: [],
-    userList: []
-  })
-
-  useEffect(() => {
-    console.log('efecto')
-    const newUserList = data.members.length === 0 ? filteredUsers ?? [] : filteredUsers?.filter(user1 => !data.members.find(user2 => user2.id === user1.id)) ?? []
-    const newData = {
-      ...data,
-      userList: newUserList
-
-    }
-    setData(newData)
-  }, [filteredUsers, data.members])
-
-  const addUser = (newUser: IUser) => {
-    const newData = {
-      ...data,
-      members: [...data.members, newUser]
-    }
-    setData(newData)
-    setFilter('')
-  }
-
-  const deleteUser = (newUser: IUser) => {
-    const newMembers = data.members.filter(user => user.id !== newUser.id)
-    const newData = {
-      ...data,
-      members: newMembers
-    }
-    setData(newData)
-    setFilter('')
-  }
+  const { inputGroupRef, data, addUser, deleteUser, filter, setFilter } = useNewGroup()
+  const { className, handleClick } = useCssEffects(isVisible?.newGroup ?? false, 'visible-new-group')
 
   return (
     <section
-      className={
-        isVisible?.newGroup ? 'secondary-aside visible-new-group' : 'secondary-aside'
-      }
+      className={className}
     >
       <header className="new-group-header">
         <button
           className="icon-button"
-          onClick={closeNewGroup}
+          onClick={() => closeNewGroup && handleClick(closeNewGroup)}
         >
           <BackArrow />
         </button>
@@ -72,6 +37,7 @@ export function NewGroup () {
         </div>
         <search className='search-group'>
           <input
+            ref={inputGroupRef}
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
             className='search-group-input'

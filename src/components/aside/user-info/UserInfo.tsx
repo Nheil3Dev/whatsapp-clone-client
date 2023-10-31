@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { AsideContext } from '../../../context/asideContext'
-import { useUser } from '../../../hooks/useUser'
+import { useCssEffects } from '../../../hooks/useCssEffects'
+import { useProfile } from '../../../hooks/useProfile'
 import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { BackArrow } from '../../icons/BackArrow'
 import { PencilIcon } from '../../icons/PencilIcon'
@@ -9,8 +10,8 @@ import './UserInfo.css'
 
 export function UserInfo () {
   const { isVisible, closeUserInfo } = useContext(AsideContext)
+  const { className, handleClick } = useCssEffects(isVisible?.userInfo ?? false, 'visible-profile')
   const {
-    className,
     data,
     formData,
     onChangeAlias,
@@ -19,11 +20,11 @@ export function UserInfo () {
     handleVisibleInfo,
     visibleInput,
     handleSubmit
-  } = useUser(isVisible?.userInfo ?? false)
+  } = useProfile()
   return (
     <section className={className}>
       <header className="profile-info-header">
-        <button className="icon-button" onClick={closeUserInfo}>
+        <button className="icon-button" onClick={() => closeUserInfo && handleClick(closeUserInfo)}>
           <BackArrow />
         </button>
         <h3>Perfil</h3>

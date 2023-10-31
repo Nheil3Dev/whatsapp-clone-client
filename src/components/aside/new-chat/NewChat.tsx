@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { AsideContext } from '../../../context/asideContext'
+import { useCssEffects } from '../../../hooks/useCssEffects'
 import { useUsers } from '../../../hooks/useUsers'
 import { BackArrow } from '../../icons/BackArrow'
 import { GroupIcon } from '../../icons/GruopIcon'
@@ -10,17 +11,16 @@ import './NewChat.css'
 export function NewChat () {
   const { setFilter, isLoading, filteredUsers } = useUsers()
   const { isVisible, closeNewChat, openNewGroup } = useContext(AsideContext)
+  const { className, handleClick } = useCssEffects(isVisible?.newChat ?? false, 'visible-new-chat')
 
   return (
     <section
-      className={
-        isVisible?.newChat ? 'secondary-aside visible-new-chat' : 'secondary-aside'
-      }
+      className={className}
     >
       <header className="new-chat-header">
         <button
           className="icon-button"
-          onClick={closeNewChat}
+          onClick={() => closeNewChat && handleClick(closeNewChat)}
         >
           <BackArrow />
         </button>

@@ -16,6 +16,7 @@
 
     & .new-group-container {
       opacity: 1;
+      max-width: 100%;
       transition: opacity linear 0.1s 0.1s;
     }
   }
@@ -40,6 +41,7 @@
   & .new-group-container {
     display: flex;
     flex-direction: column;
+    max-width: 0;
     width: 100%;
     height: calc(100vh - 19px - 19px - 155px);
     overflow-y: auto;

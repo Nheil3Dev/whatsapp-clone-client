@@ -4,14 +4,12 @@
   left: 0;
   max-width: 0;
   width: 100%;
-  overflow: hidden;
-  /* opacity: 0; */
   height: 100%;
+  overflow: hidden;
   background-color: var(--button-text-color);
   transition: max-width linear 0.1s;
 
   &.visible-profile {
-    opacity: 1;
     max-width: 100%;
 
     & .profle-info-container {

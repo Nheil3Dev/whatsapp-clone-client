@@ -11,7 +11,7 @@ export function AsideLeft () {
   return (
     <aside className='left-container'>
       <ChatList />
-      <UserInfo />
+      {isVisible?.userInfo && <UserInfo />}
       {isVisible?.newChat && <NewChat />}
       {isVisible?.newGroup && <NewGroup />}
     </aside>
