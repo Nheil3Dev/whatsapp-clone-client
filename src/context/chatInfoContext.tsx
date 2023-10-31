@@ -1,24 +1,20 @@
-import { ChangeEvent, createContext, JSX } from 'react'
+import { createContext, Dispatch, JSX } from 'react'
 import { useInfoGroup } from '../hooks/useInfoGroup'
-import { IDataForm } from '../types/types'
+import { type InfoChatAction, type InfoChatState } from '../reducers/infoChatReducer'
 
 interface IChatInfoContext {
-  formData: IDataForm
-  handleChangeName: (prop: ChangeEvent<HTMLInputElement>) => void
-  handleChangeInfo: (prop: ChangeEvent<HTMLInputElement>) => void
-  handleClickName: () => void
-  handleClickInfo: () => void
+  infoChatState: InfoChatState,
+  dispatch: Dispatch<InfoChatAction>
   uploadGroupData: () => void | Promise<void>
-  visibleInput: { name: boolean, info: boolean }
 }
 
 export const ChatInfoContext = createContext<Partial<IChatInfoContext>>({})
 
 export function ChatInfoProvider ({ children }: { children: JSX.Element[]}) {
-  const { formData, uploadGroupData, handleChangeInfo, handleChangeName, handleClickName, handleClickInfo, visibleInput } = useInfoGroup()
+  const { infoChatState, dispatch, uploadGroupData } = useInfoGroup()
 
   return (
-    <ChatInfoContext.Provider value={{ formData, uploadGroupData, handleChangeInfo, handleChangeName, handleClickName, handleClickInfo, visibleInput }}>
+    <ChatInfoContext.Provider value={{ infoChatState, dispatch, uploadGroupData }}>
       {children}
     </ChatInfoContext.Provider>
   )

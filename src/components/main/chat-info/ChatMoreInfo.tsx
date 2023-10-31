@@ -1,4 +1,5 @@
 import { FormEvent, useContext } from 'react'
+import { changeInfo, toggleInputInfo } from '../../../actions/infoChatActions'
 import { ChatContext } from '../../../context/chatContext'
 import { ChatInfoContext } from '../../../context/chatInfoContext'
 import { CheckIcon } from '../../icons/CheckIcon'
@@ -7,11 +8,16 @@ import './ChatMoreInfo.css'
 
 export function ChatMoreInfo () {
   const { chat } = useContext(ChatContext)
-  const { formData, uploadGroupData, handleChangeInfo, handleClickInfo, visibleInput } = useContext(ChatInfoContext)
+  const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
+
+  if (!uploadGroupData || !dispatch || !infoChatState) return null
+
+  const { visibleInput, formData } = infoChatState
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    uploadGroupData && await uploadGroupData()
-    handleClickInfo && handleClickInfo()
+    await uploadGroupData()
+    dispatch(toggleInputInfo)
   }
   const date = new Date(chat?.date ?? '')
   const shortDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
@@ -36,7 +42,7 @@ export function ChatMoreInfo () {
                       </h6>
                       )
                 }
-                <button className="icon-button" onClick={handleClickInfo}>
+                <button className="icon-button" onClick={() => dispatch(toggleInputInfo)}>
                   <PencilIcon />
                 </button>
               </div>
@@ -50,7 +56,7 @@ export function ChatMoreInfo () {
                   className="more-info-group-input"
                   type="text"
                   value={formData?.info}
-                  onChange={handleChangeInfo}
+                  onChange={(e) => dispatch(changeInfo(e.target.value))}
                 />
                 <button className="icon-button">
                   <CheckIcon />

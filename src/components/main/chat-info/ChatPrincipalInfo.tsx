@@ -1,4 +1,5 @@
 import { FormEvent, useContext } from 'react'
+import { changeName, toggleInputName } from '../../../actions/infoChatActions'
 import { ChatContext } from '../../../context/chatContext'
 import { ChatInfoContext } from '../../../context/chatInfoContext'
 import { CheckIcon } from '../../icons/CheckIcon'
@@ -7,27 +8,33 @@ import './ChatPrincipalInfo.css'
 
 export function ChatPrincipalInfo () {
   const { chat, groupLength } = useContext(ChatContext)
-  const { formData, uploadGroupData, handleChangeName, handleClickName, visibleInput } = useContext(ChatInfoContext)
+  const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
+
+  if (!uploadGroupData || !dispatch || !infoChatState) return null
+
+  const { visibleInput, formData } = infoChatState
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    uploadGroupData && await uploadGroupData()
-    handleClickName && handleClickName()
+    await uploadGroupData()
+    dispatch(toggleInputName)
   }
+
   return (
     <article className="info-group">
       <img src="foto_grupo.jpg" alt="Foto de grupo" />
       {
-        !visibleInput?.name
+        !visibleInput.name
           ? <div className='info-group-data'>
               <h5 className="info-group-title">{chat?.name}</h5>
-              <button className='icon-button' onClick={handleClickName}>
+              <button className='icon-button' onClick={() => dispatch(toggleInputName)}>
                 <PencilIcon />
               </button>
             </div>
           : <form
             className='info-group-form'
             onSubmit={handleSubmit}>
-              <input className='info-group-input' type="text" value={formData?.name} onChange={handleChangeName}/>
+              <input className='info-group-input' type="text" value={formData.name} onChange={(e) => dispatch(changeName(e.target.value))}/>
               <button className='icon-button'>
                 <CheckIcon />
               </button>

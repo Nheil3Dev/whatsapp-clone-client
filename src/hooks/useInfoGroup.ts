@@ -1,41 +1,13 @@
-import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { Reducer, useContext, useEffect, useReducer } from 'react'
+import { initialValue } from '../actions/infoChatActions'
 import { ChatContext } from '../context/chatContext'
+import { infoChatInitialState, infoChatReducer, type InfoChatAction, type InfoChatState } from '../reducers/infoChatReducer'
 import { changeGroupInfo } from '../services/changeGroupInfo'
-import { IDataForm } from '../types/types'
 
 export function useInfoGroup () {
-  /* STATES */
-
+  const [infoChatState, dispatch] = useReducer<Reducer<InfoChatState, InfoChatAction>>(infoChatReducer, infoChatInitialState)
   const { chat, setChat } = useContext(ChatContext)
-  const [formData, setFormData] = useState<IDataForm>({
-    name: '',
-    info: ''
-  })
-  const [visibleInput, setVisibleInput] = useState({
-    name: false,
-    info: false
-  })
-
-  /* FUNCTIONS */
-
-  const handleClickName = () => setVisibleInput({ ...visibleInput, name: !visibleInput.name })
-
-  const handleClickInfo = () => setVisibleInput({ ...visibleInput, info: !visibleInput.info })
-
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      name: e.target.value
-    })
-  }
-  const handleChangeInfo = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      info: e.target.value
-    })
-  }
-
-  /* SERVICES */
+  const { formData } = infoChatState
 
   const uploadGroupData = () => {
     if (chat?.name === formData.name && chat?.info === formData.info) return
@@ -48,23 +20,17 @@ export function useInfoGroup () {
       })
   }
 
-  /* EFFECTS */
-
   useEffect(() => {
     const newDataForm = {
       name: chat?.name ?? '',
       info: chat?.info ?? ''
     }
-    setFormData(newDataForm)
+    dispatch(initialValue(newDataForm))
   }, [chat])
 
   return {
-    formData,
-    uploadGroupData,
-    handleChangeInfo,
-    handleChangeName,
-    handleClickName,
-    handleClickInfo,
-    visibleInput
+    infoChatState,
+    dispatch,
+    uploadGroupData
   }
 }
