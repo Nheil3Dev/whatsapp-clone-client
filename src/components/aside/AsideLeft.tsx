@@ -7,13 +7,13 @@ import { NewGroup } from './new-group/NewGroup'
 import { UserInfo } from './user-info/UserInfo'
 
 export function AsideLeft () {
-  const { isVisible } = useContext(AsideContext)
+  const { asideState } = useContext(AsideContext)
   return (
     <aside className='left-container'>
       <ChatList />
-      {isVisible?.userInfo && <UserInfo />}
-      {isVisible?.newChat && <NewChat />}
-      {isVisible?.newGroup && <NewGroup />}
+      {asideState?.userInfo && <UserInfo />}
+      {asideState?.newChat && <NewChat />}
+      {asideState?.newGroup && <NewGroup />}
     </aside>
   )
 }

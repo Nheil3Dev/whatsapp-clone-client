@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeNewGroup } from '../../../actions/asideActions'
 import { AsideContext } from '../../../context/asideContext'
 import { useCssEffects } from '../../../hooks/useCssEffects'
 import { useNewGroup } from '../../../hooks/useNewGroup'
@@ -10,9 +11,10 @@ import './NewGroup.css'
 import { UserGroupItem } from './UserGroupItem'
 
 export function NewGroup () {
-  const { isVisible, closeNewGroup } = useContext(AsideContext)
+  const { asideState, dispatch } = useContext(AsideContext)
   const { inputGroupRef, data, addUser, deleteUser, filter, setFilter } = useNewGroup()
-  const { className, handleClick } = useCssEffects(isVisible?.newGroup ?? false, 'visible-new-group')
+  const { className, handleClick } = useCssEffects(asideState?.newGroup ?? false, 'visible-new-group')
+  if (!dispatch) return null
 
   return (
     <section
@@ -21,7 +23,7 @@ export function NewGroup () {
       <header className="new-group-header">
         <button
           className="icon-button"
-          onClick={() => closeNewGroup && handleClick(closeNewGroup)}
+          onClick={() => handleClick(() => dispatch(closeNewGroup))}
         >
           <BackArrow />
         </button>

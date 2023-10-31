@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeNewChat, openNewGroup } from '../../../actions/asideActions'
 import { AsideContext } from '../../../context/asideContext'
 import { useCssEffects } from '../../../hooks/useCssEffects'
 import { useUsers } from '../../../hooks/useUsers'
@@ -10,9 +11,9 @@ import './NewChat.css'
 
 export function NewChat () {
   const { setFilter, isLoading, filteredUsers } = useUsers()
-  const { isVisible, closeNewChat, openNewGroup } = useContext(AsideContext)
-  const { className, handleClick } = useCssEffects(isVisible?.newChat ?? false, 'visible-new-chat')
-
+  const { asideState, dispatch } = useContext(AsideContext)
+  const { className, handleClick } = useCssEffects(asideState?.newChat ?? false, 'visible-new-chat')
+  if (!dispatch) return null
   return (
     <section
       className={className}
@@ -20,15 +21,15 @@ export function NewChat () {
       <header className="new-chat-header">
         <button
           className="icon-button"
-          onClick={() => closeNewChat && handleClick(closeNewChat)}
+          onClick={() => handleClick(() => dispatch(closeNewChat))}
         >
           <BackArrow />
         </button>
         <h3>Nuevo chat</h3>
       </header>
-      <Search placeholder='Busca un nombre' setFilter={setFilter} visible={isVisible?.newChat} isLoading={isLoading} />
+      <Search placeholder='Busca un nombre' setFilter={setFilter} visible={asideState?.newChat} isLoading={isLoading} />
       <article className="new-chat-container">
-        <div className='new-group-item' onClick={openNewGroup}>
+        <div className='new-group-item' onClick={() => dispatch(openNewGroup)}>
           <span className='icon-group-container'>
             <GroupIcon />
           </span>

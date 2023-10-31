@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeProfile } from '../../../actions/asideActions'
 import { AsideContext } from '../../../context/asideContext'
 import { useCssEffects } from '../../../hooks/useCssEffects'
 import { useProfile } from '../../../hooks/useProfile'
@@ -9,8 +10,8 @@ import { UpdateData } from './UpdateData'
 import './UserInfo.css'
 
 export function UserInfo () {
-  const { isVisible, closeUserInfo } = useContext(AsideContext)
-  const { className, handleClick } = useCssEffects(isVisible?.userInfo ?? false, 'visible-profile')
+  const { asideState, dispatch } = useContext(AsideContext)
+  const { className, handleClick } = useCssEffects(asideState?.userInfo ?? false, 'visible-profile')
   const {
     data,
     formData,
@@ -21,10 +22,11 @@ export function UserInfo () {
     visibleInput,
     handleSubmit
   } = useProfile()
+  if (!dispatch) return null
   return (
     <section className={className}>
       <header className="profile-info-header">
-        <button className="icon-button" onClick={() => closeUserInfo && handleClick(closeUserInfo)}>
+        <button className="icon-button" onClick={() => handleClick(() => dispatch(closeProfile))}>
           <BackArrow />
         </button>
         <h3>Perfil</h3>
