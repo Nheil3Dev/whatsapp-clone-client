@@ -8,7 +8,6 @@ interface RemarkMsgProps {
 
 export const RemarkMsg = ({ msg, filter }: RemarkMsgProps) => {
   const findIndices = (msg: string, filter: string) => {
-    // console.log('indices')
     const regex = new RegExp(`(${filter})+`, 'ig')
     const indices = []
     let match

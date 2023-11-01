@@ -1,16 +1,13 @@
 .contact-info {
+  position: absolute;
   height: 100%;
-  max-width: 0;
+  max-width: 480px;
+  width: 100%;
+  border-left: 1px solid transparent;
   overflow: hidden;
-  z-index: 2;
-  transition: max-width linear 0.1s;
+  z-index: 3;
 
   &.visible-info {
-    height: 100%;
-    max-width: 480px;
-    width: 100%;
-    border-left: 1px solid rgba(233, 237, 239, 0.12);
-
     & .info-container {
       & .info-contact {
         opacity: 1;
@@ -38,7 +35,8 @@
     height: 60px;
     padding: 10px 16px;
     background-color: var(--bg-color-options);
-    border-left: 1px solid rgba(134, 150, 160, 0.15);
+    /* border-left: 1px solid rgba(134, 150, 160, 0.15); */
+    border-left: 1px solid transparent;
 
     & .info-title {
       font-weight: 400;

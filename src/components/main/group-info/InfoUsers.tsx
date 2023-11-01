@@ -6,6 +6,7 @@ import './InfoUsers.css'
 
 export function InfoUsers () {
   const { groupUsers, chat } = useContext(ChatContext)
+
   return (
     <article className="info-users">
           <div className="info-users-header">

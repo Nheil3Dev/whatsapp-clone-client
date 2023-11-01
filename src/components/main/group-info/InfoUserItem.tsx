@@ -1,10 +1,13 @@
+import { useContext } from 'react'
+import { MainContext } from '../../../context/mainContext'
 import { IUser } from '../../../types/types'
 import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import './InfoUserItem.css'
 
 export function InfoUserItem ({ user, isAdmin }: {user: IUser, isAdmin?: boolean}) {
+  const { openInfoUser } = useContext(MainContext)
   return (
-    <div className="info-user-item">
+    <div className="info-user-item" onClick={() => openInfoUser && openInfoUser(user)}>
       <span className="info-user-img"><UserDefaultAvatar /></span>
       <div className='info-user-data'>
         <div className='info-user-title-container'>

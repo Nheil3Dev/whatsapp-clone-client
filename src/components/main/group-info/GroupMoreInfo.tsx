@@ -4,9 +4,9 @@ import { ChatContext } from '../../../context/chatContext'
 import { ChatInfoContext } from '../../../context/chatInfoContext'
 import { CheckIcon } from '../../icons/CheckIcon'
 import { PencilIcon } from '../../icons/PencilIcon'
-import './ChatMoreInfo.css'
+import './GroupMoreInfo.css'
 
-export function ChatMoreInfo () {
+export function GroupMoreInfo () {
   const { chat } = useContext(ChatContext)
   const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
 

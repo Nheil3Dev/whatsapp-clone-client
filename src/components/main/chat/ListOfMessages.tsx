@@ -1,4 +1,5 @@
-// import { useEffect, useRef, useState } from 'react'
+import { useContext } from 'react'
+import { MainContext } from '../../../context/mainContext'
 import { useScrollChat } from '../../../hooks/useScrollChat'
 import { IMessage } from '../../../types/types'
 import { ArrowDownIcon } from '../../icons/ArrowDownIcon'
@@ -7,11 +8,11 @@ import { MessageItem } from './MessageItem'
 
 interface ListOfMessagesProps {
   messages: IMessage[];
-  infoActive: boolean
 }
 
-export function ListOfMessages ({ messages, infoActive }: ListOfMessagesProps) {
-  const classNameImg = `bg-chat ${infoActive ? 'info-active' : ''}`
+export function ListOfMessages ({ messages }: ListOfMessagesProps) {
+  const { visible } = useContext(MainContext)
+  const classNameImg = `bg-chat ${visible?.aside ? 'info-active' : ''}`
   const { showScrollButton, handleScrollButtonClick, containerRef } = useScrollChat(messages)
   return (
     <>
