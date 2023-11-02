@@ -1,7 +1,11 @@
-import { socket } from '../../hooks/useSocketIo'
+import { useContext } from 'react'
+import { SocketContext } from '../../context/socketContext'
 import './Welcome.css'
 
 export function Welcome () {
+  const { socket } = useContext(SocketContext)
+
+  if (!socket) return null
   return (
     <div className="welcome-container">
       <h1>Whatsapp Web Clone</h1>

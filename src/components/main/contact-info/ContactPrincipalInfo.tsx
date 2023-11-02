@@ -1,12 +1,10 @@
 import { useContext } from 'react'
-import { ChatContext } from '../../../context/chatContext'
 import { MainContext } from '../../../context/mainContext'
 import { UserDefaultAvatar } from '../../defaults-avatars/UserDefaultAvatar'
 import { OpenChatIcon } from '../../icons/OpenChatIcon'
 import './ContactPrincipalInfo.css'
 
 export function ContactPrincipalInfo () {
-  const { chat } = useContext(ChatContext)
   const { visible } = useContext(MainContext)
 
   return (
@@ -14,8 +12,8 @@ export function ContactPrincipalInfo () {
       <span className='info-contact-img'>
         <UserDefaultAvatar />
       </span>
-      <h5 className="info-contact-title">{visible?.user.alias ?? chat?.name}</h5>
-      <p className="info-contact-description">Email...</p>
+      <h5 className="info-contact-title">{visible?.user.alias}</h5>
+      <p className="info-contact-description">{visible?.user?.email}</p>
       {visible?.user.alias &&
       <button className='info-contact-btn'>
         <span className='info-contact-icon'>

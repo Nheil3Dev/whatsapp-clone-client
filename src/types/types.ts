@@ -10,6 +10,7 @@ export interface IChat {
   name: string
   info: string
   date: Date
+  email?: string
   admin?: string
   adminAlias?: string
 }
@@ -28,6 +29,7 @@ export interface IUser {
   id?: string
   alias: string
   info: string
+  email: string
 }
 
 export interface IDataForm {

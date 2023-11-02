@@ -1,7 +1,7 @@
 import { ChangeEventHandler, useEffect, useId, useRef, useState } from 'react'
 
 export function useSearch (visible: boolean, setFilter: (prop: string) => void) {
-  const [isActive, setIsActive] = useState(visible)
+  const [isActive, setIsActive] = useState(false)
   const [text, setText] = useState<string>('')
   const id = useId()
   const inputRef = useRef<HTMLInputElement>(null)
@@ -35,11 +35,13 @@ export function useSearch (visible: boolean, setFilter: (prop: string) => void) 
   }
 
   useEffect(() => {
-    if (inputRef.current && visible) {
-      setText('')
-      setFilter('')
-      setIsActive(true)
-      inputRef.current.focus()
+    if (visible) {
+      setTimeout(() => {
+        setIsActive(true)
+        setText('')
+        setFilter('')
+        inputRef.current && inputRef.current.focus()
+      }, 200)
     }
   }, [visible])
 

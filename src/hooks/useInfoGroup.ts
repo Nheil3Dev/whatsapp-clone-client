@@ -6,16 +6,21 @@ import { changeGroupInfo } from '../services/changeGroupInfo'
 
 export function useInfoGroup () {
   const [infoChatState, dispatch] = useReducer<Reducer<InfoChatState, InfoChatAction>>(infoChatReducer, infoChatInitialState)
-  const { chat, setChat } = useContext(ChatContext)
+  const { chat, chats, setChats } = useContext(ChatContext)
   const { formData } = infoChatState
 
   const uploadGroupData = () => {
+    if (!chat || !chats || !setChats) return
     if (chat?.name === formData.name && chat?.info === formData.info) return
-    return changeGroupInfo(chat?.id ?? '', formData)
+    return changeGroupInfo(chat?.id, formData)
       .then(res => {
         if (res.rowsAffected === 1 && chat) {
           const newChat = { ...chat, ...formData }
-          setChat && setChat(newChat)
+          // setChat(newChat)
+          const index = chats?.findIndex(chatItem => chatItem.id === chat.id)
+          const newChats = [...chats]
+          newChats[index] = newChat
+          setChats(newChats)
         }
       })
   }

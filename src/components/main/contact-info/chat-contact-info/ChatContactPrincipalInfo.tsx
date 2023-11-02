@@ -12,7 +12,7 @@ export function ChatContactPrincipalInfo () {
         <UserDefaultAvatar />
       </span>
       <h5 className="info-contact-title">{chat?.name}</h5>
-      <p className="info-contact-description">Email...</p>
+      <p className="info-contact-description">{chat?.email}</p>
     </article>
   )
 }

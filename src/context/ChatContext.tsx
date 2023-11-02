@@ -8,6 +8,7 @@ interface IChatContext {
   chats: IChat[]
   groupUsers: IUser[]
   setChat: (prop: IChat) => void
+  setChats: (prop: IChat[]) => void
   activeChat: string
   setActiveChat: (prop: string) => void
   groupLength: number
@@ -15,12 +16,12 @@ interface IChatContext {
 
 export const ChatContext = createContext<Partial<IChatContext>>({})
 
-export function ChatProvider ({ children }: { children: JSX.Element[] }) {
-  const { chats } = useChats()
+export function ChatProvider ({ children }: { children: JSX.Element }) {
+  const { chats, setChats } = useChats()
   const { chat, setChat, activeChat, setActiveChat, groupUsers, groupLength } = useChat(chats)
 
   return (
-    <ChatContext.Provider value={{ activeChat, setActiveChat, chat, setChat, chats, groupUsers, groupLength }}>
+    <ChatContext.Provider value={{ activeChat, setActiveChat, chat, setChat, chats, setChats, groupUsers, groupLength }}>
       {children}
     </ChatContext.Provider>
   )

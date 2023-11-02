@@ -12,5 +12,5 @@ export function useChats () {
         setChats(chats)
       })
   }, [])
-  return { chats }
+  return { chats, setChats }
 }

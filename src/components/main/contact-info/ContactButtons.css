@@ -1,8 +1,7 @@
-.group-info-button-container {
-  opacity: 0;
+.info-button-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 2rem;
+  opacity: 0;
 
   & .info-button {
     display: flex;
@@ -14,6 +13,10 @@
     color: #f15c6d;
     cursor: pointer;
     font-size: 1.1rem;
+
+    &:nth-child(3) > svg {
+      padding: 0.1rem 0.2rem;
+    }
 
     &:hover {
       background-color: var(--bg-color-options);
