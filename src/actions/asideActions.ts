@@ -11,3 +11,9 @@ export const closeNewChat: AsideAction = { type: 'close_new_chat' }
 export const openNewGroup: AsideAction = { type: 'open_new_group' }
 
 export const closeNewGroup: AsideAction = { type: 'close_new_group' }
+
+export const openConfirm: AsideAction = { type: 'open_confirm' }
+
+export const closeConfirm: AsideAction = { type: 'close_confirm' }
+
+export const closeAll: AsideAction = { type: 'close_all' }

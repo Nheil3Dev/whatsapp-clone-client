@@ -1,7 +1,7 @@
 export const createGroup = (idAdmin: string, usersId: string[], name?: string) => {
   const body = {
     idGroup: crypto.randomUUID(),
-    name: name ?? 'Nuevo Grupo',
+    name: name || 'Nuevo Grupo',
     date: new Date(),
     idAdmin,
     usersId

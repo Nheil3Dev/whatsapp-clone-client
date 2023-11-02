@@ -8,4 +8,9 @@
   background-color: #6a7175;
   border-radius: 50%;
   color: #cfd4d6;
+
+  & > svg {
+    width: 80%;
+    height: 80%;
+  }
 }
