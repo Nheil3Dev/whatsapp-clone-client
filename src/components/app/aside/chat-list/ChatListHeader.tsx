@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { openNewChat, openNewGroup, openProfile } from '../../../../actions/asideActions'
 import { AsideContext } from '../../../../context/asideContext'
+import { ChatContext } from '../../../../context/chatContext'
 import { SocketContext } from '../../../../context/socketContext'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dialog } from '../../../lib/dialog/Dialog'
@@ -12,6 +13,7 @@ export function ChatListHeader () {
   const [activeDialog, setActiveDialog] = useState<boolean>(false)
   const { dispatch } = useContext(AsideContext)
   const { socket } = useContext(SocketContext)
+  const { setActiveChat } = useContext(ChatContext)
   if (!dispatch || !socket) return null
   return (
     <header className="chat-list-header">
@@ -31,7 +33,12 @@ export function ChatListHeader () {
           <Dialog isOpen={activeDialog} onClose={setActiveDialog}>
             <p onClick={() => dispatch(openNewChat)}>Nuevo mensaje</p>
             <p onClick={() => dispatch(openNewGroup)}>Nuevo grupo</p>
-            <p onClick={() => socket.disconnect() }>Cerrar sesión</p>
+            <p onClick={() => {
+              socket.disconnect()
+              setActiveChat && setActiveChat('')
+            }}>
+              Cerrar sesión
+            </p>
           </Dialog>
         </div>
       </header>

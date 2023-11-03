@@ -34,6 +34,7 @@ export function useSocketIo () {
 
     function onDisconnect () {
       setIsConnected(false)
+      setMessages([])
     }
 
     function onMessages (id: number, user: string, content: string, date: Date) {

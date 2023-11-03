@@ -37,3 +37,21 @@ body {
   min-height: 100vh;
   background-color: var(--bg-color-window);
 }
+
+@keyframes openAside {
+  0% {
+    max-width: 0;
+  }
+  100% {
+    max-width: 480px;
+  }
+}
+
+@keyframes closeAside {
+  0% {
+    max-width: 480px;
+  }
+  100% {
+    max-width: 0;
+  }
+}

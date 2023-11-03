@@ -1,8 +1,7 @@
 import { EmojiClickData } from 'emoji-picker-react'
 import { FormEvent, FormEventHandler } from 'react'
 import { Emoji } from '../../../lib/emoji/Emoji'
-import { CheckIcon } from '../../../lib/icons/CheckIcon'
-import { EmojiIcon } from '../../../lib/icons/EmojiIcon'
+import { InputButtons } from './InputButtons'
 import './UpdateData.css'
 
 interface UpdateDataProps {
@@ -33,15 +32,7 @@ export function UpdateData ({ value, handleChange, handleClick, handleSubmit, ha
         onChange={(e) => handleChange(e.target.value)}
         maxLength={maxLength}
       />
-      <div className='upload-icon-container'>
-        {maxLength - value.length <= 5 && <span className='length'>{maxLength - value.length}</span>}
-        <button type='button' className='icon-button' onClick={handleVisibleEmoji}>
-          <EmojiIcon />
-        </button>
-        <button className='icon-button'>
-          <CheckIcon />
-        </button>
-      </div>
+      <InputButtons value={value} maxLength={maxLength} handleVisibleEmoji={handleVisibleEmoji} />
     </form>
   )
 }

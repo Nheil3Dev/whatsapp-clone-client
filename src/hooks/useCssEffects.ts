@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+// AsideLeft css effects
 export function useCssEffects (visible: boolean, visibleClass: string) {
   const [className, setClassName] = useState<string>('secondary-aside')
   const handleClick = (func: () => void) => {

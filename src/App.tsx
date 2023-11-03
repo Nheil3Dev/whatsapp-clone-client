@@ -3,9 +3,7 @@ import './App.css'
 import { AsideLeft } from './components/app/aside/AsideLeft'
 import { Welcome } from './components/app/main/Welcome'
 import { AsideRight } from './components/app/main/aside-right/AsideRight'
-import { ChatForm } from './components/app/main/chat/ChatForm'
-import { ChatHeader } from './components/app/main/chat/ChatHeader'
-import { ListOfMessages } from './components/app/main/chat/ListOfMessages'
+import { ChatContainer } from './components/app/main/chat/ChatContainer'
 import { AsideProvider } from './context/asideContext'
 import { ChatProvider } from './context/chatContext'
 import { MainProvider } from './context/mainContext'
@@ -21,21 +19,12 @@ function App () {
           <AsideLeft />
         </AsideProvider>
         <main>
-          {
-            !isConnected && <Welcome />
-          }
-          {
-            isConnected &&
-            (
+          {!isConnected && <Welcome />}
+          {isConnected &&
               <>
-                <div className='chat-container'>
-                  <ChatHeader />
-                  <ListOfMessages messages={messages ?? []} />
-                  <ChatForm />
-                </div>
+                <ChatContainer messages={messages ?? []} />
                 <AsideRight />
               </>
-            )
           }
         </main>
       </MainProvider>

@@ -1,34 +1,22 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
-import { XIcon } from '../../../lib/icons/XIcon'
+import { useAsideEffect } from '../../../../hooks/useAsideEffect'
 import './AsideRight.css'
+import { HeaderAsideRight } from './HeaderAsideRight'
 import { ContactInfo } from './contact-info/ContactInfo'
 import { ChatContactInfo } from './contact-info/chat-contact-info/ChatContactInfo'
 import { GroupInfo } from './group-info/GroupInfo'
 import { SearchMsg } from './search-messages/SearchMsg'
 
 export function AsideRight () {
-  const { visible, closeAside, closeContain } = useContext(MainContext)
+  const { visible, closeContain } = useContext(MainContext)
   const { chat } = useContext(ChatContext)
-  const className = visible?.aside ? 'aside-right visible-aside-right' : 'aside-right'
-  useEffect(() => {
-    if (visible?.aside === false) {
-      setTimeout(() => closeContain && closeContain(), 100)
-    }
-  }, [visible?.aside])
+  const { className } = useAsideEffect('aside-right', 'visible-aside-right', visible?.aside ?? false, closeContain)
+
   return (
     <aside className={className}>
-      <header className='aside-right-header'>
-        <button onClick={closeAside} className="icon-button">
-          <XIcon />
-        </button>
-        <h3 className="search-title">
-          {visible?.search && 'Buscar mensajes'}
-          {visible?.infoChat && chat?.admin && 'Info. del grupo'}
-          {visible?.infoChat && !chat?.admin && 'Info. del contacto'}
-        </h3>
-      </header>
+      <HeaderAsideRight />
       {visible?.search && <SearchMsg />}
       {visible?.infoChat && chat?.admin && <GroupInfo />}
       {visible?.infoChat && !chat?.admin && <ChatContactInfo />}
