@@ -38,6 +38,10 @@ footer {
 
           & button {
             padding: 1rem 0;
+
+            &::before {
+              border: none;
+            }
           }
 
           & button.epr-active {

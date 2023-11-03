@@ -29,7 +29,7 @@ export interface IUser {
   id?: string
   alias: string
   info: string
-  email: string
+  email?: string
 }
 
 export interface IDataForm {

@@ -1,4 +1,5 @@
-import { ChangeEventHandler, FormEvent, useEffect, useState } from 'react'
+import { EmojiClickData } from 'emoji-picker-react'
+import { FormEvent, useEffect, useState } from 'react'
 import { changeProfileData } from '../services/changeProfileData'
 import { getProfileData } from '../services/getProfileData'
 import { IUser } from '../types/types'
@@ -15,6 +16,10 @@ export function useProfile () {
     info: ''
   })
   const [visibleInput, setVisibleInput] = useState({
+    alias: false,
+    info: false
+  })
+  const [activeEmoji, setActiveEmoji] = useState({
     alias: false,
     info: false
   })
@@ -40,12 +45,41 @@ export function useProfile () {
   const handleVisibleInfo = () => {
     setVisibleInput({ ...visibleInput, info: !visibleInput.info })
   }
-  const onChangeAlias: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setFormData({ ...formData, alias: e.target.value })
+  const changeAlias = (value: string) => {
+    setFormData({ ...formData, alias: value })
   }
-  const onChangeInfo: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setFormData({ ...formData, info: e.target.value })
+  const changeInfo = (value: string) => {
+    setFormData({ ...formData, info: value })
   }
+
+  const handleEmojiAlias = (emojiObject: EmojiClickData) => {
+    setFormData(prevState => ({
+      ...prevState,
+      alias: prevState.alias + emojiObject.emoji
+    }))
+  }
+
+  const handleEmojiInfo = (emojiObject: EmojiClickData) => {
+    setFormData(prevState => ({
+      ...prevState,
+      info: prevState.info + emojiObject.emoji
+    }))
+  }
+
+  const handleVisibleEmojiAlias = () => {
+    setActiveEmoji({
+      alias: !activeEmoji.alias,
+      info: false
+    })
+  }
+
+  const handleVisibleEmojiInfo = () => {
+    setActiveEmoji({
+      alias: false,
+      info: !activeEmoji.info
+    })
+  }
+
   useEffect(() => {
     getProfileData(USER)
       .then(data => {
@@ -56,11 +90,16 @@ export function useProfile () {
   return {
     data,
     formData,
-    onChangeAlias,
-    onChangeInfo,
+    activeEmoji,
+    changeAlias,
+    changeInfo,
     handleVisibleAlias,
     handleVisibleInfo,
     visibleInput,
-    handleSubmit
+    handleSubmit,
+    handleEmojiAlias,
+    handleEmojiInfo,
+    handleVisibleEmojiAlias,
+    handleVisibleEmojiInfo
   }
 }
