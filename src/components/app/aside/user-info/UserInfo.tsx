@@ -1,23 +1,30 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { closeProfile } from '../../../../actions/asideActions'
-import { closeInputs, toggleInputAlias, toggleInputInfo } from '../../../../actions/userInfoActions'
+import { closeInputs, initUserInfo } from '../../../../actions/userInfoActions'
+import { USER } from '../../../../constants/user'
 import { AsideContext } from '../../../../context/asideContext'
 import { UserInfoContext } from '../../../../context/userInfocontext'
 import { useCssEffects } from '../../../../hooks/useCssEffects'
-import { useProfile } from '../../../../hooks/useProfile'
+import { getProfileData } from '../../../../services/getProfileData'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { BackArrow } from '../../../lib/icons/BackArrow'
-import { PencilIcon } from '../../../lib/icons/PencilIcon'
-import { UpdateData } from './UpdateData'
+import { UserData } from './UserData'
 import './UserInfo.css'
 
 export function UserInfo () {
   const { asideState, dispatch } = useContext(AsideContext)
-  const { userInfoState, dispatchUserInfo } = useContext(UserInfoContext)
+  const { dispatchUserInfo } = useContext(UserInfoContext)
   const { className, handleClick } = useCssEffects(asideState?.userInfo ?? false, 'visible-profile')
-  const { handleSubmit } = useProfile(userInfoState, dispatchUserInfo)
+
+  useEffect(() => {
+    getProfileData(USER.id)
+      .then(data => {
+        dispatchUserInfo && dispatchUserInfo(initUserInfo(data))
+      })
+  }, [])
 
   if (!dispatch || !dispatchUserInfo) return null
+
   return (
     <section className={className}>
 
@@ -39,44 +46,14 @@ export function UserInfo () {
           <UserDefaultAvatar />
         </span>
         <p className="profile-info-label">Tu nombre</p>
-        {
-          !userInfoState?.visibleInput.alias
-
-            ? <div className='profile-data'>
-                <p>{userInfoState?.data?.alias}</p>
-                <button className='icon-button' onClick={() => dispatchUserInfo(toggleInputAlias)}>
-                  <PencilIcon />
-                </button>
-              </div>
-
-            : <UpdateData
-                handleSubmit={handleSubmit}
-                maxLength={20}
-                type='alias'
-              />
-        }
+        <UserData type='alias' />
         <p className='profile-info-p'>
           Este no es tu nombre de usuario o PIN. Este nombre será visible para tus contactos de Whatsapp Clone.
         </p>
         <p className="profile-info-label">
           Info.
         </p>
-        {
-          !userInfoState?.visibleInput.info
-
-            ? <div className='profile-data'>
-                <p>{userInfoState?.data?.info}</p>
-                <button className='icon-button' onClick={() => dispatchUserInfo(toggleInputInfo)}>
-                  <PencilIcon />
-                </button>
-              </div>
-
-            : <UpdateData
-                handleSubmit={handleSubmit}
-                maxLength={60}
-                type='info'
-              />
-        }
+        <UserData type='info' />
       </article>
     </section>
   )
