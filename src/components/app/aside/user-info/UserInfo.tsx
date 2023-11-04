@@ -1,6 +1,8 @@
 import { useContext } from 'react'
 import { closeProfile } from '../../../../actions/asideActions'
+import { closeInputs, toggleInputAlias, toggleInputInfo } from '../../../../actions/userInfoActions'
 import { AsideContext } from '../../../../context/asideContext'
+import { UserInfoContext } from '../../../../context/userInfocontext'
 import { useCssEffects } from '../../../../hooks/useCssEffects'
 import { useProfile } from '../../../../hooks/useProfile'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
@@ -11,24 +13,11 @@ import './UserInfo.css'
 
 export function UserInfo () {
   const { asideState, dispatch } = useContext(AsideContext)
+  const { userInfoState, dispatchUserInfo } = useContext(UserInfoContext)
   const { className, handleClick } = useCssEffects(asideState?.userInfo ?? false, 'visible-profile')
-  const {
-    data,
-    formData,
-    activeEmoji,
-    changeAlias,
-    changeInfo,
-    handleVisibleAlias,
-    handleVisibleInfo,
-    visibleInput,
-    handleSubmit,
-    handleEmojiAlias,
-    handleEmojiInfo,
-    handleVisibleEmojiAlias,
-    handleVisibleEmojiInfo
-  } = useProfile()
+  const { handleSubmit } = useProfile(userInfoState, dispatchUserInfo)
 
-  if (!dispatch) return null
+  if (!dispatch || !dispatchUserInfo) return null
   return (
     <section className={className}>
 
@@ -37,12 +26,7 @@ export function UserInfo () {
           className="icon-button"
           onClick={() => {
             handleClick(() => dispatch(closeProfile))
-            if (visibleInput.alias) {
-              handleVisibleAlias()
-            }
-            if (visibleInput.info) {
-              handleVisibleInfo()
-            }
+            dispatchUserInfo(closeInputs)
           }}
         >
           <BackArrow />
@@ -56,24 +40,19 @@ export function UserInfo () {
         </span>
         <p className="profile-info-label">Tu nombre</p>
         {
-          !visibleInput.alias
+          !userInfoState?.visibleInput.alias
 
             ? <div className='profile-data'>
-                <p>{data?.alias}</p>
-                <button className='icon-button' onClick={handleVisibleAlias}>
+                <p>{userInfoState?.data?.alias}</p>
+                <button className='icon-button' onClick={() => dispatchUserInfo(toggleInputAlias)}>
                   <PencilIcon />
                 </button>
               </div>
 
             : <UpdateData
-                value={formData.alias}
-                handleChange={changeAlias}
-                handleClick={handleVisibleAlias}
                 handleSubmit={handleSubmit}
-                handleEmoji={handleEmojiAlias}
-                activeEmoji={activeEmoji.alias}
-                handleVisibleEmoji={handleVisibleEmojiAlias}
                 maxLength={20}
+                type='alias'
               />
         }
         <p className='profile-info-p'>
@@ -83,24 +62,19 @@ export function UserInfo () {
           Info.
         </p>
         {
-          !visibleInput.info
+          !userInfoState?.visibleInput.info
 
             ? <div className='profile-data'>
-                <p>{data?.info}</p>
-                <button className='icon-button' onClick={handleVisibleInfo}>
+                <p>{userInfoState?.data?.info}</p>
+                <button className='icon-button' onClick={() => dispatchUserInfo(toggleInputInfo)}>
                   <PencilIcon />
                 </button>
               </div>
 
             : <UpdateData
-                value={formData.info}
-                handleChange={changeInfo}
-                handleClick={handleVisibleInfo}
                 handleSubmit={handleSubmit}
-                handleEmoji={handleEmojiInfo}
-                activeEmoji={activeEmoji.info}
-                handleVisibleEmoji={handleVisibleEmojiInfo}
                 maxLength={60}
+                type='info'
               />
         }
       </article>
