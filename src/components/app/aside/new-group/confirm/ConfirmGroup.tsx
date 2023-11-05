@@ -1,3 +1,4 @@
+import { EmojiClickData } from 'emoji-picker-react'
 import { useContext, useState } from 'react'
 import { closeAll, closeConfirm } from '../../../../../actions/asideActions'
 import { AsideContext } from '../../../../../context/asideContext'
@@ -5,8 +6,10 @@ import { ChatContext } from '../../../../../context/chatContext'
 import { createGroup } from '../../../../../services/createGroup'
 import { INewGroup } from '../../../../../types/types'
 import { GroupDefaultAvatar } from '../../../../lib/defaults-avatars/GroupDefaultAvatar'
+import { Emoji } from '../../../../lib/emoji/Emoji'
 import { BackArrow } from '../../../../lib/icons/BackArrow'
 import { CheckIcon } from '../../../../lib/icons/CheckIcon'
+import { EmojiIcon } from '../../../../lib/icons/EmojiIcon'
 import './ConfirmGroup.css'
 
 interface ConfirmGroupProps {
@@ -17,6 +20,7 @@ export function ConfirmGroup ({ data }: ConfirmGroupProps) {
   const { chats, setChats, setActiveChat } = useContext(ChatContext)
   const { dispatch } = useContext(AsideContext)
   const [groupName, setGroupName] = useState('')
+  const [isActiveEmoji, setIsActiveEmoji] = useState(false)
 
   if (!dispatch || !setActiveChat || !setChats || !chats) return
 
@@ -56,10 +60,14 @@ export function ConfirmGroup ({ data }: ConfirmGroupProps) {
           <GroupDefaultAvatar />
         </span>
         <form className='confirm-form' onSubmit={(e) => e.preventDefault()}>
+          <Emoji active={isActiveEmoji} handleEmoji={(emojiObject: EmojiClickData) => setGroupName(prev => prev + emojiObject.emoji)} />
           <input id='confirm-input' type="text" className='confirm-input' value={groupName} onChange={(e) => setGroupName(e.target.value)} autoComplete='off' />
           <label htmlFor='confirm-input' className={groupName.length > 0 ? 'confirm-label with-text' : 'confirm-label'}>
             Asunto del grupo (opcional)
           </label>
+          <button className='icon-button' onClick={() => setIsActiveEmoji(!isActiveEmoji)}>
+            <EmojiIcon />
+          </button>
         </form>
         <button className='confirm-button' onClick={createNewGroup}>
           <CheckIcon />

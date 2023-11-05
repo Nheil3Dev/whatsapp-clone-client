@@ -42,6 +42,10 @@
       flex-direction: column;
       width: 100%;
 
+      & .emoji.active::before {
+        left: 240px;
+      }
+
       & .confirm-input {
         width: 100%;
         background-color: transparent;
@@ -68,6 +72,16 @@
           bottom: 2.5rem;
           font-size: 0.75rem;
           cursor: default;
+        }
+      }
+
+      & .icon-button {
+        position: absolute;
+        right: 0;
+        bottom: 0.5rem;
+        & > svg {
+          width: 1.2rem;
+          height: 1.2rem;
         }
       }
     }
