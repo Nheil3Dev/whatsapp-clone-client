@@ -1,0 +1,17 @@
+.msg-date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  font-size: 0.8rem;
+  background-color: var(--bg-color-options);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.myself .msg-date {
+  left: -300px;
+}

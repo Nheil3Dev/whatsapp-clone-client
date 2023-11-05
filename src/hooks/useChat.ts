@@ -10,7 +10,7 @@ export function useChat (chats: IChat[]) {
   useEffect(() => {
     if (chats && !chat) {
       setChat(chats[0])
-      setActiveChat(chats[0]?.id)
+      // setActiveChat(chats[0]?.id)
     } else {
       const newChat = chats.filter(chat => chat.id === activeChat)
       setChat(newChat[0])

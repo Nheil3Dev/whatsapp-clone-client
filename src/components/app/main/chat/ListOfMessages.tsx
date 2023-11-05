@@ -20,7 +20,7 @@ export function ListOfMessages ({ messages }: ListOfMessagesProps) {
         <div className={classNameImg}></div>
         <ul className="messages-list">
           {messages.map((msg, index, arr) => (
-            <MessageItem key={msg.id} msg={msg} prevUser={arr[index - 1]?.user} />
+            <MessageItem key={msg.id} msg={msg} prevMsg={arr[index - 1]} />
           ))}
         </ul>
       </section>

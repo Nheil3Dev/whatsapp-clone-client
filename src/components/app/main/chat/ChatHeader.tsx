@@ -9,8 +9,8 @@ import './ChatHeader.css'
 
 export function ChatHeader () {
   const [visibleDetails, setVisibleDetails] = useState(false)
-  const { chat, groupUsers } = useContext(ChatContext)
-  const { openInfo, openSearch } = useContext(MainContext)
+  const { chat, groupUsers, setActiveChat } = useContext(ChatContext)
+  const { openInfo, openSearch, closeAside } = useContext(MainContext)
   const title = chat?.name
   const usernames = groupUsers?.map(user => user.alias)
   return (
@@ -56,7 +56,12 @@ export function ChatHeader () {
         </button>
         <Dialog isOpen={visibleDetails} onClose={setVisibleDetails}>
           <p onClick={openInfo}>Info. del grupo</p>
-          <p>Cerrar grupo</p>
+          <p onClick={() => {
+            setActiveChat && setActiveChat('')
+            closeAside && closeAside()
+          }}>
+            Cerrar grupo
+          </p>
           <p>Abandonar grupo</p>
         </Dialog>
       </div>

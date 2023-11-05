@@ -32,7 +32,7 @@ export function ChatItem ({ chat }: ChatItemProps) {
       <div>
         <div className='title-chat-container'>
           <h3 className="title-chat-list" title={chat.name}>{chat.name}</h3>
-          <span className='chat-list-time'>{getDate(new Date(lastMsg?.date))}</span>
+          <span className='chat-list-time'>{getDate(new Date(lastMsg?.date), 'lastMsg')}</span>
         </div>
         <div className='last-msg-container'>
           <p>{username}: {lastMsg?.content}</p>
