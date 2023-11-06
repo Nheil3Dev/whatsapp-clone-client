@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { USER } from '../../../../../../constants/user'
-import { IGroupMin } from '../../../../../../types/types'
-import './ChatContactCommonGroups.css'
+import { USER } from '../../../../../constants/user'
+import { IGroupMin } from '../../../../../types/types'
+import './CommonGroups.css'
 import { GroupItem } from './GroupItem'
 
 interface ChatContactCommonGroupsProps {
   contactId: string | undefined
 }
 
-export function ChatContactCommonGroups ({ contactId }: ChatContactCommonGroupsProps) {
+export function CommonGroups ({ contactId }: ChatContactCommonGroupsProps) {
   const [commonGroups, setCommonGroups] = useState<IGroupMin[]>([])
   useEffect(() => {
     fetch(`http://localhost:1234/api/group/${USER.id}?contactId=${contactId}`)

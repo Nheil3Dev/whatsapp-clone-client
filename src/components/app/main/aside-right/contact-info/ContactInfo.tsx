@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { MainContext } from '../../../../../context/mainContext'
+import { CommonGroups } from './CommonGroups'
 import { ContactButtons } from './ContactButtons'
 import './ContactInfo.css'
 import { ContactMoreInfo } from './ContactMoreInfo'
@@ -12,7 +13,8 @@ export function ContactInfo () {
       <section className="info-container">
         <ContactPrincipalInfo />
         <ContactMoreInfo />
-        <ContactButtons />
+        <CommonGroups contactId={visible?.user.id} />
+        <ContactButtons alias={visible?.user.alias ?? ''} />
       </section>
     </div>
   )

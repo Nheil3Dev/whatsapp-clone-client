@@ -10,7 +10,7 @@ import { MainProvider } from './context/mainContext'
 import { SocketContext } from './context/socketContext'
 
 function App () {
-  const { messages, isConnected } = useContext(SocketContext)
+  const { isConnected } = useContext(SocketContext)
 
   return (
     <ChatProvider>
@@ -22,7 +22,7 @@ function App () {
           {!isConnected && <Welcome />}
           {isConnected &&
               <>
-                <ChatContainer messages={messages ?? []} />
+                <ChatContainer />
                 <AsideRight />
               </>
           }

@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
-import { ChatContext } from '../../../../../../context/chatContext'
-import { MainContext } from '../../../../../../context/mainContext'
-import { getAllUsersGroup } from '../../../../../../services/getAllUsersGroup'
-import { IGroupMin, IUser } from '../../../../../../types/types'
+import { ChatContext } from '../../../../../context/chatContext'
+import { MainContext } from '../../../../../context/mainContext'
+import { getAllUsersGroup } from '../../../../../services/getAllUsersGroup'
+import { IGroupMin, IUser } from '../../../../../types/types'
 import './GroupItem.css'
 
 interface GroupItemProps {

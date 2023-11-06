@@ -15,6 +15,21 @@ export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
   const { chats, setActiveChat } = useContext(ChatContext)
   const { dispatch } = useContext(AsideContext)
   const orderedFilteredUsers: { values: IUser[] } = Object.groupBy(filteredUsers, (user: IUser) => user.alias[0])
+  const handleClick = (user: IUser) => {
+    if (addUser) { // NewGroup
+      addUser(user)
+    } else { // NewChat
+      // Si tenemos ya un chat con ese contacto
+      const newActiveChat = chats?.filter(chat => chat.name === user.alias)
+      if (newActiveChat) {
+        setActiveChat && setActiveChat(newActiveChat[0]?.id)
+        // TODO: Crear una nueva conversación
+      } else {
+        setActiveChat && setActiveChat('')
+      }
+      dispatch && dispatch(closeNewChat)
+    }
+  }
   return (
     <>
       {
@@ -23,28 +38,13 @@ export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
             <span className='letter'>{letter}</span>
             {
               users.map(user => (
-                <UserItem key={user.id} user={user} onClick={() => {
-                  if (addUser) { // NewGroup
-                    addUser(user)
-                  } else { // NewChat
-                    // Si tenemos ya un chat con ese contacto
-                    const newActiveChat = chats?.filter(chat => chat.name === user.alias)
-                    setActiveChat && setActiveChat(newActiveChat[0]?.id)
-                    dispatch && dispatch(closeNewChat)
-                    // TODO: Crear una nueva conversación
-                  }
-                }} />
+                <UserItem key={user.id} user={user} onClick={() => handleClick(user)} />
               ))
             }
             </div>
         )
         )
       }
-      {/* {
-        filteredUsers?.map(user => (
-          <UserItem key={user.id} user={user} filter={filter} />
-        ))
-      } */}
     </>
   )
 }

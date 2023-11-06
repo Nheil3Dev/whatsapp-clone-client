@@ -1,7 +1,7 @@
 .contact-info {
   position: absolute;
   top: 60px;
-  height: 100%;
+  height: calc(100vh - 60px - 19px - 19px);
   max-width: 0;
   width: 100%;
   border-left: 1px solid transparent;
@@ -11,8 +11,11 @@
 
   &.visible-info {
     animation: openAside 0.1s linear forwards;
+    overflow-y: auto;
 
     & .info-container {
+      overflow-y: auto;
+
       & .info-contact {
         opacity: 1;
         transition: opacity linear 0.1s 0.2s;
@@ -21,6 +24,10 @@
       & .contact-more-info-container {
         opacity: 1;
         transition: opacity linear 0.1s 0.25s;
+      }
+
+      & .common-groups {
+        opacity: 1;
       }
 
       & .info-button-container {
@@ -54,5 +61,6 @@
 @media (width < 1440px) {
   .contact-info.visible-info {
     max-width: 1120px;
+    height: calc(100vh - 60px);
   }
 }

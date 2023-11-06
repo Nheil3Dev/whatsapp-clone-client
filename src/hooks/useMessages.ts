@@ -9,7 +9,9 @@ export function useMessages () {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    if (filter.length <= 1) return
+    if (filter.length <= 1) {
+      setIsLoading(false)
+    }
     setIsLoading(true)
     const index = setTimeout(() => {
       getAllFilteredMsg(filter)
