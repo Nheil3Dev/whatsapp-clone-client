@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { ChatContext } from '../../../../context/chatContext'
 import { IMessage } from '../../../../types/types'
-import { ChatForm } from './ChatForm'
 import { ChatHeader } from './ChatHeader'
-import { ListOfMessages } from './ListOfMessages'
 import { VoidChat } from './VoidChat'
+import { ChatForm } from './chat-form/ChatForm'
+import { ListOfMessages } from './list-of-messages/ListOfMessages'
 
 interface ChatContainerProps {
   messages: IMessage[]

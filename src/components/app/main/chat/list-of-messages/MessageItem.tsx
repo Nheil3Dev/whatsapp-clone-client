@@ -1,6 +1,6 @@
-import { type IMessage } from '../../../../types/types'
-import { getLocalTime } from '../../../../utils/getLocalTime'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
+import { type IMessage } from '../../../../../types/types'
+import { getLocalTime } from '../../../../../utils/getLocalTime'
+import { UserDefaultAvatar } from '../../../../lib/defaults-avatars/UserDefaultAvatar'
 import './MessageItem.css'
 import { MsgDate } from './MsgDate'
 

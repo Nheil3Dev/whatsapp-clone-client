@@ -1,8 +1,8 @@
 import { useContext } from 'react'
-import { MainContext } from '../../../../context/mainContext'
-import { useScrollChat } from '../../../../hooks/useScrollChat'
-import { IMessage } from '../../../../types/types'
-import { ArrowDownIcon } from '../../../lib/icons/ArrowDownIcon'
+import { MainContext } from '../../../../../context/mainContext'
+import { useScrollChat } from '../../../../../hooks/useScrollChat'
+import { IMessage } from '../../../../../types/types'
+import { ArrowDownIcon } from '../../../../lib/icons/ArrowDownIcon'
 import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 

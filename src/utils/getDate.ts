@@ -1,10 +1,10 @@
 import { getLocalTime } from './getLocalTime'
 
 export const getDate = (d: Date, type: 'chat'|'lastMsg') => {
-  const now = Date.now()
+  const now = new Date()
   const date = new Date(d)
   const fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-  const mSecDiff = now - date.valueOf()
+  const mSecDiff = now.valueOf() - date.valueOf()
   const daysDiff = mSecDiff / (1000 * 60 * 60 * 24)
 
   if (daysDiff > 7) {
@@ -12,6 +12,9 @@ export const getDate = (d: Date, type: 'chat'|'lastMsg') => {
   } else if (daysDiff < 1) {
     if (type === 'lastMsg') {
       return getLocalTime(date)
+    }
+    if (now.getDay() - date.getDay() === 1) {
+      return 'Ayer'
     }
     return 'Hoy'
   } else if (daysDiff === 1) {

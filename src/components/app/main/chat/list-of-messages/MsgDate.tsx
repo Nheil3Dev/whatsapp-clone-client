@@ -1,5 +1,5 @@
-import { compareDate } from '../../../../utils/compareDate'
-import { getDate } from '../../../../utils/getDate'
+import { compareDate } from '../../../../../utils/compareDate'
+import { getDate } from '../../../../../utils/getDate'
 import './MsgDate.css'
 
 interface MsgDateProps {
