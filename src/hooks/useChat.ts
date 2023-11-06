@@ -8,13 +8,8 @@ export function useChat (chats: IChat[]) {
   const [groupUsers, setGroupUsers] = useState<IUser[]>([])
 
   useEffect(() => {
-    if (chats && !chat) {
-      setChat(chats[0])
-      // setActiveChat(chats[0]?.id)
-    } else {
-      const newChat = chats.filter(chat => chat.id === activeChat)
-      setChat(newChat[0])
-    }
+    const newChat = chats.filter(chat => chat.id === activeChat)
+    setChat(newChat[0])
   }, [activeChat, chats])
 
   useEffect(() => {

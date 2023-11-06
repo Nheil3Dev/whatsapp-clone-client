@@ -1,0 +1,33 @@
+.common-group-item {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 1rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--bg-color-options);
+  }
+
+  & > img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  & .common-group-info {
+    & > h5 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+
+    & > h6 {
+      margin: 0;
+      font-weight: 400;
+      font-size: 0.8rem;
+      color: var(--text-color);
+    }
+  }
+}

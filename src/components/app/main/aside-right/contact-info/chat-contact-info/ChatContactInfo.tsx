@@ -4,6 +4,7 @@ import { ChatInfoProvider } from '../../../../../../context/chatInfoContext'
 import { BlockIcon } from '../../../../../lib/icons/BlockIcon'
 import { DislikeIcon } from '../../../../../lib/icons/DislikeIcon'
 import { TrashIcon } from '../../../../../lib/icons/TrashIcon'
+import { ChatContactCommonGroups } from './ChatContactCommonGroups'
 import './ChatContactInfo.css'
 import { ChatContactMoreInfo } from './ChatContactMoreInfo'
 import { ChatContactPrincipalInfo } from './ChatContactPrincipalInfo'
@@ -21,6 +22,7 @@ export function ChatContactInfo () {
           <ChatContactPrincipalInfo />
           <ChatContactMoreInfo />
         </ChatInfoProvider>
+        <ChatContactCommonGroups contactId={chat?.contactId} />
         <div className='info-button-container'>
           <button className="info-button">
             <BlockIcon />

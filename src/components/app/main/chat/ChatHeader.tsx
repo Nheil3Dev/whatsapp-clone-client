@@ -13,6 +13,7 @@ export function ChatHeader () {
   const { openInfo, openSearch, closeAside } = useContext(MainContext)
   const title = chat?.name
   const usernames = groupUsers?.map(user => user.alias)
+  const isGroup = chat?.admin
   return (
     <header className="chat-header-container">
       <div
@@ -20,7 +21,7 @@ export function ChatHeader () {
         onClick={openInfo}
       >
         {
-          chat?.admin
+          isGroup
             ? <img
             className='header-img'
             src="./foto_grupo.jpg"
@@ -31,7 +32,7 @@ export function ChatHeader () {
         }
         <div>
           <h3 className="title-group">{title}</h3>
-          {chat?.admin && <h4 className="members">
+          {isGroup && <h4 className="members">
             {
               groupUsers
                 ? usernames?.filter(user => user !== 'Claudio').join(', ').concat(', Tú')

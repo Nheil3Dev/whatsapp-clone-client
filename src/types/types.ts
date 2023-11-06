@@ -5,8 +5,30 @@ export interface IMessage {
   date: Date
 }
 
+export interface IGroupMin {
+  id: string
+  name: string
+}
+
+export interface IGroup extends IGroupMin {
+  info: string
+  date: Date
+  admin: string
+  adminAlias: string
+}
+
+export interface IConversation {
+  id: string
+  contactId: string
+  name: string
+  info: string
+  date: Date
+  email: string
+}
+
 export interface IChat {
   id: string
+  contactId?: string
   name: string
   info: string
   date: Date

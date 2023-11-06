@@ -21,6 +21,11 @@
         transition: opacity linear 0.1s 0.25s;
       }
 
+      & .common-groups {
+        opacity: 1;
+        transition: opacity linear 0.1s 0.3s;
+      }
+
       & .info-button-container {
         opacity: 1;
         transition: opacity linear 0.1s 0.35s;
