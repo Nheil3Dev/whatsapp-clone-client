@@ -58,8 +58,8 @@ export function ChatHeader () {
         <Dialog isOpen={visibleDetails} onClose={setVisibleDetails}>
           <p onClick={openInfo}>Info. del grupo</p>
           <p onClick={() => {
-            setActiveChat && setActiveChat('')
-            closeAside && closeAside()
+            setActiveChat('')
+            closeAside()
           }}>
             Cerrar grupo
           </p>

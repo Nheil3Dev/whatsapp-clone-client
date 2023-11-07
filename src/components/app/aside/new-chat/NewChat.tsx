@@ -12,8 +12,8 @@ import './NewChat.css'
 export function NewChat () {
   const { setFilter, isLoading, filteredUsers } = useUsers()
   const { asideState, dispatch } = useContext(AsideContext)
-  const { className, handleClick } = useCssEffects(asideState?.newChat ?? false, 'visible-new-chat')
-  if (!dispatch) return null
+  const { className, handleClick } = useCssEffects(asideState?.newChat, 'visible-new-chat')
+
   return (
     <section
       className={className}

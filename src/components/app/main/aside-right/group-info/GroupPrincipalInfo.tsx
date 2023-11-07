@@ -9,9 +9,6 @@ import './GroupPrincipalInfo.css'
 export function GroupPrincipalInfo () {
   const { chat, groupLength } = useContext(ChatContext)
   const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
-
-  if (!uploadGroupData || !dispatch || !infoChatState) return null
-
   const { visibleInput, formData } = infoChatState
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

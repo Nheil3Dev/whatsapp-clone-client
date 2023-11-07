@@ -22,12 +22,12 @@ export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
       // Si tenemos ya un chat con ese contacto
       const newActiveChat = chats?.filter(chat => chat.name === user.alias)
       if (newActiveChat) {
-        setActiveChat && setActiveChat(newActiveChat[0]?.id)
+        setActiveChat(newActiveChat[0]?.id)
         // TODO: Crear una nueva conversación
       } else {
-        setActiveChat && setActiveChat('')
+        setActiveChat('')
       }
-      dispatch && dispatch(closeNewChat)
+      dispatch(closeNewChat)
     }
   }
   return (

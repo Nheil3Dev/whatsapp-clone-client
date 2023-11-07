@@ -10,9 +10,6 @@ interface UserDataProp {
 
 export function UserData ({ type }: UserDataProp) {
   const { userInfoState, dispatchUserInfo } = useContext(UserInfoContext)
-
-  if (!userInfoState || !dispatchUserInfo) return null
-
   const { visibleInput, data } = userInfoState
 
   if (visibleInput[type]) return <UpdateData type={type} />

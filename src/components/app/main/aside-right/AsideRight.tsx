@@ -12,15 +12,15 @@ import { SearchMsg } from './search-messages/SearchMsg'
 export function AsideRight () {
   const { visible, closeContain } = useContext(MainContext)
   const { chat } = useContext(ChatContext)
-  const { className } = useAsideEffect('aside-right', 'visible-aside-right', visible?.aside ?? false, closeContain)
+  const { className } = useAsideEffect('aside-right', 'visible-aside-right', visible.aside, closeContain)
 
   return (
     <aside className={className}>
       <HeaderAsideRight />
-      {visible?.search && <SearchMsg />}
-      {visible?.infoChat && chat?.admin && <GroupInfo />}
-      {visible?.infoChat && !chat?.admin && <ChatContactInfo />}
-      {visible?.infoUser && <ContactInfo />}
+      {visible.search && <SearchMsg />}
+      {visible.infoChat && chat.admin && <GroupInfo />}
+      {visible.infoChat && !chat.admin && <ChatContactInfo />}
+      {visible.infoUser && <ContactInfo />}
     </aside>
   )
 }

@@ -14,9 +14,7 @@ import { ConfirmGroup } from './confirm/ConfirmGroup'
 export function NewGroup () {
   const { asideState, dispatch } = useContext(AsideContext)
   const { inputGroupRef, data, addUser, deleteUser, filter, setFilter } = useNewGroup()
-  const { className, handleClick } = useCssEffects(asideState?.newGroup ?? false, 'visible-new-group')
-
-  if (!dispatch) return null
+  const { className, handleClick } = useCssEffects(asideState?.newGroup, 'visible-new-group')
 
   return (
     <>

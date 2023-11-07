@@ -14,7 +14,7 @@ interface IChatContext {
   groupLength: number
 }
 
-export const ChatContext = createContext<Partial<IChatContext>>({})
+export const ChatContext = createContext<IChatContext>({} as IChatContext)
 
 export function ChatProvider ({ children }: { children: JSX.Element }) {
   const { chats, setChats } = useChats()

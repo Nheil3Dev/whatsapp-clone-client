@@ -17,7 +17,7 @@ export const getDate = (d: Date, type: 'chat'|'lastMsg') => {
       return 'Ayer'
     }
     return 'Hoy'
-  } else if (daysDiff === 1) {
+  } else if (daysDiff < 2 && now.getDay() - date.getDay() === 1) {
     return 'Ayer'
   } else {
     switch (date.getDay()) {

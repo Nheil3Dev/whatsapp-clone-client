@@ -6,7 +6,7 @@ interface IAsideContext {
   dispatch: Dispatch<AsideAction>
 }
 
-export const AsideContext = createContext<Partial<IAsideContext>>({})
+export const AsideContext = createContext<IAsideContext>({} as IAsideContext)
 
 export function AsideProvider ({ children }: { children: JSX.Element}) {
   const [asideState, dispatch] = useReducer(asideReducer, asideInitialState)

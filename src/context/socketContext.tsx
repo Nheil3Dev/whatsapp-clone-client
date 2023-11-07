@@ -11,7 +11,7 @@ interface ISocketContext {
   socket: Socket
 }
 
-export const SocketContext = createContext<Partial<ISocketContext>>({})
+export const SocketContext = createContext<ISocketContext>({} as ISocketContext)
 
 export function SocketProvider ({ children }: { children: JSX.Element}) {
   const { messages, lastMsg, isConnected, setIsConnected } = useSocketIo()

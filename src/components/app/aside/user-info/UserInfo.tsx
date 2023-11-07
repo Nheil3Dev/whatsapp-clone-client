@@ -14,7 +14,7 @@ import './UserInfo.css'
 export function UserInfo () {
   const { asideState, dispatch } = useContext(AsideContext)
   const { dispatchUserInfo } = useContext(UserInfoContext)
-  const { className, handleClick } = useCssEffects(asideState?.userInfo ?? false, 'visible-profile')
+  const { className, handleClick } = useCssEffects(asideState?.userInfo, 'visible-profile')
 
   useEffect(() => {
     getProfileData(USER.id)
@@ -22,8 +22,6 @@ export function UserInfo () {
         dispatchUserInfo && dispatchUserInfo(initUserInfo(data))
       })
   }, [])
-
-  if (!dispatch || !dispatchUserInfo) return null
 
   return (
     <section className={className}>

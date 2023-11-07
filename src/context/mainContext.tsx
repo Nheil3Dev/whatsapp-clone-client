@@ -11,7 +11,7 @@ interface IMainContext {
   closeContain: () => void
 }
 
-export const MainContext = createContext<Partial<IMainContext>>({})
+export const MainContext = createContext<IMainContext>({} as IMainContext)
 
 export function MainProvider ({ children }: { children: JSX.Element[]}) {
   const [visible, setVisible] = useState({
@@ -27,7 +27,7 @@ export function MainProvider ({ children }: { children: JSX.Element[]}) {
   const openInfoUser = (user: IUser) => setVisible({ ...visible, infoUser: true, user })
   const closeInfoUser = () => setVisible({ ...visible, infoUser: false, user: {} })
   const closeAside = () => setVisible({ ...visible, aside: false })
-  const closeContain = () => setVisible({ ...visible, aside: false, infoChat: false, search: false })
+  const closeContain = () => setVisible({ ...visible, aside: false, infoChat: false, infoUser: false, search: false })
   return (
     <MainContext.Provider value={{ visible, openInfo, openSearch, openInfoUser, closeInfoUser, closeAside, closeContain }}>
       {children}

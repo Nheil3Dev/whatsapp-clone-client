@@ -1,3 +1,4 @@
 .colored {
   color: var(--button-bg-color);
+  font-weight: bold;
 }

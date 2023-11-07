@@ -22,8 +22,8 @@ export function ChatItem ({ chat }: ChatItemProps) {
   // Habria que implementar otro con el socket para que se fuese actualizando
   return (
     <li className={className} onClick={() => {
-      setActiveChat && setActiveChat(chat.id)
-      closeContain && closeContain()
+      setActiveChat(chat.id)
+      closeContain()
     }}>
       {chat.admin
         ? <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
@@ -31,11 +31,11 @@ export function ChatItem ({ chat }: ChatItemProps) {
       }
       <div>
         <div className='title-chat-container'>
-          <h3 className="title-chat-list" title={chat.name}>{chat.name}</h3>
+          <h3 className="title-chat-list text-ellipsis" title={chat.name}>{chat.name}</h3>
           <span className='chat-list-time'>{getDate(new Date(lastMsg?.date), 'lastMsg')}</span>
         </div>
         <div className='last-msg-container'>
-          <p>{username}: {lastMsg?.content}</p>
+          <p className='text-ellipsis'>{username}: {lastMsg?.content}</p>
           <button className='icon-button'><ArrowDownIcon /></button>
         </div>
       </div>

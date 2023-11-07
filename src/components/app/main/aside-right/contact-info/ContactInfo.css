@@ -7,10 +7,11 @@
   border-left: 1px solid transparent;
   overflow: hidden;
   z-index: 3;
-  animation: closeAside 0.1s linear forwards;
+  animation: closeAsideDif 0.1s linear forwards;
 
   &.visible-info {
-    animation: openAside 0.1s linear forwards;
+    min-width: 380px;
+    animation: openAsideDif 0.1s linear forwards;
     overflow-y: auto;
 
     & .info-container {
@@ -62,5 +63,12 @@
   .contact-info.visible-info {
     max-width: 1120px;
     height: calc(100vh - 60px);
+  }
+}
+
+@media (width < 1250px) {
+  .contact-info.visible-info {
+    width: 100%;
+    animation: openAsideDif 0.1s linear forwards;
   }
 }

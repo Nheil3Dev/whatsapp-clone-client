@@ -6,7 +6,7 @@ interface IUserInfoContext {
   dispatchUserInfo: Dispatch<UserInfoAction>
 }
 
-export const UserInfoContext = createContext<Partial<IUserInfoContext>>({})
+export const UserInfoContext = createContext<IUserInfoContext>({} as IUserInfoContext)
 
 export function UserInfoProvider ({ children }: { children: JSX.Element }) {
   const [userInfoState, dispatch] = useReducer(userInfoReducer, userInfoInitialState)

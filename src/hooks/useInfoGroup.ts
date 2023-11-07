@@ -10,7 +10,6 @@ export function useInfoGroup () {
   const { formData } = infoChatState
 
   const uploadGroupData = () => {
-    if (!chat || !chats || !setChats) return
     if (chat?.name === formData.name && chat?.info === formData.info) return
     return changeGroupInfo(chat?.id, formData)
       .then(res => {

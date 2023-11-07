@@ -16,11 +16,8 @@ export function UpdateData ({ type }: UpdateDataProps) {
   const { userInfoState, dispatchUserInfo } = useContext(UserInfoContext)
   const maxLength = type === 'alias' ? 20 : 60
 
-  if (!dispatchUserInfo || !userInfoState) return null
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    if (!userInfoState || !dispatchUserInfo) return
 
     // Comprueba que no se ha cambiado el valor
     if (userInfoState.data.alias === userInfoState.formData.alias && userInfoState.data?.info === userInfoState.formData.info) {

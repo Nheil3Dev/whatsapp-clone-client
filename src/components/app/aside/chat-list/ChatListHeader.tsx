@@ -14,7 +14,7 @@ export function ChatListHeader () {
   const { dispatch } = useContext(AsideContext)
   const { socket } = useContext(SocketContext)
   const { setActiveChat } = useContext(ChatContext)
-  if (!dispatch || !socket) return null
+
   return (
     <header className="chat-list-header">
         <span onClick={() => dispatch(openProfile)} className="img">
@@ -35,7 +35,7 @@ export function ChatListHeader () {
             <p onClick={() => dispatch(openNewGroup)}>Nuevo grupo</p>
             <p onClick={() => {
               socket.disconnect()
-              setActiveChat && setActiveChat('')
+              setActiveChat('')
             }}>
               Cerrar sesión
             </p>

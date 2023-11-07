@@ -12,18 +12,18 @@ interface GroupItemProps {
 export function GroupItem ({ group }: GroupItemProps) {
   const [groupUsers, setGroupUsers] = useState<IUser[]>([])
   const { setActiveChat } = useContext(ChatContext)
-  const { closeAside } = useContext(MainContext)
+  const { closeAside, closeContain } = useContext(MainContext)
   useEffect(() => {
     getAllUsersGroup(group.id)
       .then(users => users.map((user: IUser) => user.alias).filter((user: string) => user !== 'Claudio'))
       .then(users => setGroupUsers([...users, 'Tú']))
   }, [])
 
-  if (!setActiveChat || !closeAside) return null
   return (
     <li className='common-group-item' onClick={() => {
       setActiveChat(group.id)
       closeAside()
+      closeContain()
     }}>
       <img src="foto_grupo.jpg" alt="Foto del grupo" />
       <div className='common-group-info'>

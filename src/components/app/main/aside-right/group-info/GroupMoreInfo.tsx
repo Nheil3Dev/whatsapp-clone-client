@@ -1,5 +1,6 @@
 import { FormEvent, useContext } from 'react'
 import { changeInfo, toggleInputInfo } from '../../../../../actions/infoChatActions'
+import { USER } from '../../../../../constants/user'
 import { ChatContext } from '../../../../../context/chatContext'
 import { ChatInfoContext } from '../../../../../context/chatInfoContext'
 import { CheckIcon } from '../../../../lib/icons/CheckIcon'
@@ -9,9 +10,6 @@ import './GroupMoreInfo.css'
 export function GroupMoreInfo () {
   const { chat } = useContext(ChatContext)
   const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
-
-  if (!uploadGroupData || !dispatch || !infoChatState) return null
-
   const { visibleInput, formData } = infoChatState
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -19,7 +17,7 @@ export function GroupMoreInfo () {
     await uploadGroupData()
     dispatch(toggleInputInfo)
   }
-  const date = new Date(chat?.date ?? '')
+  const date = new Date(chat?.date)
   const shortDate = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
   const time = `${date.getHours()}:${String(date.getMinutes()).padStart(
     2,
@@ -64,7 +62,7 @@ export function GroupMoreInfo () {
               </form>
             )}
       <p className="chat-more-info-data">
-        Grupo creado por {chat?.adminAlias} el {shortDate} a la(s) {time}{' '}
+        Grupo creado por {chat?.adminAlias === USER.alias ? 'ti' : chat.adminAlias} el {shortDate} a la(s) {time}{' '}
       </p>
     </article>
   )

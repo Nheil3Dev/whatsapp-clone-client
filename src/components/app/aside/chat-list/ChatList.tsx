@@ -20,7 +20,7 @@ export function ChatList () {
         </div>
         <ul className="chat-list">
           {
-            chats?.map(chat => (
+            chats.map(chat => (
               <ChatItem key={chat.id} chat={chat} />
             ))
           }

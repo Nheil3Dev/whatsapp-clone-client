@@ -8,7 +8,7 @@ interface IChatInfoContext {
   uploadGroupData: () => void | Promise<void>
 }
 
-export const ChatInfoContext = createContext<Partial<IChatInfoContext>>({})
+export const ChatInfoContext = createContext<IChatInfoContext>({} as IChatInfoContext)
 
 export function ChatInfoProvider ({ children }: { children: JSX.Element[]}) {
   const { infoChatState, dispatch, uploadGroupData } = useInfoGroup()

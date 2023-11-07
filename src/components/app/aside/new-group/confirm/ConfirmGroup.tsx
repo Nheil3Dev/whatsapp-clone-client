@@ -22,8 +22,6 @@ export function ConfirmGroup ({ data }: ConfirmGroupProps) {
   const [groupName, setGroupName] = useState('')
   const [isActiveEmoji, setIsActiveEmoji] = useState(false)
 
-  if (!dispatch || !setActiveChat || !setChats || !chats) return
-
   // TODO: Se desconecta al crear el grupo por el hook del socketIo en concreto por el lastMsg que utilizo
   // en ChatItem
   const createNewGroup = async () => {

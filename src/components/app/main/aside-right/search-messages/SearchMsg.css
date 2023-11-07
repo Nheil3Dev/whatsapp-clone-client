@@ -1,11 +1,11 @@
 .search-msg {
-  height: calc(100vh - 60px - 19px - 19px);
+  height: 100%;
   width: 100%;
   overflow: hidden;
   z-index: 2;
 
   &.visible-search {
-    min-width: 400px;
+    min-width: 380px;
     /* border-left: 1px solid rgba(233, 237, 239, 0.12); */
   }
 
@@ -13,8 +13,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: calc(100vh - 60px - 19px - 19px);
     height: 100%;
-    gap: 0.6rem;
     background-color: var(--button-text-color);
     overflow-y: auto;
 

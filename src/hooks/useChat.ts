@@ -4,7 +4,7 @@ import { IChat, IUser } from '../types/types'
 
 export function useChat (chats: IChat[]) {
   const [activeChat, setActiveChat] = useState<string>('')
-  const [chat, setChat] = useState<IChat>()
+  const [chat, setChat] = useState<IChat>({} as IChat)
   const [groupUsers, setGroupUsers] = useState<IUser[]>([])
 
   useEffect(() => {
