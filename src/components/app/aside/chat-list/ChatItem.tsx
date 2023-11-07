@@ -1,6 +1,8 @@
 import { useContext } from 'react'
+import { USER } from '../../../../constants/user'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
+import { useDropdown } from '../../../../hooks/useDropDown'
 import { useSocketIo } from '../../../../hooks/useSocketIo'
 import { IChat } from '../../../../types/types'
 import { getDate } from '../../../../utils/getDate'
@@ -14,11 +16,12 @@ interface ChatItemProps {
 
 export function ChatItem ({ chat }: ChatItemProps) {
   const { activeChat, setActiveChat } = useContext(ChatContext)
-  const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
   const { closeContain } = useContext(MainContext)
   const { lastMsg } = useSocketIo()
-  // Aqui deberia recoger el usuario de algún sitio
-  const username = lastMsg?.user === 'Claudio' ? 'Tú' : lastMsg?.user
+  const { dropdownOpened, dropdownRef, closeDropdown, openDropdown } = useDropdown()
+  const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
+
+  const username = lastMsg?.user === USER.alias ? 'Tú' : lastMsg?.user
   // Habria que implementar otro con el socket para que se fuese actualizando
   return (
     <li className={className} onClick={() => {
@@ -36,7 +39,13 @@ export function ChatItem ({ chat }: ChatItemProps) {
         </div>
         <div className='last-msg-container'>
           <p className='text-ellipsis'>{username}: {lastMsg?.content}</p>
-          <button className='icon-button'><ArrowDownIcon /></button>
+          <button className='icon-button' onClick={dropdownRef.current ? closeDropdown : openDropdown}><ArrowDownIcon /></button>
+          {dropdownOpened &&
+          <div ref={dropdownRef} className='drop-down'>
+            <p>Eliminar chat</p>
+            <p>Marcar como leído</p>
+            <p>Fijar chat</p>
+          </div>}
         </div>
       </div>
     </li>
