@@ -8,7 +8,11 @@ export const useDropdown = () => {
     if (!dropdownOpened) return
 
     const handleClickOutside = (ev: MouseEvent) => {
-      if (!dropdownRef.current?.contains(ev.target as Node)) closeDropdown()
+      // TODO: Dar una vuelta al condicional
+      if (!dropdownRef.current?.contains(ev.target as Node)) {
+        closeDropdown()
+        console.log('window event')
+      }
     }
 
     document.addEventListener('click', handleClickOutside, { capture: true })

@@ -42,8 +42,12 @@
       flex-direction: column;
       width: 100%;
 
+      & .emoji.active {
+        right: -10px;
+      }
+
       & .emoji.active::before {
-        left: 240px;
+        right: 15px;
       }
 
       & .confirm-input {
@@ -96,6 +100,16 @@
       border: none;
       cursor: pointer;
       background-color: var(--button-bg-color);
+    }
+  }
+}
+
+@media (width < 1440px) {
+  .confirm-container {
+    height: 100vh;
+
+    & .confirm-info {
+      height: calc(100vh - 155px);
     }
   }
 }

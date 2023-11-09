@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { USER } from '../../../../constants/user'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
@@ -19,12 +19,16 @@ export function ChatItem ({ chat }: ChatItemProps) {
   const { closeContain } = useContext(MainContext)
   const { lastMsg } = useSocketIo()
   const { dropdownOpened, dropdownRef, closeDropdown, openDropdown } = useDropdown()
+  const [clicked, setClicked] = useState(false)
   const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
 
   const username = lastMsg?.user === USER.alias ? 'Tú' : lastMsg?.user
   // Habria que implementar otro con el socket para que se fuese actualizando
+
   return (
-    <li className={className} onClick={() => {
+    <li className={className} onClick={(e) => {
+      // Comprueba que el click ha sido en el svg y se lo salta, devuelve true para que se propague hasta window
+      if (e.target instanceof SVGElement) return true
       setActiveChat(chat.id)
       closeContain()
     }}>
@@ -39,7 +43,15 @@ export function ChatItem ({ chat }: ChatItemProps) {
         </div>
         <div className='last-msg-container'>
           <p className='text-ellipsis'>{username}: {lastMsg?.content}</p>
-          <button className='icon-button' onClick={dropdownRef.current ? closeDropdown : openDropdown}><ArrowDownIcon /></button>
+          <button className='icon-button' onClick={() => {
+            if (!clicked) {
+              setClicked(true)
+              openDropdown()
+            } else if (!dropdownOpened && clicked) {
+              setClicked(false)
+              closeDropdown()
+            }
+          }}><ArrowDownIcon /></button>
           {dropdownOpened &&
           <div ref={dropdownRef} className='drop-down'>
             <p>Eliminar chat</p>
