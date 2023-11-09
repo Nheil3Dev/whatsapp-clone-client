@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { USER } from '../../../../../constants/user'
 import { ChatContext } from '../../../../../context/chatContext'
+import { UserContext } from '../../../../../context/userContext'
 import { IUser } from '../../../../../types/types'
 import { SearchIcon } from '../../../../lib/icons/SearchIcon'
 import { InfoUserItem } from './InfoUserItem'
@@ -8,9 +8,10 @@ import './InfoUsers.css'
 
 export function InfoUsers () {
   const { groupUsers, chat } = useContext(ChatContext)
+  const { user: auth } = useContext(UserContext)
 
   const { me, restUsers } = groupUsers.reduce((result, user) => {
-    if (user.alias === USER.alias) {
+    if (user.alias === auth?.alias) {
       result.me = user
     } else {
       result.restUsers.push(user)

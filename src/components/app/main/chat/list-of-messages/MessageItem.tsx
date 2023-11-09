@@ -1,4 +1,6 @@
-import { type IMessage } from '../../../../../types/types'
+import { useContext } from 'react'
+import { UserContext } from '../../../../../context/userContext'
+import { IMessage } from '../../../../../types/types'
 import { getLocalTime } from '../../../../../utils/getLocalTime'
 import { UserDefaultAvatar } from '../../../../lib/defaults-avatars/UserDefaultAvatar'
 import './MessageItem.css'
@@ -10,8 +12,9 @@ interface MessageProps {
 }
 
 export function MessageItem ({ msg, prevMsg }: MessageProps) {
-  const isMyMessage = msg.user === 'Claudio'
-  const isFirstMessage = !prevMsg?.user || msg.user !== prevMsg?.user
+  const { user } = useContext(UserContext)
+  const isMyMessage = msg.alias === user?.alias
+  const isFirstMessage = !prevMsg?.alias || msg.alias !== prevMsg?.alias
 
   const className = isMyMessage
     ? isFirstMessage
@@ -28,7 +31,7 @@ export function MessageItem ({ msg, prevMsg }: MessageProps) {
         {!isMyMessage && isFirstMessage && (
           <>
             <span className='msg-item-img'><UserDefaultAvatar /></span>
-            <small>{msg.user}</small>
+            <small>{msg.alias}</small>
           </>
         )}
         <p>{msg.content}</p>

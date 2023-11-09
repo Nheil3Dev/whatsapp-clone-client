@@ -1,8 +1,8 @@
 import { useContext, useEffect } from 'react'
 import { closeProfile } from '../../../../actions/asideActions'
 import { closeInputs, initUserInfo } from '../../../../actions/userInfoActions'
-import { USER } from '../../../../constants/user'
 import { AsideContext } from '../../../../context/asideContext'
+import { UserContext } from '../../../../context/userContext'
 import { UserInfoContext } from '../../../../context/userInfocontext'
 import { useCssEffects } from '../../../../hooks/useCssEffects'
 import { getProfileData } from '../../../../services/getProfileData'
@@ -12,16 +12,18 @@ import { UserData } from './UserData'
 import './UserInfo.css'
 
 export function UserInfo () {
+  const { user } = useContext(UserContext)
   const { asideState, dispatch } = useContext(AsideContext)
   const { dispatchUserInfo } = useContext(UserInfoContext)
   const { className, handleClick } = useCssEffects(asideState?.userInfo, 'visible-profile')
 
   useEffect(() => {
-    getProfileData(USER.id)
+    if (!user) return
+    getProfileData(user.id)
       .then(data => {
         dispatchUserInfo && dispatchUserInfo(initUserInfo(data))
       })
-  }, [])
+  }, [user])
 
   return (
     <section className={className}>

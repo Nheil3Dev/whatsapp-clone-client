@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../context/userContext'
 import { getAllFilteredUsers } from '../services/getAllFilteredUsers'
 import { IUser } from '../types/types'
 
 export function useUsers () {
+  const { user: auth } = useContext(UserContext)
   const [isLoading, setIsLoading] = useState(false)
   const [filter, setFilter] = useState('')
   const [filteredUsers, setFilteredUsers] = useState<IUser[]>()
@@ -13,7 +15,7 @@ export function useUsers () {
     const index = setTimeout(() => {
       getAllFilteredUsers(filter)
         .then(users => {
-          const newUsers = users.filter((user: IUser) => user.alias !== 'Claudio')
+          const newUsers = users.filter((user: IUser) => user.alias !== auth?.alias)
           setFilteredUsers(newUsers)
           setIsLoading(false)
         })

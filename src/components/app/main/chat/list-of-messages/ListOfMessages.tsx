@@ -1,19 +1,20 @@
 import { useContext } from 'react'
-import { SocketContext } from '../../../../../context/socketContext'
+import { ChatContext } from '../../../../../context/chatContext'
 import { useScrollChat } from '../../../../../hooks/useScrollChat'
 import { ArrowDownIcon } from '../../../../lib/icons/ArrowDownIcon'
 import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 
 export function ListOfMessages () {
-  const { messages } = useContext(SocketContext)
-  const { showScrollButton, handleScrollButtonClick, containerRef } = useScrollChat(messages)
+  const { chat } = useContext(ChatContext)
+  const { showScrollButton, handleScrollButtonClick, containerRef } = useScrollChat(chat?.messages)
+
   return (
     <>
       <section ref={containerRef} className="chat" >
         <div className='bg-chat'></div>
         <ul className="messages-list">
-          {messages?.map((msg, index, arr) => (
+          {chat?.messages?.map((msg, index, arr) => (
             <MessageItem key={msg.id} msg={msg} prevMsg={arr[index - 1]} />
           ))}
         </ul>

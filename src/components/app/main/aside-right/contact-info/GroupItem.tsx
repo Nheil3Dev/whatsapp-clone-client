@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { ChatContext } from '../../../../../context/chatContext'
 import { MainContext } from '../../../../../context/mainContext'
+import { UserContext } from '../../../../../context/userContext'
 import { getAllUsersGroup } from '../../../../../services/getAllUsersGroup'
 import { IGroupMin, IUser } from '../../../../../types/types'
 import './GroupItem.css'
@@ -13,9 +14,10 @@ export function GroupItem ({ group }: GroupItemProps) {
   const [groupUsers, setGroupUsers] = useState<IUser[]>([])
   const { setActiveChat } = useContext(ChatContext)
   const { closeAside, closeContain } = useContext(MainContext)
+  const { user: auth } = useContext(UserContext)
   useEffect(() => {
     getAllUsersGroup(group.id)
-      .then(users => users.map((user: IUser) => user.alias).filter((user: string) => user !== 'Claudio'))
+      .then(users => users.map((user: IUser) => user.alias).filter((user: string) => user !== auth?.alias))
       .then(users => setGroupUsers([...users, 'Tú']))
   }, [])
 

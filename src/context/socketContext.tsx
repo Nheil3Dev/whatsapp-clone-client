@@ -5,7 +5,6 @@ import { IMessage } from '../types/types'
 
 interface ISocketContext {
   messages: IMessage[]
-  lastMsg: IMessage
   isConnected: boolean
   setIsConnected: (prop: boolean) => void
   socket: Socket
@@ -14,9 +13,9 @@ interface ISocketContext {
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext)
 
 export function SocketProvider ({ children }: { children: JSX.Element}) {
-  const { messages, lastMsg, isConnected, setIsConnected } = useSocketIo()
+  const { messages, isConnected, setIsConnected } = useSocketIo()
   return (
-    <SocketContext.Provider value={{ messages, lastMsg, isConnected, setIsConnected, socket }}>
+    <SocketContext.Provider value={{ messages, isConnected, setIsConnected, socket }}>
     {children}
   </SocketContext.Provider>
   )

@@ -1,7 +1,7 @@
 import { EmojiClickData } from 'emoji-picker-react'
 import { FormEvent, useContext } from 'react'
 import { changeAlias, changeInfo, printEmojiAlias, printEmojiInfo, toggleEmojiAlias, toggleEmojiInfo, toggleInputAlias, toggleInputInfo, uploadData } from '../../../../actions/userInfoActions'
-import { USER } from '../../../../constants/user'
+import { UserContext } from '../../../../context/userContext'
 import { UserInfoContext } from '../../../../context/userInfocontext'
 import { changeProfileData } from '../../../../services/changeProfileData'
 import { Emoji } from '../../../lib/emoji/Emoji'
@@ -14,17 +14,18 @@ interface UpdateDataProps {
 
 export function UpdateData ({ type }: UpdateDataProps) {
   const { userInfoState, dispatchUserInfo } = useContext(UserInfoContext)
+  const { user } = useContext(UserContext)
   const maxLength = type === 'alias' ? 20 : 60
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
-
+    if (!user) return
     // Comprueba que no se ha cambiado el valor
     if (userInfoState.data.alias === userInfoState.formData.alias && userInfoState.data?.info === userInfoState.formData.info) {
       return type === 'alias' ? dispatchUserInfo(toggleInputAlias) : dispatchUserInfo(toggleInputInfo)
     }
 
-    changeProfileData(USER.id, userInfoState.formData)
+    changeProfileData(user.id, userInfoState.formData)
       .then(res => {
         if (res.rowsAffected === 1) {
           dispatchUserInfo(uploadData)

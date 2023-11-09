@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
+import { UserContext } from '../../../../context/userContext'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dialog } from '../../../lib/dialog/Dialog'
 import { MenuIcon } from '../../../lib/icons/MenuIcon'
@@ -8,6 +9,7 @@ import { SearchIcon } from '../../../lib/icons/SearchIcon'
 import './ChatHeader.css'
 
 export function ChatHeader () {
+  const { user } = useContext(UserContext)
   const [visibleDetails, setVisibleDetails] = useState(false)
   const { chat, groupUsers, setActiveChat } = useContext(ChatContext)
   const { openInfo, openSearch, closeAside } = useContext(MainContext)
@@ -35,7 +37,7 @@ export function ChatHeader () {
           {isGroup && <h4 className="members">
             {
               groupUsers
-                ? usernames?.filter(user => user !== 'Claudio').join(', ').concat(', Tú')
+                ? usernames?.filter(username => username !== user?.alias).join(', ').concat(', Tú')
                 : 'haz clic aquí para ver la información del grupo'
             }
           </h4>}

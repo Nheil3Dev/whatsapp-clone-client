@@ -1,7 +1,8 @@
-import { JSX, createContext } from 'react'
+import { JSX, createContext, useContext } from 'react'
 import { useChat } from '../hooks/useChat'
 import { useChats } from '../hooks/useChats'
 import { IChat, IUser } from '../types/types'
+import { SocketContext } from './socketContext'
 
 interface IChatContext {
   chat: IChat
@@ -17,7 +18,8 @@ interface IChatContext {
 export const ChatContext = createContext<IChatContext>({} as IChatContext)
 
 export function ChatProvider ({ children }: { children: JSX.Element }) {
-  const { chats, setChats } = useChats()
+  const { messages } = useContext(SocketContext)
+  const { chats, setChats } = useChats(messages)
   const { chat, setChat, activeChat, setActiveChat, groupUsers, groupLength } = useChat(chats)
 
   return (

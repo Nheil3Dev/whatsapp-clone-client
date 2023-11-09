@@ -1,9 +1,8 @@
 import { useContext, useState } from 'react'
-import { USER } from '../../../../constants/user'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
+import { UserContext } from '../../../../context/userContext'
 import { useDropdown } from '../../../../hooks/useDropDown'
-import { useSocketIo } from '../../../../hooks/useSocketIo'
 import { IChat } from '../../../../types/types'
 import { getDate } from '../../../../utils/getDate'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
@@ -15,15 +14,18 @@ interface ChatItemProps {
 }
 
 export function ChatItem ({ chat }: ChatItemProps) {
+  const { user } = useContext(UserContext)
   const { activeChat, setActiveChat } = useContext(ChatContext)
   const { closeContain } = useContext(MainContext)
-  const { lastMsg } = useSocketIo()
   const { dropdownOpened, dropdownRef, closeDropdown, openDropdown } = useDropdown()
   const [clicked, setClicked] = useState(false)
   const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
+  let username
 
-  const username = lastMsg?.user === USER.alias ? 'Tú' : lastMsg?.user
-  // Habria que implementar otro con el socket para que se fuese actualizando
+  // Para que no pete si creamos un chat nuevo
+  if (chat.messages) {
+    username = chat.messages[chat.messages.length - 1]?.alias === user?.alias ? 'Tú' : chat.messages[chat.messages.length - 1]?.alias
+  }
 
   return (
     <li className={className} onClick={(e) => {
@@ -34,24 +36,40 @@ export function ChatItem ({ chat }: ChatItemProps) {
     }}>
       {chat.admin
         ? <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
-        : <span className='img'><UserDefaultAvatar /></span>
+        : <span className='img'>
+            <UserDefaultAvatar />
+          </span>
       }
-      <div>
+      <div className='info-chat-container'>
         <div className='title-chat-container'>
-          <h3 className="title-chat-list text-ellipsis" title={chat.name}>{chat.name}</h3>
-          <span className='chat-list-time'>{getDate(new Date(lastMsg?.date), 'lastMsg')}</span>
+          <h3
+            className="title-chat-list text-ellipsis"
+            title={chat.name}
+          >
+            {chat.name}
+          </h3>
+          <span className='chat-list-time'>
+            {chat.messages?.length > 0 ? getDate(new Date(chat.messages[chat.messages.length - 1]?.date), 'lastMsg') : ''}
+          </span>
         </div>
         <div className='last-msg-container'>
-          <p className='text-ellipsis'>{username}: {lastMsg?.content}</p>
-          <button className='icon-button' onClick={() => {
-            if (!clicked) {
-              setClicked(true)
-              openDropdown()
-            } else if (!dropdownOpened && clicked) {
-              setClicked(false)
-              closeDropdown()
-            }
-          }}><ArrowDownIcon /></button>
+          <p className='text-ellipsis'>
+            {chat.messages?.length > 0 ? `${username}: ${chat.messages[chat.messages.length - 1]?.content}` : 'Sin mensajes'}
+          </p>
+          <button
+            className='icon-button'
+            onClick={() => {
+              if (!clicked) {
+                setClicked(true)
+                openDropdown()
+              } else if (!dropdownOpened && clicked) {
+                setClicked(false)
+                closeDropdown()
+              }
+            }}
+          >
+            <ArrowDownIcon />
+          </button>
           {dropdownOpened &&
           <div ref={dropdownRef} className='drop-down'>
             <p>Eliminar chat</p>

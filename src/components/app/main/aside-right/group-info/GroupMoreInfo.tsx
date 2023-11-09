@@ -1,13 +1,14 @@
 import { FormEvent, useContext } from 'react'
 import { changeInfo, toggleInputInfo } from '../../../../../actions/infoChatActions'
-import { USER } from '../../../../../constants/user'
 import { ChatContext } from '../../../../../context/chatContext'
 import { ChatInfoContext } from '../../../../../context/chatInfoContext'
+import { UserContext } from '../../../../../context/userContext'
 import { CheckIcon } from '../../../../lib/icons/CheckIcon'
 import { PencilIcon } from '../../../../lib/icons/PencilIcon'
 import './GroupMoreInfo.css'
 
 export function GroupMoreInfo () {
+  const { user } = useContext(UserContext)
   const { chat } = useContext(ChatContext)
   const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
   const { visibleInput, formData } = infoChatState
@@ -62,7 +63,7 @@ export function GroupMoreInfo () {
               </form>
             )}
       <p className="chat-more-info-data">
-        Grupo creado por {chat?.adminAlias === USER.alias ? 'ti' : chat.adminAlias} el {shortDate} a la(s) {time}{' '}
+        Grupo creado por {chat?.adminAlias === user?.alias ? 'ti' : chat.adminAlias} el {shortDate} a la(s) {time}{' '}
       </p>
     </article>
   )

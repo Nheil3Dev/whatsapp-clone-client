@@ -1,10 +1,3 @@
-export interface IMessage {
-  id?: number
-  user: string
-  content: string
-  date: Date
-}
-
 export interface IGroupMin {
   id: string
   name: string
@@ -26,6 +19,16 @@ export interface IConversation {
   email: string
 }
 
+export interface IMessage {
+  id?: number
+  alias: string
+  content: string
+  date: Date
+  userId: string
+  conversationId: string | null
+  groupId: string | null
+}
+
 export interface IChat {
   id: string
   contactId?: string
@@ -35,16 +38,12 @@ export interface IChat {
   email?: string
   admin?: string
   adminAlias?: string
+  messages: IMessage[]
 }
 
-export interface IMessages2 {
-  id?: number
+export interface IAuth {
+  id: string
   alias: string
-  content: string
-  date: Date
-  user_id: string
-  conversation_id?: string
-  group_id?: string
 }
 
 export interface IUser {

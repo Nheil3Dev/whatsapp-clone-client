@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import { IMessage } from '../types/types'
-
-const getUserName = async () => {
-  const username = await window.localStorage.getItem('user_chat')
-  if (username) {
-    return username
-  }
-  const random = String(Math.floor(Math.random() * 10000))
-  return `Anonymous${random}`
-}
+import { getUser } from '../utils/getUser'
 
 export const socket = io('http://localhost:1234', {
   auth: {
-    user: await getUserName(),
+    user: await getUser(),
     serverOffset: 0
 
   },
@@ -37,9 +29,9 @@ export function useSocketIo () {
       setMessages([])
     }
 
-    function onMessages (id: number, user: string, content: string, date: Date) {
+    function onMessages (id: number, alias: string, content: string, date: Date, userId: string, groupId: string, conversationId: string) {
       if (id > (lastMsg?.id ?? 0)) {
-        setMessages(previous => [...previous, { id, user, content, date }])
+        setMessages(previous => [...previous, { id, alias, content, date, userId, groupId, conversationId }])
       }
     }
 
@@ -55,5 +47,5 @@ export function useSocketIo () {
     }
   }, [])
 
-  return { messages, lastMsg, isConnected, setIsConnected }
+  return { messages, isConnected, setIsConnected }
 }

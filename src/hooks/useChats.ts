@@ -1,15 +1,26 @@
-import { useEffect, useState } from 'react'
-import { USER } from '../constants/user'
+import { useContext, useEffect, useState } from 'react'
+import { UserContext } from '../context/userContext'
 import { getAllChats } from '../services/getAllChats'
-import { IChat } from '../types/types'
+import { IChat, IMessage } from '../types/types'
 
-export function useChats () {
+export function useChats (messages: IMessage[]) {
   const [chats, setChats] = useState<IChat[]>([])
+  const { user } = useContext(UserContext)
+
   useEffect(() => {
-    getAllChats(USER.id)
+    if (!user) return
+    getAllChats(user.id)
       .then(chats => {
-        setChats(chats)
+        const newChats = chats.map((chat: IChat) => {
+          const newChat = {
+            ...chat,
+            messages: messages.filter(msg => msg.groupId === chat.id || msg.conversationId === chat.id)
+          }
+          return newChat
+        })
+        setChats(newChats)
       })
-  }, [])
+  }, [messages, user])
+
   return { chats, setChats }
 }
