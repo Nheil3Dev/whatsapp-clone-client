@@ -12,35 +12,40 @@ import './ChatListHeader.css'
 export function ChatListHeader () {
   const [activeDialog, setActiveDialog] = useState<boolean>(false)
   const { dispatch } = useContext(AsideContext)
-  const { socket } = useContext(SocketContext)
+  const { socket, isConnected } = useContext(SocketContext)
   const { setActiveChat } = useContext(ChatContext)
 
   return (
     <header className="chat-list-header">
-        <span onClick={() => dispatch(openProfile)} className="img">
-          <UserDefaultAvatar />
-        </span>
-        <div className='icon-container-header-aside'>
-          <button className='icon-button' title='Nuevo chat' onClick={() => dispatch(openNewChat)}>
-            <NewChatIcon />
-          </button>
-          <button className='icon-button' title='Menú' onClick={(e) => {
-            e.stopPropagation()
-            setActiveDialog(!activeDialog)
-          } }>
-            <MenuIcon />
-          </button>
-          <Dialog isOpen={activeDialog} onClose={setActiveDialog}>
-            <p onClick={() => dispatch(openNewChat)}>Nuevo mensaje</p>
-            <p onClick={() => dispatch(openNewGroup)}>Nuevo grupo</p>
-            <p onClick={() => {
-              socket.disconnect()
-              setActiveChat('')
-            }}>
-              Cerrar sesión
-            </p>
-          </Dialog>
-        </div>
+        {isConnected
+          ? <>
+              <span onClick={() => dispatch(openProfile)} className="img">
+                <UserDefaultAvatar />
+              </span>
+              <div className='icon-container-header-aside'>
+                <button className='icon-button' title='Nuevo chat' onClick={() => dispatch(openNewChat)}>
+                  <NewChatIcon />
+                </button>
+                <button className='icon-button' title='Menú' onClick={(e) => {
+                  e.stopPropagation()
+                  setActiveDialog(!activeDialog)
+                } }>
+                  <MenuIcon />
+                </button>
+                <Dialog isOpen={activeDialog} onClose={setActiveDialog}>
+                  <p onClick={() => dispatch(openNewChat)}>Nuevo mensaje</p>
+                  <p onClick={() => dispatch(openNewGroup)}>Nuevo grupo</p>
+                  <p onClick={() => {
+                    socket.disconnect()
+                    setActiveChat('')
+                  }}>
+                    Cerrar sesión
+                  </p>
+                </Dialog>
+              </div>
+            </>
+          : <h1 className='init-heading'>WhatsApp Web Clone <span>by Nheil3Dev</span></h1>
+        }
       </header>
   )
 }

@@ -2,6 +2,7 @@ import { useContext, useState } from 'react'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
 import { UserContext } from '../../../../context/userContext'
+import { useDelay } from '../../../../hooks/useDelay'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dialog } from '../../../lib/dialog/Dialog'
 import { MenuIcon } from '../../../lib/icons/MenuIcon'
@@ -13,9 +14,12 @@ export function ChatHeader () {
   const [visibleDetails, setVisibleDetails] = useState(false)
   const { chat, groupUsers, setActiveChat } = useContext(ChatContext)
   const { openInfo, openSearch, closeAside } = useContext(MainContext)
+  const { delay } = useDelay(3000, chat)
+
   const title = chat?.name
   const usernames = groupUsers?.map(user => user.alias)
   const isGroup = chat?.admin
+
   return (
     <header className="chat-header-container">
       <div
@@ -32,15 +36,17 @@ export function ChatHeader () {
             />
             : <span className='header-img'><UserDefaultAvatar /></span>
         }
-        <div>
-          <h3 className="title-group">{title}</h3>
-          {isGroup && <h4 className="members">
+        <div className='info-header-container'>
+          <h3 className="title-group text-ellipsis">{title}</h3>
+          <h4 className="members text-ellipsis">
             {
-              groupUsers
-                ? usernames?.filter(username => username !== user?.alias).join(', ').concat(', Tú')
-                : 'haz clic aquí para ver la información del grupo'
+              delay
+                ? isGroup
+                  ? usernames?.filter(username => username !== user?.alias).join(', ').concat(', Tú')
+                  : ''
+                : `haz clic aquí para ver la información del ${isGroup ? 'grupo' : 'contacto'}`
             }
-          </h4>}
+          </h4>
         </div>
       </div>
       <div className="icon-container-header">

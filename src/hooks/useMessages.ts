@@ -2,7 +2,7 @@ import { useDeferredValue, useEffect, useState } from 'react'
 import { getAllFilteredMsg } from '../services/getAllFilteredMsg'
 import { IMessage } from '../types/types'
 
-export function useMessages () {
+export function useMessages (chatId: string) {
   const [filteredMsgs, setFilteredMsgs] = useState<IMessage[]>([])
   const deferredFilteredMsgs = useDeferredValue(filteredMsgs)
   const [filter, setFilter] = useState<string>('')
@@ -14,7 +14,7 @@ export function useMessages () {
     }
     setIsLoading(true)
     const index = setTimeout(() => {
-      getAllFilteredMsg(filter)
+      getAllFilteredMsg(chatId, filter)
         .then(msgs => {
           setFilteredMsgs(msgs)
           setIsLoading(false)

@@ -22,6 +22,7 @@
     background-size: auto;
     opacity: 0.06;
     z-index: -1;
+    border-right: 1px solid var(--bg-color-window);
   }
 
   &::-webkit-scrollbar {

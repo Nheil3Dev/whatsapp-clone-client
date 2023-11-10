@@ -4,6 +4,7 @@
   align-items: center;
   gap: 1rem;
   cursor: pointer;
+  border-bottom: 1px solid transparent;
 
   &:hover {
     background-color: var(--bg-color-options);
@@ -77,6 +78,10 @@
 & .selected,
 .selected:hover {
   background-color: var(--bg-color-input-text);
+
+  & .info-chat-container {
+    border-top-color: var(--bg-color-input-text);
+  }
 
   & > div > .last-msg-container > p {
     color: #d1d7d1;

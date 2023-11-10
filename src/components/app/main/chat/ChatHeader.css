@@ -20,18 +20,30 @@
       margin-right: 1rem;
     }
 
-    & .title-group {
-      font-size: 1rem;
-      font-weight: 500;
-      margin: 0;
-      color: var(--heading-color);
-    }
+    & .info-header-container {
+      flex-grow: 1;
 
-    & .members {
-      margin: 0;
-      color: var(--text-color);
-      font-weight: 400;
-      font-size: 0.8rem;
+      & .title-group {
+        font-size: 1rem;
+        font-weight: 500;
+        margin: 0;
+        color: var(--heading-color);
+
+        &.text-ellipsis {
+          width: 90%;
+        }
+      }
+
+      & .members {
+        margin: 0;
+        color: var(--text-color);
+        font-weight: 400;
+        font-size: 0.8rem;
+
+        &.text-ellipsis {
+          width: 90%;
+        }
+      }
     }
   }
 

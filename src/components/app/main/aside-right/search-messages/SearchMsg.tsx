@@ -1,4 +1,5 @@
 import { Suspense, useContext, useEffect, useState } from 'react'
+import { ChatContext } from '../../../../../context/chatContext'
 import { MainContext } from '../../../../../context/mainContext'
 import { useMessages } from '../../../../../hooks/useMessages'
 import { Search } from '../../../../lib/search/Search'
@@ -6,7 +7,8 @@ import { FilteredMsgList } from './FilteredMsgList'
 import './SearchMsg.css'
 
 export function SearchMsg () {
-  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages()
+  const { chat } = useContext(ChatContext)
+  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages(chat.id)
   const { visible } = useContext(MainContext)
   const [className, setClassName] = useState('search-msg')
 

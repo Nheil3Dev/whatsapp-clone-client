@@ -1,49 +1,113 @@
 .welcome-container {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100%;
   background-color: var(--bg-color-chat);
   border-left: 1px solid rgba(233, 237, 239, 0.12);
 
-  & > h1 {
-    font-weight: 300;
-    font-size: 3rem;
+  &::before {
+    position: absolute;
+    content: "";
+    background-image: url("bg-chat-tile-dark.png");
+    background-size: auto;
+    opacity: 0.06;
+    width: 100%;
+    height: 100%;
   }
 
-  & > p {
-    margin: 0;
+  & .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color-chat);
+    z-index: 10;
+    padding: 1rem 2rem;
+    border-radius: 20px;
 
-    &:last-child() {
-      padding-top: 2rem;
+    & > h1 {
+      font-weight: 300;
+      font-size: 3rem;
+      margin: 0;
     }
 
-    & > a,
-    & > a:visited,
-    & > a:active {
-      color: var(--button-bg-color);
-      text-decoration: none;
+    & .login-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1rem 0;
 
-      &:hover {
-        color: var(--button-bg-color-hover);
+      & .input-container {
+        position: relative;
+
+        & > input {
+          outline: none;
+          border: none;
+          border-bottom: 2px solid white;
+          font-size: 1rem;
+          background-color: transparent;
+          padding-bottom: 0.5rem;
+
+          &:focus {
+            border-bottom-color: var(--button-bg-color-hover);
+          }
+
+          &:focus ~ label {
+            top: -1.2rem;
+            left: 0;
+            font-size: 0.75rem;
+            cursor: default;
+          }
+        }
+
+        & > label {
+          color: var(--text-color);
+          position: absolute;
+          top: 0;
+          left: 0.5rem;
+          transition: all linear 0.2s;
+          cursor: initial;
+        }
       }
     }
-  }
 
-  & button {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-top: 2rem;
+    & .login-form-buttons-container {
+      display: flex;
+      gap: 0.75rem;
+    }
 
-    &:hover {
-      background-color: var(--button-bg-color-hover);
+    & button {
+      position: relative;
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+
+      &:hover {
+        background-color: var(--button-bg-color-hover);
+      }
+
+      &:nth-child(2):hover {
+        &::before {
+          position: absolute;
+          top: 6rem;
+          right: -40%;
+          width: 270px;
+          content: "Inicia sesión con un usuario de prueba";
+          background-color: var(--button-bg-color);
+          border-radius: 10px;
+          padding: 1rem;
+        }
+      }
     }
   }
 }

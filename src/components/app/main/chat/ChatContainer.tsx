@@ -7,12 +7,14 @@ import { ListOfMessages } from './list-of-messages/ListOfMessages'
 
 export function ChatContainer () {
   const { activeChat } = useContext(ChatContext)
-  if (activeChat === '') return <VoidChat />
   return (
-    <div className='chat-container'>
-      <ChatHeader />
-      <ListOfMessages />
-      <ChatForm />
-    </div>
+    <>
+      <div className='chat-container'>
+        {activeChat === '' && <VoidChat />}
+        <ChatHeader />
+        <ListOfMessages />
+        <ChatForm />
+      </div>
+    </>
   )
 }
