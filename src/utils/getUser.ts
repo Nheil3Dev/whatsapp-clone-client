@@ -1,6 +1,8 @@
+import { LOCALSTORAGE } from '../constants/localStorage'
+
 export const getUser = async () => {
-  const userId = await window.localStorage.getItem('userId_chat')
-  const userName = await window.localStorage.getItem('user_chat')
+  const userId = await window.localStorage.getItem(LOCALSTORAGE.ID)
+  const userName = await window.localStorage.getItem(LOCALSTORAGE.ALIAS)
   if (userId && userName) {
     return {
       id: userId,

@@ -20,7 +20,7 @@ export function useChats (messages: IMessage[]) {
         })
         setChats(newChats)
       })
-  }, [messages, user])
+  }, [messages, user?.id])
 
   return { chats, setChats }
 }

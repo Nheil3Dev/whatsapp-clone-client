@@ -18,8 +18,8 @@ export function AsideRight () {
     <aside className={className}>
       <HeaderAsideRight />
       {visible.search && <SearchMsg />}
-      {visible.infoChat && chat.admin && <GroupInfo />}
-      {visible.infoChat && !chat.admin && <ChatContactInfo />}
+      {visible.infoChat && chat?.admin && <GroupInfo />}
+      {visible.infoChat && !chat?.admin && <ChatContactInfo />}
       {visible.infoUser && <ContactInfo />}
     </aside>
   )
