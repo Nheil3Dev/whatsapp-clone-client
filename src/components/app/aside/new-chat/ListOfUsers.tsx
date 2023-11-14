@@ -12,20 +12,21 @@ interface ListOfUsersProps {
 }
 
 export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
-  const { chats, setActiveChat } = useContext(ChatContext)
+  const { chats, setActiveChat, addNewChat } = useContext(ChatContext)
   const { dispatch } = useContext(AsideContext)
   const orderedFilteredUsers: { values: IUser[] } = Object.groupBy(filteredUsers, (user: IUser) => user.alias[0])
-  const handleClick = (user: IUser) => {
+
+  const handleClick = async (user: IUser) => {
     if (addUser) { // NewGroup
       addUser(user)
     } else { // NewChat
       // Si tenemos ya un chat con ese contacto
-      const newActiveChat = chats?.filter(chat => chat.name === user.alias)
-      if (newActiveChat) {
-        setActiveChat(newActiveChat[0]?.id)
-        // TODO: Crear una nueva conversación
+      const newActiveChat = chats?.filter(chat => chat.name === user.alias)[0]
+      if (newActiveChat?.id) {
+        setActiveChat(newActiveChat?.id)
+      // Creamos un chat nuevo
       } else {
-        setActiveChat('')
+        await addNewChat(user)
       }
       dispatch(closeNewChat)
     }
@@ -38,7 +39,7 @@ export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
             <span className='letter'>{letter}</span>
             {
               users.map(user => (
-                <UserItem key={user.id} user={user} onClick={() => handleClick(user)} />
+                <UserItem key={user.id} user={user} handleClick={handleClick} />
               ))
             }
             </div>

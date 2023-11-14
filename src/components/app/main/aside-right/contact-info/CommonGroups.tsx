@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../../../../../context/userContext'
+import { getCommonGroups } from '../../../../../services/getCommonGroups'
 import { IGroupMin } from '../../../../../types/types'
 import './CommonGroups.css'
 import { GroupItem } from './GroupItem'
@@ -9,11 +10,11 @@ interface ChatContactCommonGroupsProps {
 }
 
 export function CommonGroups ({ contactId }: ChatContactCommonGroupsProps) {
-  const [commonGroups, setCommonGroups] = useState<IGroupMin[]>([])
   const { user } = useContext(UserContext)
+  const [commonGroups, setCommonGroups] = useState<IGroupMin[]>([])
   useEffect(() => {
-    fetch(`http://localhost:1234/api/group/${user?.id}?contactId=${contactId}`)
-      .then(res => res.json())
+    if (!user || !contactId) return
+    getCommonGroups(user.id, contactId)
       .then((groups) => setCommonGroups(groups))
   }, [])
   return (

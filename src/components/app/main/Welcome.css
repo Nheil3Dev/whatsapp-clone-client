@@ -55,13 +55,13 @@
 
           &:focus {
             border-bottom-color: var(--button-bg-color-hover);
-          }
 
-          &:focus ~ label {
-            top: -1.2rem;
-            left: 0;
-            font-size: 0.75rem;
-            cursor: default;
+            & ~ label {
+              top: -1.2rem;
+              left: 0;
+              font-size: 0.75rem;
+              cursor: default;
+            }
           }
         }
 
@@ -70,8 +70,15 @@
           position: absolute;
           top: 0;
           left: 0.5rem;
-          transition: all linear 0.2s;
+          transition: all linear 0.15s;
           cursor: initial;
+
+          &.activated-input {
+            top: -1.2rem;
+            left: 0;
+            font-size: 0.75rem;
+            cursor: default;
+          }
         }
       }
     }
@@ -86,11 +93,10 @@
       background-color: var(--button-bg-color);
       color: var(--button-text-color);
       border: none;
-      padding: 1rem 2rem;
+      padding: 0.75rem 2rem;
       border-radius: 25px;
       cursor: pointer;
       font-size: 0.85rem;
-      font-weight: 500;
 
       &:hover {
         background-color: var(--button-bg-color-hover);

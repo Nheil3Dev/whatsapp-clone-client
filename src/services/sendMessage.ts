@@ -1,10 +1,10 @@
 import { socket } from '../hooks/useSocketIo'
+import { normalizeDate } from '../utils/normalizeDate'
 
 export const sendMessage = (content: string, chatId: string, type: 'conversation'|'group') => {
-  const date = new Date()
-  const formatDate = date.toISOString().slice(0, 19).replace('T', ' ')
+  const date = normalizeDate()
   if (type === 'conversation') {
-    return socket.emit('whatsapp clone msg', content, formatDate, null, chatId)
+    return socket.emit('whatsapp clone msg', content, date, null, chatId)
   }
-  return socket.emit('whatsapp clone msg', content, formatDate, chatId, null)
+  return socket.emit('whatsapp clone msg', content, date, chatId, null)
 }

@@ -18,15 +18,15 @@
 
   & > .img {
     margin-left: 1rem;
-    min-height: 45px;
-    min-width: 45px;
+    min-height: 49px;
+    min-width: 49px;
   }
 
   & .info-chat-container {
     flex-grow: 1;
     padding: 10px 0;
     border-top: 1px solid var(--bg-color-options);
-    max-width: calc(100% - 77px);
+    max-width: calc(100% - 81px);
 
     & .title-chat-container {
       display: flex;

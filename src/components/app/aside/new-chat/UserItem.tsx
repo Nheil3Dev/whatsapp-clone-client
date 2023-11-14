@@ -4,12 +4,12 @@ import './UserItem.css'
 
 interface UserItemProps {
   user: IUser
-  onClick: () => void
+  handleClick: (user: IUser) => Promise<void>
 }
 
-export function UserItem ({ user, onClick }: UserItemProps) {
+export function UserItem ({ user, handleClick }: UserItemProps) {
   return (
-    <div className="user-item-container" onClick={onClick}>
+    <div className="user-item-container" onClick={async () => await handleClick(user)}>
       <div className='user-item-avatar'>
         <UserDefaultAvatar />
       </div>
