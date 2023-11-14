@@ -56,7 +56,8 @@ export function ChatList () {
               {
                 filter.length === 0
                   ? chats.map(chat => (
-                    <ChatItem key={chat.id} chat={chat} />
+                    // Muestra las conversaciones con mensajes y los grupos con o sin mensajes
+                    (chat.messages.length > 0 || chat.admin) && <ChatItem key={chat.id} chat={chat} />
                   ))
                   : <ChatListFiltered filteredUsers={filteredUsers} />
               }

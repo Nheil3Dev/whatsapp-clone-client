@@ -18,7 +18,16 @@ export function useChats (messages: IMessage[]) {
           }
           return newChat
         })
-        setChats(newChats)
+        const sortedChats = newChats.slice().sort((chatA: IChat, chatB: IChat) => {
+          const lastMessageA = chatA.messages[chatA.messages.length - 1]
+          const lastMessageB = chatB.messages[chatB.messages.length - 1]
+
+          const dateA = new Date(lastMessageA.date)
+          const dateB = new Date(lastMessageB.date)
+
+          return Number(dateB) - Number(dateA) // Ordenar en orden descendente (más reciente primero)
+        })
+        setChats(sortedChats)
       })
   }, [messages, user?.id])
 
