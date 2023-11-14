@@ -2,6 +2,7 @@ import { JSX, createContext, useContext } from 'react'
 import { useChat } from '../hooks/useChat'
 import { useChats } from '../hooks/useChats'
 import { createConversation } from '../services/createConversation'
+import { createGroup } from '../services/createGroup'
 import { IChat, IUser } from '../types/types'
 import { normalizeDate } from '../utils/normalizeDate'
 import { SocketContext } from './socketContext'
@@ -17,6 +18,7 @@ interface IChatContext {
   setActiveChat: (prop: string) => void
   groupLength: number
   addNewChat: (prop: IUser) => void
+  addNewGroup: (groupName: string, usersId: string[]) => void
 }
 
 export const ChatContext = createContext<IChatContext>({} as IChatContext)
@@ -47,14 +49,38 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
     const response = await createConversation(newChat.id, newChat.date, [user?.id ?? '', contact.id ?? ''])
 
     if (response) {
-      setChats([...chats, newChat])
+      setChats([newChat, ...chats])
       setActiveChat(newChat.id)
       setChat(newChat)
     }
   }
 
+  const addNewGroup = async (groupName: string, usersId: string[]) => {
+    if (!user) return
+    const newGroup = {
+      id: String(crypto.randomUUID()),
+      name: groupName,
+      info: '',
+      date: normalizeDate(),
+      admin: user?.id,
+      adminAlias: user?.alias,
+      messages: []
+    }
+
+    // Añadimos el id del propio usuario
+    usersId.push(user.id)
+
+    const response = await createGroup(newGroup, usersId)
+
+    if (response) {
+      setChats([newGroup, ...chats])
+      setActiveChat(newGroup.id)
+      setChat(newGroup)
+    }
+  }
+
   return (
-    <ChatContext.Provider value={{ activeChat, setActiveChat, chat, setChat, chats, setChats, groupUsers, groupLength, addNewChat }}>
+    <ChatContext.Provider value={{ activeChat, setActiveChat, chat, setChat, chats, setChats, groupUsers, groupLength, addNewChat, addNewGroup }}>
       {children}
     </ChatContext.Provider>
   )

@@ -34,7 +34,7 @@ export interface IChat {
   contactId?: string
   name: string
   info: string
-  date: Date
+  date: Date | string
   email?: string
   admin?: string
   adminAlias?: string
