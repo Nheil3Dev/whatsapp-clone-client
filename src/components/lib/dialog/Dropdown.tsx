@@ -1,9 +1,10 @@
-import { forwardRef, JSX } from 'react'
+import { ForwardedRef, forwardRef, JSX } from 'react'
+import './Dropdown.css'
 
-export const Dropdown = forwardRef(function Dropdown (props: { children: JSX.Element[]}, ref) {
+export const Dropdown = forwardRef(function Dropdown (props: { children: JSX.Element[]}, ref: ForwardedRef<HTMLDivElement>) {
   return (
     <div ref={ref} className='drop-down'>
-            {props.children}
-          </div>
+      {props.children}
+    </div>
   )
 })

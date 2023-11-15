@@ -11,6 +11,7 @@ export function useMessages (chatId: string) {
   useEffect(() => {
     if (filter.length <= 1) {
       setIsLoading(false)
+      return
     }
     setIsLoading(true)
     const index = setTimeout(() => {

@@ -65,6 +65,11 @@
         right: -10px;
         opacity: 0;
       }
+
+      & .drop-down {
+        top: 1.5rem;
+        right: 0.5rem;
+      }
     }
   }
 

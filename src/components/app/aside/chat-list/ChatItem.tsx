@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
 import { UserContext } from '../../../../context/userContext'
@@ -6,6 +6,7 @@ import { useDropdown } from '../../../../hooks/useDropDown'
 import { IChat } from '../../../../types/types'
 import { getDate } from '../../../../utils/getDate'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
+import { Dropdown } from '../../../lib/dialog/Dropdown'
 import { ArrowDownIcon } from '../../../lib/icons/ArrowDownIcon'
 import './ChatItem.css'
 
@@ -17,8 +18,7 @@ export function ChatItem ({ chat }: ChatItemProps) {
   const { user } = useContext(UserContext)
   const { activeChat, setActiveChat } = useContext(ChatContext)
   const { closeContain } = useContext(MainContext)
-  const { dropdownOpened, dropdownRef, closeDropdown, openDropdown } = useDropdown()
-  const [clicked, setClicked] = useState(false)
+  const { dropdownOpened, dropdownRef, toggleDropdown, buttonRef } = useDropdown()
   const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
   let username
 
@@ -57,25 +57,18 @@ export function ChatItem ({ chat }: ChatItemProps) {
             {chat.messages?.length > 0 ? `${username}: ${chat.messages[chat.messages.length - 1]?.content}` : 'Sin mensajes'}
           </p>
           <button
+            ref={buttonRef}
             className='icon-button'
-            onClick={() => {
-              if (!clicked) {
-                setClicked(true)
-                openDropdown()
-              } else if (!dropdownOpened && clicked) {
-                setClicked(false)
-                closeDropdown()
-              }
-            }}
+            onClick={toggleDropdown}
           >
             <ArrowDownIcon />
           </button>
           {dropdownOpened &&
-          <div ref={dropdownRef} className='drop-down'>
+          <Dropdown ref={dropdownRef}>
             <p>Eliminar chat</p>
             <p>Marcar como leído</p>
             <p>Fijar chat</p>
-          </div>}
+          </Dropdown>}
         </div>
       </div>
     </li>

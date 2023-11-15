@@ -55,5 +55,11 @@
     gap: 1rem;
     margin-left: auto;
     color: var(--text-color);
+
+    & .clicked {
+      background-color: #374248;
+      border-radius: 50%;
+      padding: 6px;
+    }
   }
 }

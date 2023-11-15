@@ -3,31 +3,31 @@ import { useEffect, useRef, useState } from 'react'
 export const useDropdown = () => {
   const [dropdownOpened, setDropdownOpened] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  const openDropdown = () => {
+    if (!dropdownOpened) setDropdownOpened(true)
+  }
+
+  const closeDropdown = () => {
+    if (dropdownOpened) setDropdownOpened(false)
+  }
+
+  const toggleDropdown = () => setDropdownOpened(!dropdownOpened)
 
   useEffect(() => {
-    if (!dropdownOpened) return
-
     const handleClickOutside = (ev: MouseEvent) => {
-      // TODO: Dar una vuelta al condicional
-      if (!dropdownRef.current?.contains(ev.target as Node)) {
+      if (dropdownOpened && dropdownRef.current && !dropdownRef.current?.contains(ev.target as Node) && !buttonRef.current?.contains(ev.target as Node)) {
         closeDropdown()
-        console.log('window event')
       }
     }
-
-    document.addEventListener('click', handleClickOutside, { capture: true })
+    document.addEventListener('mousedown', handleClickOutside, { capture: true })
 
     return () =>
-      document.removeEventListener('click', handleClickOutside, {
+      document.removeEventListener('mousedown', handleClickOutside, {
         capture: true
       })
   }, [dropdownOpened])
 
-  const openDropdown = () => setDropdownOpened(true)
-
-  const closeDropdown = () => setDropdownOpened(false)
-
-  const toggleDropdown = () => setDropdownOpened(!dropdownOpened)
-
-  return { dropdownOpened, openDropdown, closeDropdown, dropdownRef, toggleDropdown }
+  return { dropdownOpened, openDropdown, closeDropdown, dropdownRef, toggleDropdown, buttonRef }
 }

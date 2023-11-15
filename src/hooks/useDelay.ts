@@ -9,6 +9,6 @@ export function useDelay (time: number, chat: IChat) {
     const id = setTimeout(() => setDelay(true), time)
 
     return () => clearTimeout(id)
-  }, [chat.id])
+  }, [chat?.id])
   return { delay }
 }

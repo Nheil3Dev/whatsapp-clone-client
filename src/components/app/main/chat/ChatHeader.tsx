@@ -1,19 +1,20 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
 import { UserContext } from '../../../../context/userContext'
 import { useDelay } from '../../../../hooks/useDelay'
+import { useDropdown } from '../../../../hooks/useDropDown'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
-import { Dialog } from '../../../lib/dialog/Dialog'
+import { Dropdown } from '../../../lib/dialog/Dropdown'
 import { MenuIcon } from '../../../lib/icons/MenuIcon'
 import { SearchIcon } from '../../../lib/icons/SearchIcon'
 import './ChatHeader.css'
 
 export function ChatHeader () {
   const { user } = useContext(UserContext)
-  const [visibleDetails, setVisibleDetails] = useState(false)
   const { chat, groupUsers, setActiveChat } = useContext(ChatContext)
   const { openInfo, openSearch, closeAside } = useContext(MainContext)
+  const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
   const { delay } = useDelay(3000, chat)
 
   const title = chat?.name
@@ -54,25 +55,30 @@ export function ChatHeader () {
           <SearchIcon />
         </button>
         <button
-          onClick={(e) => {
-            e.stopPropagation()
-            setVisibleDetails(!visibleDetails)
-          }}
-          className="icon-button"
+          ref={buttonRef}
+          onClick={toggleDropdown}
+          className={dropdownOpened ? 'icon-button clicked' : 'icon-button'}
           title="Menú"
         >
           <MenuIcon />
         </button>
-        <Dialog isOpen={visibleDetails} onClose={setVisibleDetails}>
-          <p onClick={openInfo}>Info. del grupo</p>
+        {dropdownOpened &&
+        <Dropdown ref={dropdownRef}>
+          <p onClick={() => {
+            openInfo()
+            closeDropdown()
+          }}>
+            Info. del grupo
+          </p>
           <p onClick={() => {
             setActiveChat('')
+            closeDropdown()
             closeAside()
           }}>
             Cerrar grupo
           </p>
           <p>Abandonar grupo</p>
-        </Dialog>
+        </Dropdown>}
       </div>
     </header>
   )
