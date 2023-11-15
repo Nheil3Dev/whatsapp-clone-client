@@ -65,6 +65,73 @@
       border-radius: 3px 0px 0px 0px;
     }
   }
+
+  &:hover .dropdown-container .icon-button {
+    right: 0;
+    opacity: 1;
+    padding: 0.2rem;
+  }
+
+  &:hover .emoji-button-container {
+    opacity: 1;
+  }
+
+  &.myself .emoji-button-container {
+    left: -1.65rem;
+    right: auto;
+  }
+
+  &.myself .dropdown-container .drop-down {
+    right: 0.25rem;
+    left: auto;
+  }
+
+  & .dropdown-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: inherit;
+
+    & .icon-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.2rem 0;
+      background-color: inherit;
+      border-radius: 50%;
+      opacity: 0;
+      transition: padding linear 0.1s;
+    }
+    & .drop-down {
+      top: 1.5rem;
+      left: -1.75rem;
+    }
+  }
+
+  & .emoji-button-container {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: -1.65rem;
+    opacity: 0;
+
+    & .emoji-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.2rem;
+      border-radius: 50%;
+      border: none;
+      background-color: var(--bg-color-window);
+      color: gray;
+      cursor: pointer;
+
+      & > svg {
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    }
+  }
 }
 
 .myself {

@@ -1,5 +1,5 @@
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { ChatContext } from '../../../../../context/chatContext'
 import { sendMessage } from '../../../../../services/sendMessage'
 import { SendIcon } from '../../../../lib/icons/SendIcon'
@@ -7,12 +7,19 @@ import './ChatForm.css'
 import { ChatFormIcons } from './ChatFormIcons'
 
 export function ChatForm () {
-  const { chat } = useContext(ChatContext)
+  const { chat, activeChat } = useContext(ChatContext)
   const [message, setMessage] = useState<string>('')
   const [active, setActive] = useState({
     emojis: false,
     x: false
   })
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (activeChat === '') return
+    inputRef.current && inputRef.current.focus()
+  }, [activeChat])
+
   const handleEmoji = (emojiObject: EmojiClickData) => {
     setMessage(prevText => prevText + emojiObject.emoji)
   }
@@ -30,6 +37,7 @@ export function ChatForm () {
       <form>
         <ChatFormIcons active={active} setActive={setActive} />
         <input
+          ref={inputRef}
           className="input-text"
           type="text"
           placeholder="Escribe un mensaje"

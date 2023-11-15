@@ -3,7 +3,7 @@
   flex-direction: column;
   position: absolute;
   left: 32px;
-  bottom: 40px;
+  bottom: 42px;
   z-index: 6;
   width: 200px;
   background-color: var(--bg-color-chat);
@@ -14,6 +14,7 @@
   box-shadow: 0 2px 5px 0 rgba(11, 20, 26, 0.26),
     0 2px 10px 0 rgba(11, 20, 26, 0.16);
   animation: openOptions linear 0.2s forwards;
+  overflow: hidden;
 
   & .item {
     display: flex;
@@ -23,6 +24,7 @@
     padding: 0.25rem;
     border-radius: 10px;
     cursor: pointer;
+    opacity: 0;
 
     &:hover {
       background-color: var(--bg-color-notifications);
@@ -30,22 +32,27 @@
 
     &:nth-child(1) {
       color: #7f66ff;
+      animation: openContain linear 0.1s 0.28s forwards;
     }
 
     &:nth-child(2) {
       color: #007bfc;
+      animation: openContain linear 0.1s 0.26s forwards;
     }
 
     &:nth-child(3) {
       color: #ff2e74;
+      animation: openContain linear 0.1s 0.24s forwards;
     }
 
     &:nth-child(4) {
       color: #009de2;
+      animation: openContain linear 0.1s 0.21s forwards;
     }
 
     &:nth-child(5) {
       color: #ffbc38;
+      animation: openContain linear 0.1s 0.18s forwards;
 
       & span svg {
         transform: rotateX(180deg) rotateZ(90deg);
@@ -54,6 +61,7 @@
 
     &:nth-child(6) {
       color: #02a698;
+      animation: openContain linear 0.1s 0.15s forwards;
     }
 
     & span {
@@ -74,16 +82,19 @@
 @keyframes openOptions {
   0% {
     width: 0;
-    height: 0px;
-    opacity: 0;
-    overflow: hidden;
-  }
-  50% {
-    opacity: 0;
-    width: 200px;
+    height: 0;
   }
   100% {
-    height: auto;
+    width: 200px;
+    height: 252px;
+  }
+}
+
+@keyframes openContain {
+  0% {
+    opacity: 0;
+  }
+  100% {
     opacity: 1;
   }
 }

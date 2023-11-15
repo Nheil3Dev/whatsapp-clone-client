@@ -90,13 +90,14 @@ footer {
       height: 40px;
       background-color: var(--bg-color-input-text);
       border: none;
-      padding: 10px 16px;
+      padding: 0 16px;
       border-radius: 10px;
       font-size: 1rem;
       outline: none;
 
       &::placeholder {
-        font-size: 1rem;
+        padding-left: 0.5rem;
+        font-size: 0.9rem;
         color: var(--text-color);
       }
     }

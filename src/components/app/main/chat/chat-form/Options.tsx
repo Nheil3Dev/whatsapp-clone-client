@@ -1,3 +1,4 @@
+import { ForwardedRef, forwardRef } from 'react'
 import { CameraIcon } from '../../../../lib/icons/CameraIcon'
 import { ContactIcon } from '../../../../lib/icons/ContactIcon'
 import { DocumentIcon } from '../../../../lib/icons/DocumentIcon'
@@ -6,9 +7,9 @@ import { QuizIcon } from '../../../../lib/icons/QuizIcon'
 import { StickerIcon } from '../../../../lib/icons/StickerIcon'
 import './Options.css'
 
-export function Options () {
+export const Options = forwardRef(function Options (props, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <div className='options-container'>
+    <div ref={ref} className='options-container'>
       <div className='item'><span><DocumentIcon /></span><p>Documento</p></div>
       <div className='item'><span><ImageIcon /></span><p>Fotos y videos</p></div>
       <div className='item'><span><CameraIcon /></span><p>Cámara</p></div>
@@ -17,4 +18,4 @@ export function Options () {
       <div className='item'><span><StickerIcon /></span><p>Nuevo sticker</p></div>
     </div>
   )
-}
+})

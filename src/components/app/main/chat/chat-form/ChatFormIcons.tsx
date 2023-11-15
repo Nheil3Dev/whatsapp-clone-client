@@ -1,3 +1,4 @@
+import { useDropdown } from '../../../../../hooks/useDropDown'
 import { EmojiIcon } from '../../../../lib/icons/EmojiIcon'
 import { PlusIcon } from '../../../../lib/icons/PlusIcon'
 import { XIcon } from '../../../../lib/icons/XIcon'
@@ -13,6 +14,7 @@ interface ChatFormIconsProps {
 }
 
 export function ChatFormIcons ({ active, setActive }: ChatFormIconsProps) {
+  const { dropdownOpened, dropdownRef, toggleDropdown, buttonRef } = useDropdown()
   return (
     <div className="icon-container">
       <button
@@ -34,13 +36,17 @@ export function ChatFormIcons ({ active, setActive }: ChatFormIconsProps) {
         <EmojiIcon />
       </button>
       <button
-        onClick={() => setActive({ ...active, x: !active.x })}
-        className={active.x ? 'icon-button active-x' : 'icon-button'}
+        ref={buttonRef}
+        onClick={() => {
+          setActive({ ...active, x: !active.x })
+          toggleDropdown()
+        }}
+        className={dropdownOpened ? 'icon-button active-x' : 'icon-button'}
         type="button"
       >
         <PlusIcon />
       </button>
-      {active.x && <Options />}
+      {dropdownOpened && <Options ref={dropdownRef} />}
     </div>
   )
 }
