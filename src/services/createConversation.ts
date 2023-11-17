@@ -4,7 +4,7 @@ export const createConversation = (conversationId: string, date: string, usersId
     date,
     usersId
   }
-  return fetch('http://localhost:1234/api/conversation', {
+  return fetch('http://localhost:1234/api/chats', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

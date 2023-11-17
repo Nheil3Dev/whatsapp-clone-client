@@ -1,4 +1,4 @@
-export const getProfileData = (user: string) => {
-  return fetch(`http://localhost:1234/api/user/${user}`)
+export const getProfileData = (userId: string) => {
+  return fetch(`http://localhost:1234/api/users/${userId}`)
     .then(res => res.json())
 }

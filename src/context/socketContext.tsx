@@ -9,14 +9,15 @@ interface ISocketContext {
   isConnected: boolean
   setIsConnected: (prop: boolean) => void
   socket: Socket
+  lastMsg: IMessage
 }
 
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext)
 
 export function SocketProvider ({ children }: { children: JSX.Element}) {
-  const { messages, setMessages, isConnected, setIsConnected } = useSocketIo()
+  const { messages, setMessages, isConnected, setIsConnected, lastMsg } = useSocketIo()
   return (
-    <SocketContext.Provider value={{ messages, setMessages, isConnected, setIsConnected, socket }}>
+    <SocketContext.Provider value={{ messages, setMessages, isConnected, setIsConnected, socket, lastMsg }}>
     {children}
   </SocketContext.Provider>
   )

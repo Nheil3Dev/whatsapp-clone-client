@@ -38,14 +38,18 @@ export function NewGroup () {
               ))
             }
           </div>
-          <search className='search-group'>
-            <input
-              ref={inputGroupRef}
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className='search-group-input'
-              type="text"
-              placeholder={data.members.length > 0 ? '' : 'Escribe el nombre del contacto'} />
+          <search>
+            <form className='search-group' onSubmit={(e) => e.preventDefault()}>
+              <input
+                id='searh-new-group'
+                ref={inputGroupRef}
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+                className='search-group-input'
+                type="text"
+                placeholder={data.members.length > 0 ? '' : 'Escribe el nombre del contacto'}
+              />
+            </form>
           </search>
           <ListOfUsers filteredUsers={data.userList} addUser={addUser} />
           {data.members.length > 0 &&

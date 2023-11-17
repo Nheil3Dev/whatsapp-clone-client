@@ -47,5 +47,5 @@ export function useSocketIo () {
     }
   }, [])
 
-  return { messages, setMessages, isConnected, setIsConnected }
+  return { messages, setMessages, lastMsg, isConnected, setIsConnected }
 }

@@ -1,94 +1,98 @@
-.common-search {
-  position: relative;
-  display: flex;
-  gap: 0.5rem;
+search {
   width: 100%;
-  padding: 0.4rem 10px;
-  background-color: var(--button-text-color);
 
-  & .arrow-search-container {
-    position: absolute;
+  & .common-search {
+    position: relative;
     display: flex;
-    align-items: center;
-    top: 0.25rem;
-    padding-left: 0.5rem;
-    cursor: pointer;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.4rem 10px;
+    background-color: var(--button-text-color);
 
-    & .arrow-search {
+    & .arrow-search-container {
+      position: absolute;
       display: flex;
-      color: var(--button-bg-color);
-      z-index: -1;
-      transition: transform linear 0.1s, z-index linear 0.1s 0.05s;
-      padding: 0.5rem;
+      align-items: center;
+      top: 0.25rem;
+      padding-left: 0.5rem;
+      cursor: pointer;
+
+      & .arrow-search {
+        display: flex;
+        color: var(--button-bg-color);
+        z-index: -1;
+        transition: transform linear 0.1s, z-index linear 0.1s 0.05s;
+        padding: 0.5rem;
+
+        & svg {
+          display: flex;
+          width: 15px;
+        }
+
+        &.actived-search {
+          z-index: 1;
+          transform: rotateZ(0.25turn);
+          transition: transform linear 0.1s;
+        }
+      }
+    }
+
+    & > label {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      top: 0.75rem;
+      padding: 0 0px 0 1rem;
+      color: var(--text-color);
+      cursor: pointer;
 
       & svg {
-        display: flex;
         width: 15px;
       }
 
-      &.actived-search {
-        z-index: 1;
-        transform: rotateZ(0.25turn);
-        transition: transform linear 0.1s;
+      & .search-icon {
+        display: flex;
+        z-index: 0;
+
+        transition: z-index linear 0.1s, transform linear 0.05s 0.1s;
+
+        &.actived-search {
+          z-index: -1;
+          transform: rotateZ(0.25turn);
+          transition: z-index linear 0.1s;
+        }
       }
     }
-  }
 
-  & > label {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    top: 0.75rem;
-    padding: 0 0px 0 1rem;
-    color: var(--text-color);
-    cursor: pointer;
+    & input {
+      width: 100%;
+      padding: 0.6rem 4.5rem;
+      border-radius: 10px;
+      border: none;
+      background-color: var(--bg-color-options);
+      outline: none;
 
-    & svg {
-      width: 15px;
+      &::placeholder {
+        color: var(--text-color);
+        font-size: 0.85rem;
+      }
     }
 
-    & .search-icon {
+    & .clean-button {
+      position: absolute;
       display: flex;
-      z-index: 0;
-
-      transition: z-index linear 0.1s, transform linear 0.05s 0.1s;
-
-      &.actived-search {
-        z-index: -1;
-        transform: rotateZ(0.25turn);
-        transition: z-index linear 0.1s;
-      }
-    }
-  }
-
-  & input {
-    width: 100%;
-    padding: 0.6rem 4.5rem;
-    border-radius: 10px;
-    border: none;
-    background-color: var(--bg-color-options);
-    outline: none;
-
-    &::placeholder {
+      align-items: center;
+      justify-content: center;
+      top: 0.75rem;
+      right: 1rem;
+      background-color: transparent;
+      border: none;
       color: var(--text-color);
-      font-size: 0.85rem;
-    }
-  }
+      cursor: pointer;
 
-  & .clean-button {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0.75rem;
-    right: 1rem;
-    background-color: transparent;
-    border: none;
-    color: var(--text-color);
-    cursor: pointer;
-
-    & > svg {
-      width: 15px;
+      & > svg {
+        width: 15px;
+      }
     }
   }
 }
