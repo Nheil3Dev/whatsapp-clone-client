@@ -2,7 +2,7 @@ import { JSX, createContext, useState } from 'react'
 import { IUser } from '../types/types'
 
 interface IMainContext {
-  visible: { aside: boolean, infoChat: boolean, infoUser: boolean, search: boolean, user: Partial<IUser> }
+  visible: { aside: boolean, infoChat: boolean, infoUser: boolean, search: boolean, user: IUser }
   openInfo: () => void
   openSearch: () => void
   openInfoUser: (user: IUser) => void
@@ -19,13 +19,13 @@ export function MainProvider ({ children }: { children: JSX.Element[]}) {
     infoChat: false,
     infoUser: false,
     search: false,
-    user: {}
+    user: {} as IUser
   })
 
-  const openInfo = () => setVisible({ aside: true, infoChat: true, infoUser: false, search: false, user: {} })
-  const openSearch = () => setVisible({ aside: true, infoChat: false, infoUser: false, search: true, user: {} })
+  const openInfo = () => setVisible({ aside: true, infoChat: true, infoUser: false, search: false, user: {} as IUser })
+  const openSearch = () => setVisible({ aside: true, infoChat: false, infoUser: false, search: true, user: {} as IUser })
   const openInfoUser = (user: IUser) => setVisible({ ...visible, infoUser: true, user })
-  const closeInfoUser = () => setVisible({ ...visible, infoUser: false, user: {} })
+  const closeInfoUser = () => setVisible({ ...visible, infoUser: false, user: {} as IUser })
   const closeAside = () => setVisible({ ...visible, aside: false })
   const closeContain = () => setVisible({ ...visible, aside: false, infoChat: false, infoUser: false, search: false })
   return (

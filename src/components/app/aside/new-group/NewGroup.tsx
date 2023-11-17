@@ -13,7 +13,7 @@ import { ConfirmGroup } from './confirm/ConfirmGroup'
 
 export function NewGroup () {
   const { asideState, dispatch } = useContext(AsideContext)
-  const { inputGroupRef, data, addUser, deleteUser, filter, setFilter } = useNewGroup()
+  const { inputGroupRef, data, deleteUser, filter, setFilter } = useNewGroup()
   const { className, handleClick } = useCssEffects(asideState?.newGroup, 'visible-new-group')
 
   return (
@@ -51,7 +51,7 @@ export function NewGroup () {
               />
             </form>
           </search>
-          <ListOfUsers filteredUsers={data.userList} addUser={addUser} />
+          <ListOfUsers filteredUsers={data.userList} />
           {data.members.length > 0 &&
             <div className='arrow-icon-container'>
               <button onClick={() => dispatch(openConfirm)}>
