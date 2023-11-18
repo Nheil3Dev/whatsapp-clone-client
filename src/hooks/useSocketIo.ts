@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
+import { URL_SERVER } from '../constants/url'
 import { IMessage } from '../types/types'
 import { getUser } from '../utils/getUser'
 
 // TODO: este socket no se le modifica el user cuando cierro sesión
-export const socket = io('http://localhost:1234', {
+export const socket = io(URL_SERVER, {
   auth: {
     user: await getUser(),
     serverOffset: 0

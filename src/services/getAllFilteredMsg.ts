@@ -1,4 +1,6 @@
+import { URL_BASE_API } from '../constants/url'
+
 export const getAllFilteredMsg = (chatId: string, filter: string) => {
-  return fetch(`http://localhost:1234/api/messages?chatId=${chatId}&search=${filter}`)
+  return fetch(`${URL_BASE_API}/messages?chatId=${chatId}&search=${filter}`)
     .then(res => res.json())
 }

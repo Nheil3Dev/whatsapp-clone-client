@@ -1,5 +1,7 @@
+import { URL_BASE_API } from '../constants/url'
+
 export const changeGroupInfo = (id: string, formData: { name: string, info: string }) => {
-  return fetch(`http://localhost:1234/api/group/${id}`, {
+  return fetch(`${URL_BASE_API}/group/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'

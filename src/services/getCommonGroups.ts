@@ -1,4 +1,6 @@
+import { URL_BASE_API } from '../constants/url'
+
 export const getCommonGroups = (userId: string, contactId: string) => {
-  return fetch(`http://localhost:1234/api/group/${userId}?contactId=${contactId}`)
+  return fetch(`${URL_BASE_API}/group/${userId}?contactId=${contactId}`)
     .then(res => res.json())
 }

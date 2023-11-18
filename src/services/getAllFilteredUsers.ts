@@ -1,4 +1,6 @@
+import { URL_BASE_API } from '../constants/url'
+
 export const getAllFilteredUsers = (filter: string) => {
-  return fetch(`http://localhost:1234/api/users/filter/${filter === '' ? 'all' : filter}`)
+  return fetch(`${URL_BASE_API}/users/filter/${filter === '' ? 'all' : filter}`)
     .then(res => res.json())
 }

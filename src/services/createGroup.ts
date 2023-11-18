@@ -1,7 +1,8 @@
+import { URL_BASE_API } from '../constants/url'
 import { IChat } from '../types/types'
 
 export const createGroup = (newGroup: IChat, usersId: string[]) => {
-  return fetch('http://localhost:1234/api/group', {
+  return fetch(`${URL_BASE_API}/group`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
