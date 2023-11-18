@@ -4,6 +4,7 @@ import { MainContext } from '../../../../context/mainContext'
 import { UserContext } from '../../../../context/userContext'
 import { useDelay } from '../../../../hooks/useDelay'
 import { useDropdown } from '../../../../hooks/useDropDown'
+import { getUsernames } from '../../../../utils/getUsernames'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dropdown } from '../../../lib/dialog/Dropdown'
 import { MenuIcon } from '../../../lib/icons/MenuIcon'
@@ -17,8 +18,10 @@ export function ChatHeader () {
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
   const { delay } = useDelay(3000, chat)
 
+  if (!user) return
+
   const title = chat?.name
-  const usernames = groupUsers?.map(user => user.alias)
+  const usernames = getUsernames(groupUsers, user?.id)
   const isGroup = chat?.admin
 
   return (
@@ -43,7 +46,7 @@ export function ChatHeader () {
             {
               delay
                 ? isGroup
-                  ? usernames?.filter(username => username !== user?.alias).join(', ').concat(', Tú')
+                  ? usernames
                   : ''
                 : `haz clic aquí para ver la información del ${isGroup ? 'grupo' : 'contacto'}`
             }

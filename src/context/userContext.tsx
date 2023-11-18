@@ -1,41 +1,47 @@
 import { createContext, JSX, useContext, useEffect, useState } from 'react'
 import { LOCALSTORAGE } from '../constants/localStorage'
-import { IAuth } from '../types/types'
+import { IUserMin } from '../types/types'
 import { getUser } from '../utils/getUser'
 import { SocketContext } from './socketContext'
 
 interface IUserContext {
-  user: IAuth | undefined
-  updateUser: (user: string) => void
-
+  user: IUserMin | undefined
+  updateUsername: (user: string) => void
+  saveUser: (id: string, alias: string) => void
+  clearUser: () => void
 }
 
 export const UserContext = createContext<IUserContext>({} as IUserContext)
 
 export function UserProvider ({ children }: { children: JSX.Element}) {
-  const { messages, setMessages } = useContext(SocketContext)
-  const [user, setUser] = useState<IAuth>()
+  const { isConnected } = useContext(SocketContext)
+  const [user, setUser] = useState<IUserMin>()
 
-  const updateUser = (username: string) => {
-    setUser({ id: user?.id ?? '', alias: username })
-    localStorage.setItem(LOCALSTORAGE.ALIAS, username)
-    const updatedMessages = messages.map(msg => {
-      if (msg.userId === user?.id) {
-        return {
-          ...msg,
-          alias: username
-        }
-      }
-      return msg
-    })
-    setMessages(updatedMessages)
+  const updateUsername = (newAlias: string) => {
+    if (!user) return
+    setUser({ ...user, alias: newAlias })
+    localStorage.setItem(LOCALSTORAGE.ALIAS, newAlias)
+  }
+
+  const saveUser = (id: string, alias: string) => {
+    const newUser = { id, alias }
+    setUser(newUser)
+    window.localStorage.setItem(LOCALSTORAGE.ID, id)
+    window.localStorage.setItem(LOCALSTORAGE.ALIAS, alias)
+  }
+
+  const clearUser = () => {
+    setUser({ id: '', alias: '' })
+    window.localStorage.removeItem(LOCALSTORAGE.ID)
+    window.localStorage.removeItem(LOCALSTORAGE.ALIAS)
   }
 
   useEffect(() => {
+    if (!isConnected) return clearUser()
     getUser().then(user => setUser(user))
-  }, [])
+  }, [isConnected])
   return (
-    <UserContext.Provider value={{ user, updateUser }}>
+    <UserContext.Provider value={{ user, updateUsername, saveUser, clearUser }}>
       {children}
     </UserContext.Provider>
   )

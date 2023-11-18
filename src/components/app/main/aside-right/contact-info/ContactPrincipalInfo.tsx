@@ -8,13 +8,13 @@ import './ContactPrincipalInfo.css'
 export function ContactPrincipalInfo () {
   const { visible, closeAside } = useContext(MainContext)
   const { setActiveChat, chats, addNewChat } = useContext(ChatContext)
-  // TODO: Sacar esta función del ChatContext ya que se utiliza en otros sitios a excepción del closeAside() que en otro sitio tendrá que cerrar otras cosas
+
   const handleClick = async () => {
     // Si tenemos ya un chat con ese contacto
     const newActiveChat = chats?.filter(chat => chat.name === visible?.user.alias)[0]
+
     if (newActiveChat) {
       setActiveChat(newActiveChat.id)
-      // TODO: crear la converasación si no tenemos ya una
     } else {
       await addNewChat(visible.user)
     }

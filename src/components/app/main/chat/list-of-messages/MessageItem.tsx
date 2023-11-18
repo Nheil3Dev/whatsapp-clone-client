@@ -19,7 +19,7 @@ interface MessageProps {
 export function MessageItem ({ msg, prevMsg }: MessageProps) {
   const { user } = useContext(UserContext)
   const { chat } = useContext(ChatContext)
-  const isMyMessage = msg.alias === user?.alias
+  const isMyMessage = msg.userId === user?.id
   const isFirstMessage = !prevMsg?.alias || msg.alias !== prevMsg?.alias
   const { dropdownOpened, dropdownRef, buttonRef, toggleDropdown } = useDropdown()
 

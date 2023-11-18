@@ -41,9 +41,14 @@ export interface IChat {
   messages: IMessage[]
 }
 
-export interface IAuth {
+export interface IUserMin {
   id: string
   alias: string
+}
+
+export interface IAuth {
+  email: string
+  password: string
 }
 
 export interface IUser {

@@ -4,9 +4,10 @@ import { UserItem } from './UserItem'
 
 interface ListOfUsersProps {
   filteredUsers: IUser[]
+  addUser?: (user: IUser) => void
 }
 
-export function ListOfUsers ({ filteredUsers }: ListOfUsersProps) {
+export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
   const orderedFilteredUsers: { values: IUser[] } = Object.groupBy(filteredUsers, (user: IUser) => user.alias[0])
 
   return (
@@ -17,7 +18,7 @@ export function ListOfUsers ({ filteredUsers }: ListOfUsersProps) {
             <span className='letter'>{letter}</span>
             {
               users.map(user => (
-                <UserItem key={user.id} user={user} />
+                <UserItem key={user.id} user={user} addUser={addUser} />
               ))
             }
             </div>

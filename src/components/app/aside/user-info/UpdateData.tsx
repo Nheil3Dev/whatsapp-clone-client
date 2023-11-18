@@ -14,7 +14,7 @@ interface UpdateDataProps {
 
 export function UpdateData ({ type }: UpdateDataProps) {
   const { userInfoState, dispatchUserInfo } = useContext(UserInfoContext)
-  const { user, updateUser } = useContext(UserContext)
+  const { user, updateUsername } = useContext(UserContext)
   const maxLength = type === 'alias' ? 20 : 60
 
   const handleSubmit = async (e: FormEvent) => {
@@ -30,7 +30,7 @@ export function UpdateData ({ type }: UpdateDataProps) {
         if (res.rowsAffected === 1) {
           dispatchUserInfo(uploadData)
           type === 'alias' ? dispatchUserInfo(toggleInputAlias) : dispatchUserInfo(toggleInputInfo)
-          updateUser(userInfoState.formData.alias)
+          updateUsername(userInfoState.formData.alias)
         }
       })
   }

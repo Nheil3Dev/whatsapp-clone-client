@@ -2,22 +2,22 @@ import { useContext } from 'react'
 import { closeNewChat } from '../../../../actions/asideActions'
 import { AsideContext } from '../../../../context/asideContext'
 import { ChatContext } from '../../../../context/chatContext'
-import { useNewGroup } from '../../../../hooks/useNewGroup'
 import { IUser } from '../../../../types/types'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import './UserItem.css'
 
 interface UserItemProps {
   user: IUser
+  addUser?: (user: IUser) => void
 }
 
-export function UserItem ({ user }: UserItemProps) {
-  const { asideState, dispatch } = useContext(AsideContext)
+export function UserItem ({ user, addUser }: UserItemProps) {
+  const { dispatch } = useContext(AsideContext)
   const { chats, setActiveChat, addNewChat } = useContext(ChatContext)
-  const { addUser } = useNewGroup()
 
   const handleClick = async (user: IUser) => {
-    if (asideState.newGroup) { // NewGroup
+    if (addUser) { // NewGroup
+      console.log('hola')
       addUser(user)
     } else { // NewChat
       // Comprueba si tenemos ya un chat con ese contacto

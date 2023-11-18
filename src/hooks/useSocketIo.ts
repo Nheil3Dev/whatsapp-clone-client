@@ -3,6 +3,7 @@ import io from 'socket.io-client'
 import { IMessage } from '../types/types'
 import { getUser } from '../utils/getUser'
 
+// TODO: este socket no se le modifica el user cuando cierro sesión
 export const socket = io('http://localhost:1234', {
   auth: {
     user: await getUser(),

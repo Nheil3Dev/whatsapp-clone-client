@@ -11,7 +11,7 @@ export function InfoUsers () {
   const { user: auth } = useContext(UserContext)
 
   const { me, restUsers } = groupUsers.reduce((result, user) => {
-    if (user.alias === auth?.alias) {
+    if (user.id === auth?.id) {
       result.me = user
     } else {
       result.restUsers.push(user)

@@ -8,7 +8,7 @@ import './SearchMsg.css'
 
 export function SearchMsg () {
   const { chat } = useContext(ChatContext)
-  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages(chat.id)
+  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages(chat?.id)
   const { visible } = useContext(MainContext)
   const [className, setClassName] = useState('search-msg')
 
