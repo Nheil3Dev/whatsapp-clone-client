@@ -3,6 +3,7 @@ import { openNewChat, openNewGroup, openProfile } from '../../../../actions/asid
 import { AsideContext } from '../../../../context/asideContext'
 import { ChatContext } from '../../../../context/chatContext'
 import { SocketContext } from '../../../../context/socketContext'
+import { UserContext } from '../../../../context/userContext'
 import { useDropdown } from '../../../../hooks/useDropDown'
 import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dropdown } from '../../../lib/dialog/Dropdown'
@@ -13,6 +14,7 @@ import './ChatListHeader.css'
 export function ChatListHeader () {
   const { dispatch } = useContext(AsideContext)
   const { socket, isConnected } = useContext(SocketContext)
+  const { clearUser } = useContext(UserContext)
   const { setActiveChat } = useContext(ChatContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
 
@@ -46,6 +48,7 @@ export function ChatListHeader () {
                     </p>
                     <p onClick={() => {
                       socket.disconnect()
+                      clearUser()
                       setActiveChat('')
                       closeDropdown()
                     }}>

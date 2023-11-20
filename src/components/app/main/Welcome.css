@@ -39,7 +39,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.75rem;
       padding: 1rem 0;
 
       & .input-container {
@@ -79,6 +79,18 @@
             font-size: 0.75rem;
             cursor: default;
           }
+        }
+
+        & .login-error {
+          position: absolute;
+          text-align: center;
+          width: 270px;
+          top: 9.75rem;
+          right: -2.25rem;
+          padding: 0.75rem;
+          border-radius: 10px;
+          background-color: #f15c6d;
+          font-size: 0.95rem;
         }
       }
     }

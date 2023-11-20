@@ -13,7 +13,7 @@ import './ChatHeader.css'
 
 export function ChatHeader () {
   const { user } = useContext(UserContext)
-  const { chat, groupUsers, setActiveChat } = useContext(ChatContext)
+  const { chat, groupUsers, setActiveChat, delChat } = useContext(ChatContext)
   const { openInfo, openSearch, closeAside } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
   const { delay } = useDelay(3000, chat)
@@ -71,16 +71,18 @@ export function ChatHeader () {
             openInfo()
             closeDropdown()
           }}>
-            Info. del grupo
+            Info. del {chat?.admin ? 'grupo' : 'contacto'}
           </p>
           <p onClick={() => {
             setActiveChat('')
             closeDropdown()
             closeAside()
           }}>
-            Cerrar grupo
+            {chat?.admin ? 'Cerrar grupo' : 'Cerrar chat'}
           </p>
-          <p>Abandonar grupo</p>
+          <p onClick={() => delChat(chat.id, chat.admin ? 'group' : 'conversation')}>
+            {chat?.admin ? 'Abandonar grupo' : 'Eliminar chat'}
+          </p>
         </Dropdown>}
       </div>
     </header>

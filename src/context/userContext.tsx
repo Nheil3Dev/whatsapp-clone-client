@@ -1,8 +1,7 @@
-import { createContext, JSX, useContext, useEffect, useState } from 'react'
+import { createContext, JSX, useEffect, useState } from 'react'
 import { LOCALSTORAGE } from '../constants/localStorage'
 import { IUserMin } from '../types/types'
 import { getUser } from '../utils/getUser'
-import { SocketContext } from './socketContext'
 
 interface IUserContext {
   user: IUserMin | undefined
@@ -14,7 +13,6 @@ interface IUserContext {
 export const UserContext = createContext<IUserContext>({} as IUserContext)
 
 export function UserProvider ({ children }: { children: JSX.Element}) {
-  const { isConnected } = useContext(SocketContext)
   const [user, setUser] = useState<IUserMin>()
 
   const updateUsername = (newAlias: string) => {
@@ -37,9 +35,8 @@ export function UserProvider ({ children }: { children: JSX.Element}) {
   }
 
   useEffect(() => {
-    if (!isConnected) return clearUser()
     getUser().then(user => setUser(user))
-  }, [isConnected])
+  }, [])
   return (
     <UserContext.Provider value={{ user, updateUsername, saveUser, clearUser }}>
       {children}

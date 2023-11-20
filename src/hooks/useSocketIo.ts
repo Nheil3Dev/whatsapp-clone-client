@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import io from 'socket.io-client'
 import { URL_SERVER } from '../constants/url'
-import { IMessage } from '../types/types'
+import { IMessage, IUserMin } from '../types/types'
 import { getUser } from '../utils/getUser'
 
 // TODO: este socket no se le modifica el user cuando cierro sesión
@@ -14,13 +14,16 @@ export const socket = io(URL_SERVER, {
   autoConnect: false
 })
 
-export function useSocketIo () {
+export function useSocketIo (user: IUserMin | undefined) {
   const [isConnected, setIsConnected] = useState(socket.connected)
   const [messages, setMessages] = useState<IMessage[]>([])
   const lastMsg = messages[messages.length - 1]
 
   useEffect(() => {
-    // socket.connect()
+    if (user?.id) {
+      socket.connect()
+      setIsConnected(true)
+    }
 
     function onConnect () {
       setIsConnected(true)
@@ -47,7 +50,7 @@ export function useSocketIo () {
       socket.off('whatsapp clone msg', onMessages)
       socket.disconnect()
     }
-  }, [])
+  }, [user])
 
   return { messages, setMessages, lastMsg, isConnected, setIsConnected }
 }

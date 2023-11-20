@@ -7,10 +7,10 @@ import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <SocketProvider>
-      <UserProvider>
+    <UserProvider>
+      <SocketProvider>
         <App />
-      </UserProvider>
-    </SocketProvider>
+      </SocketProvider>
+    </UserProvider>
   </React.StrictMode>
 )

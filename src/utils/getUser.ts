@@ -10,8 +10,8 @@ export const getUser = async () => {
     }
   }
   // TODO: tengo que crear un usuario invitado y ponerlo aqui
-  return {
-    id: '3a477c32-9b41-4d7c-8cd6-dc3de056c5ec',
-    alias: 'Valeria'
-  }
+  // return {
+  //   id: '3a477c32-9b41-4d7c-8cd6-dc3de056c5ec',
+  //   alias: 'Valeria'
+  // }
 }

@@ -16,7 +16,7 @@ interface ChatItemProps {
 
 export function ChatItem ({ chat }: ChatItemProps) {
   const { user } = useContext(UserContext)
-  const { activeChat, setActiveChat } = useContext(ChatContext)
+  const { activeChat, setActiveChat, delChat } = useContext(ChatContext)
   const { closeContain } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, toggleDropdown, buttonRef } = useDropdown()
   const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
@@ -65,7 +65,7 @@ export function ChatItem ({ chat }: ChatItemProps) {
           </button>
           {dropdownOpened &&
           <Dropdown ref={dropdownRef}>
-            <p>Eliminar chat</p>
+            <p onClick={() => delChat(chat.id, chat.admin ? 'group' : 'conversation')}>Eliminar chat</p>
             <p>Marcar como leído</p>
             <p>Fijar chat</p>
           </Dropdown>}

@@ -67,3 +67,5 @@ export interface INewGroup {
   members: IUser[],
   userList: IUser[]
 }
+
+export type ChatType = 'conversation' | 'group'
