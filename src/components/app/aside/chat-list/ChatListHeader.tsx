@@ -1,30 +1,31 @@
 import { useContext } from 'react'
-import { openNewChat, openNewGroup, openProfile } from '../../../../actions/asideActions'
+import { openNewChat, openProfile } from '../../../../actions/asideActions'
 import { AsideContext } from '../../../../context/asideContext'
-import { ChatContext } from '../../../../context/chatContext'
 import { SocketContext } from '../../../../context/socketContext'
 import { UserContext } from '../../../../context/userContext'
 import { useDropdown } from '../../../../hooks/useDropDown'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
+import { IUserMin } from '../../../../types/types'
 import { Dropdown } from '../../../lib/dialog/Dropdown'
 import { MenuIcon } from '../../../lib/icons/MenuIcon'
 import { NewChatIcon } from '../../../lib/icons/NewChatIcon'
+import { UserImg } from '../../../lib/image/UserImg'
 import './ChatListHeader.css'
+import { ChatListHeaderDropdown } from './ChatListHeaderDropdown'
 
 export function ChatListHeader () {
   const { dispatch } = useContext(AsideContext)
-  const { socket, isConnected } = useContext(SocketContext)
-  const { clearUser } = useContext(UserContext)
-  const { setActiveChat } = useContext(ChatContext)
+  const { isConnected } = useContext(SocketContext)
+  const { user } = useContext(UserContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
 
   return (
     <header className="chat-list-header">
         {isConnected
           ? <>
-              <span onClick={() => dispatch(openProfile)} className="img">
-                <UserDefaultAvatar />
+              <span onClick={() => dispatch(openProfile)} className='img'>
+                <UserImg className='img' user={user ?? {} as IUserMin} />
               </span>
+
               <div className='icon-container-header-aside'>
                 <button className='icon-button' title='Nuevo chat' onClick={() => dispatch(openNewChat)}>
                   <NewChatIcon />
@@ -34,26 +35,7 @@ export function ChatListHeader () {
                 </button>
                 {dropdownOpened &&
                   <Dropdown ref={dropdownRef}>
-                    <p onClick={() => {
-                      dispatch(openNewChat)
-                      closeDropdown()
-                    }}>
-                      Nuevo mensaje
-                    </p>
-                    <p onClick={() => {
-                      dispatch(openNewGroup)
-                      closeDropdown()
-                    }}>
-                      Nuevo grupo
-                    </p>
-                    <p onClick={() => {
-                      socket.disconnect()
-                      clearUser()
-                      setActiveChat('')
-                      closeDropdown()
-                    }}>
-                      Cerrar sesión
-                    </p>
+                    <ChatListHeaderDropdown closeDropdown={closeDropdown} />
                   </Dropdown>
                 }
               </div>

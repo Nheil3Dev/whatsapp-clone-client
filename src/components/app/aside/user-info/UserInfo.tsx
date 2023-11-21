@@ -6,8 +6,9 @@ import { UserContext } from '../../../../context/userContext'
 import { UserInfoContext } from '../../../../context/userInfocontext'
 import { useCssEffects } from '../../../../hooks/useCssEffects'
 import { getProfileData } from '../../../../services/getProfileData'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
+import { IUserMin } from '../../../../types/types'
 import { BackArrow } from '../../../lib/icons/BackArrow'
+import { UserImg } from '../../../lib/image/UserImg'
 import { UserData } from './UserData'
 import './UserInfo.css'
 
@@ -42,9 +43,7 @@ export function UserInfo () {
       </header>
 
       <article className="profle-info-container">
-        <span className='profile-info-img'>
-          <UserDefaultAvatar />
-        </span>
+        <UserImg className='profile-info-img' user={user ?? {} as IUserMin} />
         <p className="profile-info-label">Tu nombre</p>
         <UserData type='alias' />
         <p className='profile-info-p'>

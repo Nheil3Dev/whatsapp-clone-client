@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { ChatContext } from '../../../../../context/chatContext'
 import { useScrollChat } from '../../../../../hooks/useScrollChat'
 import { ArrowDownIcon } from '../../../../lib/icons/ArrowDownIcon'
+import { ChatFormEdit } from '../chat-form/ChatFormEdit'
 import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 
@@ -29,6 +30,7 @@ export function ListOfMessages () {
         </button>
       }
       </div>
+      <ChatFormEdit />
     </>
   )
 }

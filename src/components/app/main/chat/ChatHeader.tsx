@@ -5,16 +5,17 @@ import { UserContext } from '../../../../context/userContext'
 import { useDelay } from '../../../../hooks/useDelay'
 import { useDropdown } from '../../../../hooks/useDropDown'
 import { getUsernames } from '../../../../utils/getUsernames'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dropdown } from '../../../lib/dialog/Dropdown'
 import { MenuIcon } from '../../../lib/icons/MenuIcon'
 import { SearchIcon } from '../../../lib/icons/SearchIcon'
+import { ChatImg } from '../../../lib/image/ChatImg'
 import './ChatHeader.css'
+import { ChatHeaderDropdown } from './ChatHeaderDropdown'
 
 export function ChatHeader () {
   const { user } = useContext(UserContext)
-  const { chat, groupUsers, setActiveChat, delChat } = useContext(ChatContext)
-  const { openInfo, openSearch, closeAside } = useContext(MainContext)
+  const { chat, groupUsers } = useContext(ChatContext)
+  const { openInfo, openSearch } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
   const { delay } = useDelay(3000, chat)
 
@@ -30,16 +31,7 @@ export function ChatHeader () {
         className='info-container-header'
         onClick={openInfo}
       >
-        {
-          isGroup
-            ? <img
-            className='header-img'
-            src="./foto_grupo.jpg"
-            alt="imagen del grupo"
-            title="Detalles del perfil"
-            />
-            : <span className='header-img'><UserDefaultAvatar /></span>
-        }
+        <ChatImg className='header-img' chat={chat} isHeader />
         <div className='info-header-container'>
           <h3 className="title-group text-ellipsis">{title}</h3>
           <h4 className="members text-ellipsis">
@@ -67,22 +59,7 @@ export function ChatHeader () {
         </button>
         {dropdownOpened &&
         <Dropdown ref={dropdownRef}>
-          <p onClick={() => {
-            openInfo()
-            closeDropdown()
-          }}>
-            Info. del {chat?.admin ? 'grupo' : 'contacto'}
-          </p>
-          <p onClick={() => {
-            setActiveChat('')
-            closeDropdown()
-            closeAside()
-          }}>
-            {chat?.admin ? 'Cerrar grupo' : 'Cerrar chat'}
-          </p>
-          <p onClick={() => delChat(chat.id, chat.admin ? 'group' : 'conversation')}>
-            {chat?.admin ? 'Abandonar grupo' : 'Eliminar chat'}
-          </p>
+          <ChatHeaderDropdown closeDropdown={closeDropdown} />
         </Dropdown>}
       </div>
     </header>

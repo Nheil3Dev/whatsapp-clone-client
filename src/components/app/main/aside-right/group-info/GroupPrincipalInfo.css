@@ -8,7 +8,7 @@
   background-color: var(--button-text-color);
   opacity: 0;
 
-  & img {
+  & .info-group-img {
     width: 200px;
     aspect-ratio: 1, 1;
     border-radius: 50%;

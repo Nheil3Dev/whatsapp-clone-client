@@ -10,7 +10,7 @@
     background-color: var(--bg-color-options);
   }
 
-  & > img {
+  & .common-group-item-img {
     width: 40px;
     height: 40px;
     border-radius: 50%;

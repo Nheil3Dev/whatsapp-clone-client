@@ -1,6 +1,6 @@
 import { IUser } from '../../../../types/types'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { XIcon } from '../../../lib/icons/XIcon'
+import { UserImg } from '../../../lib/image/UserImg'
 import './UserGroupItem.css'
 
 interface UserGroupItemProps {
@@ -11,9 +11,7 @@ interface UserGroupItemProps {
 export function UserGroupItem ({ user, deleteUser }: UserGroupItemProps) {
   return (
     <div className='user-group-item-container'>
-      <span className='user-group-item-img'>
-        <UserDefaultAvatar />
-      </span>
+      <UserImg className='user-group-item-img' user={user} />
       <p>
         {user.alias}
       </p>

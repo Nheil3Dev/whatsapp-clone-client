@@ -8,6 +8,7 @@ import { UserDefaultAvatar } from '../../../../lib/defaults-avatars/UserDefaultA
 import { Dropdown } from '../../../../lib/dialog/Dropdown'
 import { ArrowDownIcon } from '../../../../lib/icons/ArrowDownIcon'
 import { EmojiIcon } from '../../../../lib/icons/EmojiIcon'
+import { MessageDropdown } from './MessageDropdown'
 import './MessageItem.css'
 import { MsgDate } from './MsgDate'
 
@@ -21,7 +22,7 @@ export function MessageItem ({ msg, prevMsg }: MessageProps) {
   const { chat } = useContext(ChatContext)
   const isMyMessage = msg.userId === user?.id
   const isFirstMessage = !prevMsg?.alias || msg.alias !== prevMsg?.alias
-  const { dropdownOpened, dropdownRef, buttonRef, toggleDropdown } = useDropdown()
+  const { dropdownOpened, dropdownRef, buttonRef, toggleDropdown, closeDropdown } = useDropdown()
 
   const className = isMyMessage
     ? isFirstMessage
@@ -30,6 +31,8 @@ export function MessageItem ({ msg, prevMsg }: MessageProps) {
     : isFirstMessage
       ? 'message'
       : 'message same-user'
+
+  // TODO: Arreglar para traernos las fotos de los usuarios (en el caso que introduzcamos esto)
 
   return (
     <li id={String(msg?.id)} className='msg-li'>
@@ -48,12 +51,10 @@ export function MessageItem ({ msg, prevMsg }: MessageProps) {
             <ArrowDownIcon />
           </button>
           {
-          dropdownOpened &&
-          <Dropdown ref={dropdownRef}>
-            <p>Responder</p>
-            <p>Responder en privado</p>
-            <p>Enviar mensaje a {msg.alias}</p>
-          </Dropdown>
+            dropdownOpened &&
+            <Dropdown ref={dropdownRef}>
+              <MessageDropdown msg={msg} isMyMessage={isMyMessage} closeDropdown={closeDropdown} />
+            </Dropdown>
         }
         </div>
         <div className='emoji-button-container'>

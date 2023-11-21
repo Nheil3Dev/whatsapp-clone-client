@@ -5,10 +5,11 @@ import { UserContext } from '../../../../context/userContext'
 import { useDropdown } from '../../../../hooks/useDropDown'
 import { IChat } from '../../../../types/types'
 import { getDate } from '../../../../utils/getDate'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
 import { Dropdown } from '../../../lib/dialog/Dropdown'
 import { ArrowDownIcon } from '../../../lib/icons/ArrowDownIcon'
+import { ChatImg } from '../../../lib/image/ChatImg'
 import './ChatItem.css'
+import { ChatItemDropdown } from './ChatItemDropdown'
 
 interface ChatItemProps {
   chat: IChat
@@ -16,7 +17,7 @@ interface ChatItemProps {
 
 export function ChatItem ({ chat }: ChatItemProps) {
   const { user } = useContext(UserContext)
-  const { activeChat, setActiveChat, delChat } = useContext(ChatContext)
+  const { activeChat, setActiveChat } = useContext(ChatContext)
   const { closeContain } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, toggleDropdown, buttonRef } = useDropdown()
   const className = activeChat === chat.id ? 'chat-item selected' : 'chat-item'
@@ -34,12 +35,7 @@ export function ChatItem ({ chat }: ChatItemProps) {
       setActiveChat(chat.id)
       closeContain()
     }}>
-      {chat.admin
-        ? <img className="img" src="foto_grupo.jpg" alt="Foto de grupo" />
-        : <span className='img'>
-            <UserDefaultAvatar />
-          </span>
-      }
+      <ChatImg className='img' chat={chat} />
       <div className='info-chat-container'>
         <div className='title-chat-container'>
           <h3
@@ -65,9 +61,7 @@ export function ChatItem ({ chat }: ChatItemProps) {
           </button>
           {dropdownOpened &&
           <Dropdown ref={dropdownRef}>
-            <p onClick={() => delChat(chat.id, chat.admin ? 'group' : 'conversation')}>Eliminar chat</p>
-            <p>Marcar como leído</p>
-            <p>Fijar chat</p>
+            <ChatItemDropdown chat={chat} />
           </Dropdown>}
         </div>
       </div>

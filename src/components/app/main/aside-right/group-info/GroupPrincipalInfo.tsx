@@ -4,6 +4,7 @@ import { ChatContext } from '../../../../../context/chatContext'
 import { ChatInfoContext } from '../../../../../context/chatInfoContext'
 import { CheckIcon } from '../../../../lib/icons/CheckIcon'
 import { PencilIcon } from '../../../../lib/icons/PencilIcon'
+import { ChatImg } from '../../../../lib/image/ChatImg'
 import './GroupPrincipalInfo.css'
 
 export function GroupPrincipalInfo () {
@@ -19,7 +20,7 @@ export function GroupPrincipalInfo () {
 
   return (
     <article className="info-group">
-      <img src="foto_grupo.jpg" alt="Foto de grupo" />
+      <ChatImg className='info-group-img' chat={chat} />
       {
         !visibleInput.name
           ? <div className='info-group-data'>

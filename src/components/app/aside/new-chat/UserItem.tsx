@@ -3,7 +3,7 @@ import { closeNewChat } from '../../../../actions/asideActions'
 import { AsideContext } from '../../../../context/asideContext'
 import { ChatContext } from '../../../../context/chatContext'
 import { IUser } from '../../../../types/types'
-import { UserDefaultAvatar } from '../../../lib/defaults-avatars/UserDefaultAvatar'
+import { UserImg } from '../../../lib/image/UserImg'
 import './UserItem.css'
 
 interface UserItemProps {
@@ -17,7 +17,6 @@ export function UserItem ({ user, addUser }: UserItemProps) {
 
   const handleClick = async (user: IUser) => {
     if (addUser) { // NewGroup
-      console.log('hola')
       addUser(user)
     } else { // NewChat
       // Comprueba si tenemos ya un chat con ese contacto
@@ -33,9 +32,7 @@ export function UserItem ({ user, addUser }: UserItemProps) {
   }
   return (
     <div className="user-item-container" onClick={async () => await handleClick(user)}>
-      <div className='user-item-avatar'>
-        <UserDefaultAvatar />
-      </div>
+      <UserImg className='user-item-avatar' user={user} />
       <div className='user-item-info'>
         <h5>{user.alias}</h5>
         <p>{user.info}</p>

@@ -39,11 +39,13 @@ export interface IChat {
   admin?: string
   adminAlias?: string
   messages: IMessage[]
+  img?: string
 }
 
 export interface IUserMin {
   id: string
   alias: string
+  img?: string
 }
 
 export interface IAuth {
@@ -56,6 +58,7 @@ export interface IUser {
   alias: string
   info: string
   email?: string
+  img?: string
 }
 
 export interface IDataForm {

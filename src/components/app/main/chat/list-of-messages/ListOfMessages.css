@@ -63,7 +63,7 @@
   }
 }
 
-@media (width < 1648px) {
+@media (width < 1639px) {
   .chat {
     & .bg-chat {
       max-width: calc(100vw - 19px - 19px - 480px);

@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { MainContext } from '../../../../../context/mainContext'
 import { UserContext } from '../../../../../context/userContext'
 import { IUser } from '../../../../../types/types'
-import { UserDefaultAvatar } from '../../../../lib/defaults-avatars/UserDefaultAvatar'
+import { UserImg } from '../../../../lib/image/UserImg'
 import './InfoUserItem.css'
 
 export function InfoUserItem ({ user, isAdmin }: {user: IUser, isAdmin?: boolean}) {
@@ -10,7 +10,7 @@ export function InfoUserItem ({ user, isAdmin }: {user: IUser, isAdmin?: boolean
   const { user: auth } = useContext(UserContext)
   return (
     <div className="info-user-item" onClick={() => openInfoUser && openInfoUser(user)}>
-      <span className="info-user-img"><UserDefaultAvatar /></span>
+      <UserImg className='info-user-img' user={user} />
       <div className='info-user-data'>
         <div className='info-user-title-container'>
           <h5 className="info-user-title">{user.id === auth?.id ? 'Tú' : user.alias}</h5>
