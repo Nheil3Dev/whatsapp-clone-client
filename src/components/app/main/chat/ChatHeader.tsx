@@ -17,7 +17,7 @@ export function ChatHeader () {
   const { chat, groupUsers } = useContext(ChatContext)
   const { openInfo, openSearch } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
-  const { delay } = useDelay(3000, chat)
+  const { delay } = useDelay(3000, chat?.id)
 
   if (!user) return
 

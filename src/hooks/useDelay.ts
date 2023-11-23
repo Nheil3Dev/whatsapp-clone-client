@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { IChat } from '../types/types'
 
-export function useDelay (time: number, chat: IChat) {
+export function useDelay (time: number, dependencies: string | null) {
   const [delay, setDelay] = useState(false)
 
   useEffect(() => {
@@ -9,6 +8,6 @@ export function useDelay (time: number, chat: IChat) {
     const id = setTimeout(() => setDelay(true), time)
 
     return () => clearTimeout(id)
-  }, [chat?.id])
+  }, [dependencies])
   return { delay }
 }

@@ -8,7 +8,7 @@ interface ChatHeaderDropdownProps {
 
 export function ChatHeaderDropdown ({ closeDropdown }: ChatHeaderDropdownProps) {
   const { chat, setActiveChat, delChat } = useContext(ChatContext)
-  const { openInfo, closeAside } = useContext(MainContext)
+  const { openInfo, closeAside, openDialog } = useContext(MainContext)
   return (
     <>
       <p onClick={() => {
@@ -24,7 +24,10 @@ export function ChatHeaderDropdown ({ closeDropdown }: ChatHeaderDropdownProps) 
       }}>
         {chat?.admin ? 'Cerrar grupo' : 'Cerrar chat'}
       </p>
-      <p onClick={() => delChat(chat.id, chat.admin ? 'group' : 'conversation')}>
+      <p onClick={(e) => {
+        e.stopPropagation()
+        openDialog('chat', () => delChat(chat.id, chat.admin ? 'group' : 'conversation'))
+      }}>
         {chat?.admin ? 'Abandonar grupo' : 'Eliminar chat'}
       </p>
     </>

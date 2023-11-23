@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { ChatContext } from '../../../../../context/chatContext'
+import { MainContext } from '../../../../../context/mainContext'
 import { IMessage } from '../../../../../types/types'
 
 interface MessageDropdownProps {
@@ -10,13 +11,10 @@ interface MessageDropdownProps {
 
 export function MessageDropdown ({ msg, isMyMessage, closeDropdown }: MessageDropdownProps) {
   const { deleteMsg, setEditMsg } = useContext(ChatContext)
+  const { openDialog } = useContext(MainContext)
   return (
     <>
-      <p>Enviar mensaje a {isMyMessage ? 'Ti' : msg.alias}</p>
-      {isMyMessage
-        ? <p onClick={() => deleteMsg(msg.id ?? 0)}>Eliminar mensaje</p>
-        : <p>Responder</p>
-          }
+      <p>Responder</p>
       {isMyMessage
         ? <p onClick={() => {
           setEditMsg(msg.id ?? 0)
@@ -27,6 +25,9 @@ export function MessageDropdown ({ msg, isMyMessage, closeDropdown }: MessageDro
         </p>
         : <p>Responder en privado</p>
       }
+      {isMyMessage
+        ? <p onClick={() => openDialog('msg', () => deleteMsg(msg.id ?? 0))}>Eliminar mensaje</p>
+        : <p>Enviar mensaje a {msg.alias}</p>}
     </>
   )
 }

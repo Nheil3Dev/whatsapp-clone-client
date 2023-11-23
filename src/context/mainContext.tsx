@@ -1,4 +1,5 @@
 import { JSX, createContext, useState } from 'react'
+import { useDialog } from '../hooks/useDialog'
 import { IUser } from '../types/types'
 
 interface IMainContext {
@@ -9,6 +10,9 @@ interface IMainContext {
   closeInfoUser: () => void
   closeAside: () => void
   closeContain: () => void
+  dialog: { isOpen: boolean, type: 'msg' | 'chat', confirm: () => void }
+  closeDialog: () => void
+  openDialog: (type: 'msg'| 'chat', confirm: () => void) => void
 }
 
 export const MainContext = createContext<IMainContext>({} as IMainContext)
@@ -21,6 +25,7 @@ export function MainProvider ({ children }: { children: JSX.Element[]}) {
     search: false,
     user: {} as IUser
   })
+  const { dialog, closeDialog, openDialog } = useDialog()
 
   const openInfo = () => setVisible({ aside: true, infoChat: true, infoUser: false, search: false, user: {} as IUser })
   const openSearch = () => setVisible({ aside: true, infoChat: false, infoUser: false, search: true, user: {} as IUser })
@@ -29,7 +34,7 @@ export function MainProvider ({ children }: { children: JSX.Element[]}) {
   const closeAside = () => setVisible({ ...visible, aside: false })
   const closeContain = () => setVisible({ ...visible, aside: false, infoChat: false, infoUser: false, search: false })
   return (
-    <MainContext.Provider value={{ visible, openInfo, openSearch, openInfoUser, closeInfoUser, closeAside, closeContain }}>
+    <MainContext.Provider value={{ visible, openInfo, openSearch, openInfoUser, closeInfoUser, closeAside, closeContain, dialog, closeDialog, openDialog }}>
       {children}
     </MainContext.Provider>
   )

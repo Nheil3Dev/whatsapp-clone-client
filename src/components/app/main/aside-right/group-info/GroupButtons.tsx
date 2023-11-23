@@ -1,15 +1,21 @@
+import { useContext } from 'react'
+import { ChatContext } from '../../../../../context/chatContext'
+import { MainContext } from '../../../../../context/mainContext'
 import { DislikeIcon } from '../../../../lib/icons/DislikeIcon'
 import { OutIcon } from '../../../../lib/icons/OutIcon'
 import './GroupButtons.css'
 
 export function GroupButtons () {
+  const { chat, delChat } = useContext(ChatContext)
+  const { openDialog } = useContext(MainContext)
+  const type = chat.admin ? 'group' : 'conversation'
   return (
     <div className='group-info-button-container'>
-          <button className="info-button">
+          <button className="info-button" onClick={() => openDialog('chat', () => delChat(chat.id, type))}>
             <OutIcon />
             Salir del grupo
           </button>
-          <button className="info-button">
+          <button className="info-button" onClick={() => alert('No seas tóxic@...')}>
             <DislikeIcon />
             Reportar grupo
           </button>
