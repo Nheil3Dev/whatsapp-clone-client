@@ -1,3 +1,4 @@
+import { Dictionary, groupBy } from 'lodash'
 import { IUser } from '../../../../types/types'
 import './ListOfUsers.css'
 import { UserItem } from './UserItem'
@@ -8,7 +9,7 @@ interface ListOfUsersProps {
 }
 
 export function ListOfUsers ({ filteredUsers, addUser }: ListOfUsersProps) {
-  const orderedFilteredUsers: { values: IUser[] } = Object.groupBy(filteredUsers, (user: IUser) => user.alias[0])
+  const orderedFilteredUsers: Dictionary<IUser[]> = groupBy(filteredUsers, (user: IUser) => user.alias[0])
 
   return (
     <>

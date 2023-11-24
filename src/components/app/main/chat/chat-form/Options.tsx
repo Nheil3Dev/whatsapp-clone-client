@@ -9,7 +9,7 @@ import './Options.css'
 
 export const Options = forwardRef(function Options (props, ref: ForwardedRef<HTMLDivElement>) {
   return (
-    <div ref={ref} className='options-container'>
+    <div ref={ref} className='options-container' {...props}>
       <div className='item'><span><DocumentIcon /></span><p>Documento</p></div>
       <div className='item'><span><ImageIcon /></span><p>Fotos y videos</p></div>
       <div className='item'><span><CameraIcon /></span><p>Cámara</p></div>

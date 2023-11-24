@@ -1,29 +1,47 @@
 import { useEffect, useState } from 'react'
-import io from 'socket.io-client'
+import io, { Socket } from 'socket.io-client'
 import { URL_SERVER } from '../constants/url'
 import { IMessage, IUserMin } from '../types/types'
-import { getUser } from '../utils/getUser'
-
-// TODO: este socket no se le modifica el user cuando cierro sesión
-export const socket = io(URL_SERVER, {
-  auth: {
-    user: await getUser(),
-    serverOffset: 0
-
-  },
-  autoConnect: false
-})
+import { normalizeDate } from '../utils/normalizeDate'
 
 export function useSocketIo (user: IUserMin | undefined) {
-  const [isConnected, setIsConnected] = useState(socket.connected)
+  const [socket, setSocket] = useState<Socket>()
+  const [isConnected, setIsConnected] = useState(false)
   const [messages, setMessages] = useState<IMessage[]>([])
+  const [delMsg, setDelMsg] = useState({ msgId: 0, chatId: '' })
+  const [modMsg, setModMsg] = useState({ msgId: 0, content: '', chatId: '' })
   const lastMsg = messages[messages.length - 1]
 
-  useEffect(() => {
-    if (user?.id) {
-      socket.connect()
-      setIsConnected(true)
+  const sendMessage = (content: string, chatId: string, type: 'conversation'|'group') => {
+    const date = normalizeDate()
+    if (type === 'conversation') {
+      return socket?.emit('whatsapp clone msg', content, date, null, chatId)
     }
+    return socket?.emit('whatsapp clone msg', content, date, chatId, null)
+  }
+
+  const deleteMessage = (msgId: number, chatId: string) => {
+    return socket?.emit('delete msg', msgId, chatId)
+  }
+
+  const modifyMessage = (msgId: number, content: string, chatId: string) => {
+    return socket?.emit('modify msg', msgId, content, chatId)
+  }
+
+  useEffect(() => {
+    if (!user?.id) {
+      return
+    }
+
+    const newSocket = io(URL_SERVER, {
+      auth: {
+        user,
+        serverOffset: 0
+      }
+    })
+
+    setSocket(newSocket)
+    setIsConnected(true)
 
     function onConnect () {
       setIsConnected(true)
@@ -40,17 +58,31 @@ export function useSocketIo (user: IUserMin | undefined) {
       }
     }
 
-    socket.on('connect', onConnect)
-    socket.on('disconnect', onDisconnect)
-    socket.on('whatsapp clone msg', onMessages)
+    function onDeleteMsg (msgId: number, chatId: string) {
+      const newDelMsg = { msgId, chatId }
+      setDelMsg(newDelMsg)
+    }
+
+    function onModifyMsg (msgId: number, content: string, chatId: string) {
+      const newModMsg = { msgId, content, chatId }
+      setModMsg(newModMsg)
+    }
+
+    newSocket.on('connect', onConnect)
+    newSocket.on('disconnect', onDisconnect)
+    newSocket.on('whatsapp clone msg', onMessages)
+    newSocket.on('delete msg', onDeleteMsg)
+    newSocket.on('modify msg', onModifyMsg)
 
     return () => {
-      socket.off('connect', onConnect)
-      socket.off('disconnect', onDisconnect)
-      socket.off('whatsapp clone msg', onMessages)
-      socket.disconnect()
+      newSocket.off('connect', onConnect)
+      newSocket.off('disconnect', onDisconnect)
+      newSocket.off('whatsapp clone msg', onMessages)
+      newSocket.off('delete msg', onDeleteMsg)
+      newSocket.off('modify msg', onModifyMsg)
+      newSocket.disconnect()
     }
-  }, [user])
+  }, [user?.id])
 
-  return { messages, setMessages, lastMsg, isConnected, setIsConnected }
+  return { messages, setMessages, lastMsg, isConnected, setIsConnected, socket, sendMessage, deleteMessage, delMsg, modMsg, modifyMessage }
 }

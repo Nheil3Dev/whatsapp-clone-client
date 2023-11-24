@@ -1,13 +1,15 @@
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
 import { FormEvent, useContext, useEffect, useRef, useState } from 'react'
 import { ChatContext } from '../../../../../context/chatContext'
-import { sendMessage } from '../../../../../services/sendMessage'
+import { SocketContext } from '../../../../../context/socketContext'
 import { SendIcon } from '../../../../lib/icons/SendIcon'
 import './ChatForm.css'
 import { ChatFormIcons } from './ChatFormIcons'
 
 export function ChatForm () {
-  const { chat, activeChat, editMsg, editMessage } = useContext(ChatContext)
+  const { chat, activeChat, editMsg, setEditMsg } = useContext(ChatContext)
+  const { modifyMessage } = useContext(SocketContext)
+  const { sendMessage } = useContext(SocketContext)
   const [message, setMessage] = useState<string>('')
   const [active, setActive] = useState({
     emojis: false,
@@ -37,7 +39,9 @@ export function ChatForm () {
 
     if (message.length > 0) {
       if (editMsg !== 0) {
-        editMessage(message)
+        // editMessage(message)
+        modifyMessage(editMsg, message, chat.id)
+        setEditMsg(0)
       } else {
         sendMessage(message, chat.id, chat.admin ? 'group' : 'conversation')
       }

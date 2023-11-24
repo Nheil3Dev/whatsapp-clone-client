@@ -26,9 +26,6 @@ export function UserProvider ({ children }: { children: JSX.Element}) {
     setUser(newUser)
     window.localStorage.setItem(LOCALSTORAGE.ID, id)
     window.localStorage.setItem(LOCALSTORAGE.ALIAS, alias)
-    // Recargamos la página para crear un nuevo socket con el nuevo usuario, si no lo hicieramos conservaríamos el socket del usuario anterior
-    // Sólo afecta cuando cambiamos de usuario dentro de la misma sesión
-    window.location.reload()
   }
 
   const clearUser = () => {

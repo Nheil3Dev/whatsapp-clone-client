@@ -4,7 +4,7 @@ import { getAllChats } from '../services/getAllChats'
 import { IChat, IMessage } from '../types/types'
 import { sortChats } from '../utils/sortChats'
 
-export function useChats (lastMsgSocket: IMessage) {
+export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chatId: string }, modMsg: { msgId: number, content: string, chatId: string }) {
   const [chats, setChats] = useState<IChat[]>([])
   const [lastMsg, setLastMsg] = useState<number>(0)
   const { user } = useContext(UserContext)
@@ -29,8 +29,6 @@ export function useChats (lastMsgSocket: IMessage) {
     const chatIndex = chats.findIndex(chat => chat.id === lastMsgSocket.conversationId || chat.id === lastMsgSocket.groupId)
 
     // TODO: No deberiamos traernos todos los mensajes, sólo los de los canales que nos interesan
-    // habría que cambiar el socket
-    // si no es un mensaje para nuestros chats
     if (chatIndex === -1) return
 
     const updatedChat = {
@@ -40,6 +38,55 @@ export function useChats (lastMsgSocket: IMessage) {
     const updatedChats = [updatedChat, ...chats.slice(0, chatIndex), ...chats.slice(chatIndex + 1)]
     setChats(updatedChats)
   }, [lastMsgSocket])
+
+  // Borrado de mensajes
+  useEffect(() => {
+    if (delMsg?.msgId === 0) return
+
+    const chat = chats.filter(chat => chat.id === delMsg.chatId)[0]
+
+    if (chat) {
+      const newMsgs = chat.messages.filter(message => message.id !== delMsg.msgId)
+      const newChat = { ...chat, messages: newMsgs }
+
+      const newChats = chats.map(c => {
+        if (c.id === newChat.id) {
+          return newChat
+        } else {
+          return c
+        }
+      })
+      setChats(newChats)
+    }
+  }, [delMsg])
+
+  // Modificación de mensajes
+  useEffect(() => {
+    if (modMsg.msgId === 0) return
+
+    const chat = chats.filter(chat => chat.id === modMsg.chatId)[0]
+
+    if (chat) {
+      const newMsgs = chat.messages.map(message => {
+        if (message.id === modMsg.msgId) {
+          return {
+            ...message,
+            content: modMsg.content
+          }
+        }
+        return message
+      })
+      const newChat = { ...chat, messages: newMsgs }
+      const newChats = chats.map(c => {
+        if (c.id === newChat.id) {
+          return newChat
+        } else {
+          return c
+        }
+      })
+      setChats(newChats)
+    }
+  }, [modMsg])
 
   return { chats, setChats }
 }
