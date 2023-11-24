@@ -3,7 +3,7 @@ import { Socket } from 'socket.io-client'
 import { UserContext } from '../context/userContext'
 import { login } from '../services/login'
 
-export function useLogin (socket: Socket) {
+export function useLogin (socket: Socket | undefined) {
   const { saveUser } = useContext(UserContext)
   const [auth, setAuth] = useState({
     email: '',
@@ -36,7 +36,7 @@ export function useLogin (socket: Socket) {
     }
     const response = await login(user)
     saveUser(response.user.id, response.user.alias)
-    socket.connect()
+    socket?.connect()
   }
 
   const handleSubmit = async (e: FormEvent) => {
@@ -46,7 +46,7 @@ export function useLogin (socket: Socket) {
     if (response.email && response.password) {
       const { user } = response
       saveUser(user.id, user.alias)
-      socket.connect()
+      socket?.connect()
     } else if (!response.email) {
       setAuth({
         ...auth,

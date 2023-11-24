@@ -29,10 +29,7 @@ export function useSocketIo (user: IUserMin | undefined) {
   }
 
   useEffect(() => {
-    if (!user?.id) {
-      return
-    }
-
+    if (!user?.id) return
     const newSocket = io(URL_SERVER, {
       auth: {
         user,
@@ -42,7 +39,6 @@ export function useSocketIo (user: IUserMin | undefined) {
 
     setSocket(newSocket)
     setIsConnected(true)
-
     function onConnect () {
       setIsConnected(true)
     }
@@ -68,6 +64,7 @@ export function useSocketIo (user: IUserMin | undefined) {
       setModMsg(newModMsg)
     }
 
+    newSocket.connect()
     newSocket.on('connect', onConnect)
     newSocket.on('disconnect', onDisconnect)
     newSocket.on('whatsapp clone msg', onMessages)

@@ -6,7 +6,6 @@ import './Welcome.css'
 export function Welcome () {
   const { socket } = useContext(SocketContext)
   const { auth, handleChangeEmail, handleChangePassword, handleSubmit, test } = useLogin(socket)
-  if (!socket) return null
   return (
       <div className="welcome-container">
         <div className='login-container'>

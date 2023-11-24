@@ -32,7 +32,7 @@ export function ChatListHeaderDropdown ({ closeDropdown }: ChatListHeaderDropdow
       </p>
 
       <p onClick={() => {
-        socket.disconnect()
+        socket?.disconnect()
         clearUser()
         setActiveChat('')
         closeDropdown()
