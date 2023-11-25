@@ -19,7 +19,7 @@ interface MessageProps {
 
 export function MessageItem ({ msg, prevMsg }: MessageProps) {
   const { user } = useContext(UserContext)
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const isMyMessage = msg.userId === user?.id
   const isFirstMessage = !prevMsg?.alias || msg.alias !== prevMsg?.alias
   const { dropdownOpened, dropdownRef, buttonRef, toggleDropdown, closeDropdown } = useDropdown()
@@ -38,7 +38,7 @@ export function MessageItem ({ msg, prevMsg }: MessageProps) {
     <li id={String(msg?.id)} className='msg-li'>
       <MsgDate key={`date${msg.id}`} date={msg.date} prevDate={prevMsg?.date} />
       <div className={className}>
-        {!isMyMessage && isFirstMessage && chat.admin && (
+        {!isMyMessage && isFirstMessage && chatState.chat.admin && (
           <>
             <span className='msg-item-img'><UserDefaultAvatar /></span>
             <small>{msg.alias}</small>

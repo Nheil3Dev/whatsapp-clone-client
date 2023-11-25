@@ -1,24 +1,26 @@
-import { useEffect, useState } from 'react'
+import { Reducer, useEffect, useReducer } from 'react'
+import { getGroupUsers, openChat } from '../actions/chatActions'
+import { ChatAction, ChatState, chatInitialState, chatReducer } from '../reducers/chatReducer'
 import { getAllUsersGroup } from '../services/getAllUsersGroup'
-import { IChat, IUser } from '../types/types'
+import { IChat } from '../types/types'
 
 export function useChat (chats: IChat[]) {
-  const [activeChat, setActiveChat] = useState<string>('')
-  const [chat, setChat] = useState<IChat>({} as IChat)
-  const [groupUsers, setGroupUsers] = useState<IUser[]>([])
-  const [editMsg, setEditMsg] = useState<number>(0)
+  const [chatState, dispatchChat] = useReducer<Reducer<ChatState, ChatAction>>(chatReducer, chatInitialState)
+  const { activeChat, chat } = chatState
 
   useEffect(() => {
     const activedChat = chats.filter(chat => chat.id === activeChat)[0]
-    setChat(activedChat)
+    dispatchChat(openChat(activedChat))
   }, [activeChat, chats])
 
   useEffect(() => {
     if (chat?.admin) {
       getAllUsersGroup(chat?.id)
-        .then(users => setGroupUsers(users))
+        .then(users => {
+          dispatchChat(getGroupUsers(users))
+        })
     }
   }, [chat])
 
-  return { chat, setChat, activeChat, setActiveChat, groupUsers, setGroupUsers, groupLength: groupUsers.length, editMsg, setEditMsg }
+  return { chatState, dispatchChat }
 }

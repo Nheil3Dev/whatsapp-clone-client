@@ -14,7 +14,7 @@ interface ContactButtonsProps {
 // porque el chat seleccionado pertenece al grupo y en este componente vemos los perfiles de los usuarios del grupo.
 
 export function ContactButtons ({ alias }: ContactButtonsProps) {
-  const { chat, delChat } = useContext(ChatContext)
+  const { chatState, delChat } = useContext(ChatContext)
   const { openDialog } = useContext(MainContext)
   return (
     <div className="info-button-container">
@@ -26,7 +26,7 @@ export function ContactButtons ({ alias }: ContactButtonsProps) {
         <DislikeIcon />
         Reportar a {alias}
       </button>
-      <button className="info-button" onClick={() => openDialog('chat', () => delChat(chat.id, 'conversation'))}>
+      <button className="info-button" onClick={() => openDialog('chat', () => delChat(chatState.chat.id, 'conversation'))}>
         <TrashIcon />
         Eliminar chat
       </button>

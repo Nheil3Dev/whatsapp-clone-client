@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { openNewChat, openNewGroup } from '../../../../actions/asideActions'
+import { closeChat } from '../../../../actions/chatActions'
 import { AsideContext } from '../../../../context/asideContext'
 import { ChatContext } from '../../../../context/chatContext'
 import { SocketContext } from '../../../../context/socketContext'
@@ -12,7 +13,7 @@ interface ChatListHeaderDropdownProps {
 export function ChatListHeaderDropdown ({ closeDropdown }: ChatListHeaderDropdownProps) {
   const { socket } = useContext(SocketContext)
   const { clearUser } = useContext(UserContext)
-  const { setActiveChat } = useContext(ChatContext)
+  const { dispatchChat } = useContext(ChatContext)
   const { dispatch } = useContext(AsideContext)
 
   return (
@@ -34,7 +35,7 @@ export function ChatListHeaderDropdown ({ closeDropdown }: ChatListHeaderDropdow
       <p onClick={() => {
         socket?.disconnect()
         clearUser()
-        setActiveChat('')
+        dispatchChat(closeChat)
         closeDropdown()
       }}>
         Cerrar sesión

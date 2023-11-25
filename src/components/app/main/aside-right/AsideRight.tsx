@@ -11,8 +11,9 @@ import { SearchMsg } from './search-messages/SearchMsg'
 
 export function AsideRight () {
   const { visible, closeContain } = useContext(MainContext)
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const { className } = useAsideEffect('aside-right', 'visible-aside-right', visible.aside, closeContain)
+  const { chat } = chatState
 
   return (
     <aside className={className}>

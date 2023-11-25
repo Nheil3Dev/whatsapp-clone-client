@@ -7,7 +7,8 @@ import './HeaderAsideRight.css'
 
 export function HeaderAsideRight () {
   const { visible, closeInfoUser, closeAside } = useContext(MainContext)
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
+  const { chat } = chatState
   return (
     <header className='aside-right-header'>
         <button onClick={visible?.infoUser ? closeInfoUser : closeAside} className="icon-button">

@@ -39,6 +39,7 @@ export function useSocketIo (user: IUserMin | undefined) {
 
     setSocket(newSocket)
     setIsConnected(true)
+
     function onConnect () {
       setIsConnected(true)
     }

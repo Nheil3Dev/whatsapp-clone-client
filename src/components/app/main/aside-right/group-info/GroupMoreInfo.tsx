@@ -9,9 +9,10 @@ import './GroupMoreInfo.css'
 
 export function GroupMoreInfo () {
   const { user } = useContext(UserContext)
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
   const { visibleInput, formData } = infoChatState
+  const { chat } = chatState
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()

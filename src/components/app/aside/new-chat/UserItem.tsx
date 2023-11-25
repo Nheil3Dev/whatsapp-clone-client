@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { closeNewChat } from '../../../../actions/asideActions'
+import { selectChat } from '../../../../actions/chatActions'
 import { AsideContext } from '../../../../context/asideContext'
 import { ChatContext } from '../../../../context/chatContext'
 import { IUser } from '../../../../types/types'
@@ -13,7 +14,7 @@ interface UserItemProps {
 
 export function UserItem ({ user, addUser }: UserItemProps) {
   const { dispatch } = useContext(AsideContext)
-  const { chats, setActiveChat, addNewChat } = useContext(ChatContext)
+  const { chats, dispatchChat, addNewChat } = useContext(ChatContext)
 
   const handleClick = async (user: IUser) => {
     if (addUser) { // NewGroup
@@ -22,7 +23,7 @@ export function UserItem ({ user, addUser }: UserItemProps) {
       // Comprueba si tenemos ya un chat con ese contacto
       const newActiveChat = chats?.filter(chat => chat.name === user.alias)[0]
       if (newActiveChat) {
-        setActiveChat(newActiveChat.id)
+        dispatchChat(selectChat(newActiveChat.id))
       // Creamos un chat nuevo
       } else {
         await addNewChat(user)

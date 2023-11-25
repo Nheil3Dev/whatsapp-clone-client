@@ -14,8 +14,6 @@ import { SocketContext } from './context/socketContext'
 function App () {
   const { isConnected } = useContext(SocketContext)
 
-  console.log(isConnected)
-
   return (
     <>
       <ChatProvider>

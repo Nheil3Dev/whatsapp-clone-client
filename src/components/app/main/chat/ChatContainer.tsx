@@ -6,11 +6,11 @@ import { ChatForm } from './chat-form/ChatForm'
 import { ListOfMessages } from './list-of-messages/ListOfMessages'
 
 export function ChatContainer () {
-  const { activeChat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   return (
     <>
       <div className='chat-container'>
-        {activeChat === '' && <VoidChat />}
+        {chatState.activeChat === '' && <VoidChat />}
         <ChatHeader />
         <ListOfMessages />
         <ChatForm />

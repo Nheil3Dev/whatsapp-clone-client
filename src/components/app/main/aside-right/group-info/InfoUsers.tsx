@@ -7,8 +7,9 @@ import { InfoUserItem } from './InfoUserItem'
 import './InfoUsers.css'
 
 export function InfoUsers () {
-  const { groupUsers, chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const { user: auth } = useContext(UserContext)
+  const { groupUsers, chat } = chatState
 
   const { me, restUsers } = groupUsers.reduce((result, user) => {
     if (user.id === auth?.id) {

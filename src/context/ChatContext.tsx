@@ -1,6 +1,8 @@
 import { JSX, createContext, useContext } from 'react'
+import { closeChat, selectChat } from '../actions/chatActions'
 import { useChat } from '../hooks/useChat'
 import { useChats } from '../hooks/useChats'
+import { ChatAction, ChatState } from '../reducers/chatReducer'
 import { checkConversation } from '../services/checkConversation'
 import { createConversation } from '../services/createConversation'
 import { createGroup } from '../services/createGroup'
@@ -11,19 +13,13 @@ import { SocketContext } from './socketContext'
 import { UserContext } from './userContext'
 
 interface IChatContext {
-  chat: IChat
+  chatState: ChatState
+  dispatchChat: (action: ChatAction) => void
   chats: IChat[]
-  groupUsers: IUser[]
-  setChat: (prop: IChat) => void
   setChats: (prop: IChat[]) => void
-  activeChat: string
-  setActiveChat: (prop: string) => void
-  groupLength: number
   addNewChat: (prop: IUser) => void
   addNewGroup: (groupName: string, usersId: string[]) => void
   delChat: (groupId: string, type: ChatType) => void
-  editMsg: number
-  setEditMsg: (id: number) => void
 }
 
 export const ChatContext = createContext<IChatContext>({} as IChatContext)
@@ -32,13 +28,14 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
   const { lastMsg, delMsg, modMsg } = useContext(SocketContext)
   const { user } = useContext(UserContext)
   const { chats, setChats } = useChats(lastMsg, delMsg, modMsg)
-  const { chat, setChat, activeChat, setActiveChat, groupUsers, groupLength, editMsg, setEditMsg } = useChat(chats)
+  const { chatState, dispatchChat } = useChat(chats)
 
   const addNewChat = async (contact: IUser) => {
     // Comprobamos que no se haya creado ya
     const isCreated = chats.filter(chat => chat.contactId === contact.id)[0]
     if (isCreated) {
-      setActiveChat(isCreated.id)
+      const chatId = isCreated.id
+      dispatchChat(selectChat(chatId))
       return
     // Comprobamos que exista la conversación aunque nos hayamos salido de ella
     } else {
@@ -46,8 +43,7 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
       const newChat = await checkConversation(user.id, contact.id ?? '')
       if (newChat?.id) {
         setChats([newChat, ...chats])
-        setActiveChat(newChat.id)
-        setChat(newChat)
+        dispatchChat(selectChat(newChat.id))
         return
       }
     }
@@ -66,8 +62,7 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
 
     if (response) {
       setChats([newChat, ...chats])
-      setActiveChat(newChat.id)
-      setChat(newChat)
+      dispatchChat(selectChat(newChat.id))
     }
   }
 
@@ -90,8 +85,7 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
 
     if (response) {
       setChats([newGroup, ...chats])
-      setActiveChat(newGroup.id)
-      setChat(newGroup)
+      dispatchChat(selectChat(newGroup.id))
     }
   }
 
@@ -104,57 +98,14 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
       const newChats = chats.filter(chat => chat.id !== chatId)
       setChats(newChats)
 
-      if (activeChat === chatId) setActiveChat('')
+      if (chatState.activeChat === chatId) {
+        dispatchChat(closeChat)
+      }
     }
   }
 
-  // const deleteMsg = async (msgId: number) => {
-  //   const isDeleted = await deleteMessage(msgId)
-
-  //   if (isDeleted) {
-  //     const newMsgs = chat.messages.filter(message => message.id !== msgId)
-  //     const newChat = { ...chat, messages: newMsgs }
-  //     setChat(newChat)
-  //     const newChats = chats.map(c => {
-  //       if (c.id === newChat.id) {
-  //         return newChat
-  //       } else {
-  //         return c
-  //       }
-  //     })
-  //     setChats(newChats)
-  //   }
-  // }
-
-  // const editMessage = async (newContent: string) => {
-  //   const isModified = await modifyMessage(editMsg, newContent)
-
-  //   if (isModified) {
-  //     const newMsgs = chat.messages.map(message => {
-  //       if (message.id === editMsg) {
-  //         return {
-  //           ...message,
-  //           content: newContent
-  //         }
-  //       }
-  //       return message
-  //     })
-  //     const newChat = { ...chat, messages: newMsgs }
-  //     setChat(newChat)
-  //     const newChats = chats.map(c => {
-  //       if (c.id === newChat.id) {
-  //         return newChat
-  //       } else {
-  //         return c
-  //       }
-  //     })
-  //     setChats(newChats)
-  //     setEditMsg(0)
-  //   }
-  // }
-
   return (
-    <ChatContext.Provider value={{ activeChat, setActiveChat, chat, setChat, chats, setChats, groupUsers, groupLength, addNewChat, addNewGroup, delChat, editMsg, setEditMsg }}>
+    <ChatContext.Provider value={{ chatState, dispatchChat, chats, setChats, addNewChat, addNewGroup, delChat }}>
       {children}
     </ChatContext.Provider>
   )

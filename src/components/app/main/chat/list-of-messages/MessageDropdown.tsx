@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { selectEditMsg } from '../../../../../actions/chatActions'
 import { ChatContext } from '../../../../../context/chatContext'
 import { MainContext } from '../../../../../context/mainContext'
 import { SocketContext } from '../../../../../context/socketContext'
@@ -12,14 +13,14 @@ interface MessageDropdownProps {
 
 export function MessageDropdown ({ msg, isMyMessage, closeDropdown }: MessageDropdownProps) {
   const { deleteMessage } = useContext(SocketContext)
-  const { setEditMsg } = useContext(ChatContext)
+  const { dispatchChat } = useContext(ChatContext)
   const { openDialog } = useContext(MainContext)
   return (
     <>
       <p>Responder</p>
       {isMyMessage
         ? <p onClick={() => {
-          setEditMsg(msg.id ?? 0)
+          dispatchChat(selectEditMsg(msg.id ?? 0))
           closeDropdown()
         }}
         >

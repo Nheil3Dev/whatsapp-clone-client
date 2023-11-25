@@ -8,8 +8,9 @@ import { ChatContactMoreInfo } from './ChatContactMoreInfo'
 import { ChatContactPrincipalInfo } from './ChatContactPrincipalInfo'
 
 export function ChatContactInfo () {
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const [className, setClassName] = useState('chat-contact-info')
+  const { chat } = chatState
   useEffect(() => {
     setTimeout(() => setClassName('chat-contact-info visible-info'), 10)
   }, [])

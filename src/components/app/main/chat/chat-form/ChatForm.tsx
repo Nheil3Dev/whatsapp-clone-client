@@ -1,5 +1,6 @@
 import EmojiPicker, { type EmojiClickData } from 'emoji-picker-react'
 import { FormEvent, useContext, useEffect, useRef, useState } from 'react'
+import { clearEdit } from '../../../../../actions/chatActions'
 import { ChatContext } from '../../../../../context/chatContext'
 import { SocketContext } from '../../../../../context/socketContext'
 import { SendIcon } from '../../../../lib/icons/SendIcon'
@@ -7,7 +8,7 @@ import './ChatForm.css'
 import { ChatFormIcons } from './ChatFormIcons'
 
 export function ChatForm () {
-  const { chat, activeChat, editMsg, setEditMsg } = useContext(ChatContext)
+  const { chatState, dispatchChat } = useContext(ChatContext)
   const { modifyMessage } = useContext(SocketContext)
   const { sendMessage } = useContext(SocketContext)
   const [message, setMessage] = useState<string>('')
@@ -16,18 +17,19 @@ export function ChatForm () {
     x: false
   })
   const inputRef = useRef<HTMLInputElement>(null)
+  const { chat, activeChat, editMsgId } = chatState
 
   useEffect(() => {
     if (activeChat === '') return
-    if (editMsg !== 0) {
-      const newMsg = chat?.messages.filter(m => m.id === editMsg)[0].content
+    if (editMsgId !== 0) {
+      const newMsg = chat?.messages.filter(m => m.id === editMsgId)[0].content
       setMessage(newMsg)
     }
-    if (editMsg === 0) {
+    if (editMsgId === 0) {
       setMessage('')
     }
     inputRef.current && inputRef.current.focus()
-  }, [activeChat, editMsg])
+  }, [activeChat, editMsgId])
 
   const handleEmoji = (emojiObject: EmojiClickData) => {
     setMessage(prevText => prevText + emojiObject.emoji)
@@ -38,10 +40,9 @@ export function ChatForm () {
     e.preventDefault()
 
     if (message.length > 0) {
-      if (editMsg !== 0) {
-        // editMessage(message)
-        modifyMessage(editMsg, message, chat.id)
-        setEditMsg(0)
+      if (editMsgId !== 0) {
+        modifyMessage(editMsgId, message, chat.id)
+        dispatchChat(clearEdit)
       } else {
         sendMessage(message, chat.id, chat.admin ? 'group' : 'conversation')
       }

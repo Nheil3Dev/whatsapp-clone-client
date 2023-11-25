@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { selectChat } from '../../../../../actions/chatActions'
 import { ChatContext } from '../../../../../context/chatContext'
 import { MainContext } from '../../../../../context/mainContext'
 import { UserContext } from '../../../../../context/userContext'
@@ -14,7 +15,7 @@ interface GroupItemProps {
 
 export function GroupItem ({ group }: GroupItemProps) {
   const [groupUsers, setGroupUsers] = useState<string>('')
-  const { setActiveChat, chats } = useContext(ChatContext)
+  const { dispatchChat, chats } = useContext(ChatContext)
   const { closeAside, closeContain } = useContext(MainContext)
   const { user } = useContext(UserContext)
   useEffect(() => {
@@ -28,7 +29,7 @@ export function GroupItem ({ group }: GroupItemProps) {
 
   return (
     <li className='common-group-item' onClick={() => {
-      setActiveChat(group.id)
+      dispatchChat(selectChat(group.id))
       closeAside()
       closeContain()
     }}>

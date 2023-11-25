@@ -4,7 +4,8 @@ import { ChatImg } from '../../../../../lib/image/ChatImg'
 import './ChatContactPrincipalInfo.css'
 
 export function ChatContactPrincipalInfo () {
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
+  const { chat } = chatState
 
   return (
     <article className="info-contact">

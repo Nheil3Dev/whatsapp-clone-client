@@ -7,8 +7,8 @@ import { FilteredMsgList } from './FilteredMsgList'
 import './SearchMsg.css'
 
 export function SearchMsg () {
-  const { chat } = useContext(ChatContext)
-  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages(chat?.id)
+  const { chatState } = useContext(ChatContext)
+  const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages(chatState.chat?.id)
   const { visible } = useContext(MainContext)
   const [className, setClassName] = useState('search-msg')
 

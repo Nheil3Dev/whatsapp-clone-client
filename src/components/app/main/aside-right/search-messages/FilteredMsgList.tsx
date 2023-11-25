@@ -13,11 +13,11 @@ interface FilteredMsgListProps {
 }
 
 export function FilteredMsgList ({ filteredMsgs, active, filter }: FilteredMsgListProps) {
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const { user } = useContext(UserContext)
 
   if (!user) return
-  if (!active) return <p className='ph-filter-search'>Buscar mensajes en {chat?.name}</p>
+  if (!active) return <p className='ph-filter-search'>Buscar mensajes en {chatState.chat?.name}</p>
   return filteredMsgs.length === 0
     ? <p className='ph-filter-search'>No se encontró ningún mensaje.</p>
     : (<ul className='msg-filtered-container'>

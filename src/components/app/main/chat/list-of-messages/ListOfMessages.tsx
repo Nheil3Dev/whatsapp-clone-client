@@ -7,7 +7,8 @@ import './ListOfMessages.css'
 import { MessageItem } from './MessageItem'
 
 export function ListOfMessages () {
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
+  const { chat } = chatState
   const { showScrollButton, handleScrollButtonClick, containerRef } = useScrollChat(chat?.messages)
 
   return (

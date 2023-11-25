@@ -8,9 +8,10 @@ import { ChatImg } from '../../../../lib/image/ChatImg'
 import './GroupPrincipalInfo.css'
 
 export function GroupPrincipalInfo () {
-  const { chat, groupLength } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
   const { infoChatState, dispatch, uploadGroupData } = useContext(ChatInfoContext)
   const { visibleInput, formData } = infoChatState
+  const { chat, groupUsers } = chatState
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -38,7 +39,7 @@ export function GroupPrincipalInfo () {
               </button>
             </form>
       }
-      <p className="info-group-description">Grupo · {groupLength} participantes</p>
+      <p className="info-group-description">Grupo · {groupUsers?.length} participantes</p>
     </article>
   )
 }

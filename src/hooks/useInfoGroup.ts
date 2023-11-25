@@ -6,8 +6,9 @@ import { changeGroupInfo } from '../services/changeGroupInfo'
 
 export function useInfoGroup () {
   const [infoChatState, dispatch] = useReducer<Reducer<InfoChatState, InfoChatAction>>(infoChatReducer, infoChatInitialState)
-  const { chat, chats, setChats } = useContext(ChatContext)
+  const { chatState, chats, setChats } = useContext(ChatContext)
   const { formData } = infoChatState
+  const { chat } = chatState
 
   const uploadGroupData = () => {
     if (chat?.name === formData.name && chat?.info === formData.info) return
@@ -15,7 +16,6 @@ export function useInfoGroup () {
       .then(res => {
         if (res.rowsAffected === 1 && chat) {
           const newChat = { ...chat, ...formData }
-          // setChat(newChat)
           const index = chats?.findIndex(chatItem => chatItem.id === chat.id)
           const newChats = [...chats]
           newChats[index] = newChat

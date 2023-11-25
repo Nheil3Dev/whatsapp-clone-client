@@ -3,7 +3,8 @@ import { ChatContext } from '../../../../../../context/chatContext'
 import './ChatContactMoreInfo.css'
 
 export function ChatContactMoreInfo () {
-  const { chat } = useContext(ChatContext)
+  const { chatState } = useContext(ChatContext)
+  const { chat } = chatState
   return (
     <article className="contact-more-info-container">
         <p className='contact-more-info-title'>Info.</p>
