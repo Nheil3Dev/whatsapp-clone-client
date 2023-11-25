@@ -1,4 +1,1 @@
-export const LOCALSTORAGE = {
-  ALIAS: 'user_chat',
-  ID: 'userId_chat'
-}
+export const LOCALSTORAGE = 'wc_local_data'

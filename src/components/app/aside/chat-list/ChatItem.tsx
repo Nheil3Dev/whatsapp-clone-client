@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeContain } from '../../../../actions/asideRightActions'
 import { selectChat } from '../../../../actions/chatActions'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
@@ -19,7 +20,7 @@ interface ChatItemProps {
 export function ChatItem ({ chat }: ChatItemProps) {
   const { user } = useContext(UserContext)
   const { chatState, dispatchChat } = useContext(ChatContext)
-  const { closeContain } = useContext(MainContext)
+  const { dispatchAsideRight } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, toggleDropdown, buttonRef } = useDropdown()
   const className = chatState.activeChat === chat.id ? 'chat-item selected' : 'chat-item'
   let username
@@ -34,7 +35,7 @@ export function ChatItem ({ chat }: ChatItemProps) {
       // Comprueba que el click ha sido en el svg y se lo salta, devuelve true para que se propague hasta window
       if (e.target instanceof SVGElement) return true
       dispatchChat(selectChat(chat.id))
-      closeContain()
+      dispatchAsideRight(closeContain)
     }}>
       <ChatImg className='img' chat={chat} />
       <div className='info-chat-container'>

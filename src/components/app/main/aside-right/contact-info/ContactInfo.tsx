@@ -7,14 +7,14 @@ import { ContactMoreInfo } from './ContactMoreInfo'
 import { ContactPrincipalInfo } from './ContactPrincipalInfo'
 
 export function ContactInfo () {
-  const { visible } = useContext(MainContext)
+  const { asideRightState } = useContext(MainContext)
   return (
-    <div className={visible?.infoUser ? 'contact-info visible-info' : 'contact-info'}>
+    <div className={asideRightState?.infoUser ? 'contact-info visible-info' : 'contact-info'}>
       <section className="info-container">
         <ContactPrincipalInfo />
         <ContactMoreInfo />
-        <CommonGroups contactId={visible?.user.id} />
-        <ContactButtons alias={visible?.user.alias ?? ''} />
+        <CommonGroups contactId={asideRightState?.user.id} />
+        <ContactButtons alias={asideRightState?.user.alias ?? ''} />
       </section>
     </div>
   )

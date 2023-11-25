@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeAside, openInfo } from '../../../../actions/asideRightActions'
 import { closeChat } from '../../../../actions/chatActions'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
@@ -9,12 +10,12 @@ interface ChatHeaderDropdownProps {
 
 export function ChatHeaderDropdown ({ closeDropdown }: ChatHeaderDropdownProps) {
   const { chatState, dispatchChat, delChat } = useContext(ChatContext)
-  const { openInfo, closeAside, openDialog } = useContext(MainContext)
+  const { dispatchAsideRight, openDialog } = useContext(MainContext)
   const { chat } = chatState
   return (
     <>
       <p onClick={() => {
-        openInfo()
+        dispatchAsideRight(openInfo)
         closeDropdown()
       }}>
         Info. del {chat?.admin ? 'grupo' : 'contacto'}
@@ -22,7 +23,7 @@ export function ChatHeaderDropdown ({ closeDropdown }: ChatHeaderDropdownProps) 
       <p onClick={() => {
         dispatchChat(closeChat)
         closeDropdown()
-        closeAside()
+        dispatchAsideRight(closeAside)
       }}>
         {chat?.admin ? 'Cerrar grupo' : 'Cerrar chat'}
       </p>

@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
+import { closeAside, closeContain } from '../../../../../actions/asideRightActions'
 import { selectChat } from '../../../../../actions/chatActions'
 import { ChatContext } from '../../../../../context/chatContext'
 import { MainContext } from '../../../../../context/mainContext'
@@ -16,8 +17,9 @@ interface GroupItemProps {
 export function GroupItem ({ group }: GroupItemProps) {
   const [groupUsers, setGroupUsers] = useState<string>('')
   const { dispatchChat, chats } = useContext(ChatContext)
-  const { closeAside, closeContain } = useContext(MainContext)
+  const { dispatchAsideRight } = useContext(MainContext)
   const { user } = useContext(UserContext)
+
   useEffect(() => {
     if (!user) return
     getAllUsersGroup(group.id)
@@ -30,8 +32,8 @@ export function GroupItem ({ group }: GroupItemProps) {
   return (
     <li className='common-group-item' onClick={() => {
       dispatchChat(selectChat(group.id))
-      closeAside()
-      closeContain()
+      dispatchAsideRight(closeAside)
+      dispatchAsideRight(closeContain)
     }}>
       <ChatImg className='common-group-item-img' chat={chats.filter(chat => chat.id === group.id)[0]} />
       <div className='common-group-info'>

@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeAside } from '../../../../../actions/asideRightActions'
 import { selectChat } from '../../../../../actions/chatActions'
 import { ChatContext } from '../../../../../context/chatContext'
 import { MainContext } from '../../../../../context/mainContext'
@@ -7,31 +8,31 @@ import { UserImg } from '../../../../lib/image/UserImg'
 import './ContactPrincipalInfo.css'
 
 export function ContactPrincipalInfo () {
-  const { visible, closeAside } = useContext(MainContext)
+  const { asideRightState, dispatchAsideRight } = useContext(MainContext)
   const { dispatchChat, chats, addNewChat } = useContext(ChatContext)
 
   const handleClick = async () => {
     // Si tenemos ya un chat con ese contacto
-    const newActiveChat = chats?.filter(chat => chat.name === visible?.user.alias)[0]
+    const newActiveChat = chats?.filter(chat => chat.name === asideRightState?.user.alias)[0]
 
     if (newActiveChat) {
       dispatchChat(selectChat(newActiveChat.id))
     } else {
-      await addNewChat(visible.user)
+      await addNewChat(asideRightState.user)
     }
-    closeAside()
+    dispatchAsideRight(closeAside)
   }
 
   return (
     <article className="info-contact">
-      <UserImg className='info-contact-img' user={visible.user} />
+      <UserImg className='info-contact-img' user={asideRightState.user} />
       <h5 className="info-contact-title">
-        {visible?.user.alias}
+        {asideRightState?.user.alias}
       </h5>
       <p className="info-contact-description">
-        {visible?.user?.email}
+        {asideRightState?.user?.email}
       </p>
-      {visible?.user.alias &&
+      {asideRightState?.user.alias &&
       <button
         className='info-contact-btn'
         onClick={handleClick}

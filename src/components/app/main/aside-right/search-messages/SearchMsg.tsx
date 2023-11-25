@@ -9,7 +9,7 @@ import './SearchMsg.css'
 export function SearchMsg () {
   const { chatState } = useContext(ChatContext)
   const { filter, setFilter, isLoading, deferredFilteredMsgs } = useMessages(chatState.chat?.id)
-  const { visible } = useContext(MainContext)
+  const { asideRightState } = useContext(MainContext)
   const [className, setClassName] = useState('search-msg')
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function SearchMsg () {
   return (
     <div className={className}>
       <section className="search-container">
-        <Search placeholder='Buscar...' setFilter={setFilter} isLoading={isLoading} visible={visible?.search} />
+        <Search placeholder='Buscar...' setFilter={setFilter} isLoading={isLoading} visible={asideRightState?.search} />
         <Suspense fallback={<p>Cargando...</p>}>
           <FilteredMsgList filteredMsgs={deferredFilteredMsgs} active={filter.length > 1} filter={filter} />
         </Suspense>

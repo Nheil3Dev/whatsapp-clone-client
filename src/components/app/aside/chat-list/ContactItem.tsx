@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeContain } from '../../../../actions/asideRightActions'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
 import { UserContext } from '../../../../context/userContext'
@@ -11,13 +12,13 @@ interface ContactItemProps {
 
 export function ContactItem ({ contact }: ContactItemProps) {
   const { addNewChat } = useContext(ChatContext)
-  const { closeContain } = useContext(MainContext)
+  const { dispatchAsideRight } = useContext(MainContext)
   const { user } = useContext(UserContext)
 
   return (
     <li className='chat-item' onClick={async () => {
       await addNewChat(contact)
-      closeContain()
+      dispatchAsideRight(closeContain)
     }}>
       <UserImg className='img' user={contact} />
       <div className='info-chat-container'>

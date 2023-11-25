@@ -1,40 +1,22 @@
-import { JSX, createContext, useState } from 'react'
+import { JSX, Reducer, createContext, useReducer } from 'react'
 import { useDialog } from '../hooks/useDialog'
-import { IUser } from '../types/types'
+import { AsideRightActions, AsideRightState, asideRightInitialState, asideRightReducer } from '../reducers/asideRightReducer'
 
 interface IMainContext {
-  visible: { aside: boolean, infoChat: boolean, infoUser: boolean, search: boolean, user: IUser }
-  openInfo: () => void
-  openSearch: () => void
-  openInfoUser: (user: IUser) => void
-  closeInfoUser: () => void
-  closeAside: () => void
-  closeContain: () => void
+  asideRightState: AsideRightState
+  dispatchAsideRight: (action: AsideRightActions) => void
   dialog: { isOpen: boolean, type: 'msg' | 'chat', confirm: () => void }
+  openDialog: (type: 'msg' | 'chat', confirm: () => void) => void
   closeDialog: () => void
-  openDialog: (type: 'msg'| 'chat', confirm: () => void) => void
 }
 
 export const MainContext = createContext<IMainContext>({} as IMainContext)
 
 export function MainProvider ({ children }: { children: JSX.Element[]}) {
-  const [visible, setVisible] = useState({
-    aside: false,
-    infoChat: false,
-    infoUser: false,
-    search: false,
-    user: {} as IUser
-  })
+  const [asideRightState, dispatchAsideRight] = useReducer<Reducer<AsideRightState, AsideRightActions>>(asideRightReducer, asideRightInitialState)
   const { dialog, closeDialog, openDialog } = useDialog()
-
-  const openInfo = () => setVisible({ aside: true, infoChat: true, infoUser: false, search: false, user: {} as IUser })
-  const openSearch = () => setVisible({ aside: true, infoChat: false, infoUser: false, search: true, user: {} as IUser })
-  const openInfoUser = (user: IUser) => setVisible({ ...visible, infoUser: true, user })
-  const closeInfoUser = () => setVisible({ ...visible, infoUser: false, user: {} as IUser })
-  const closeAside = () => setVisible({ ...visible, aside: false })
-  const closeContain = () => setVisible({ ...visible, aside: false, infoChat: false, infoUser: false, search: false })
   return (
-    <MainContext.Provider value={{ visible, openInfo, openSearch, openInfoUser, closeInfoUser, closeAside, closeContain, dialog, closeDialog, openDialog }}>
+    <MainContext.Provider value={{ asideRightState, dispatchAsideRight, dialog, openDialog, closeDialog }}>
       {children}
     </MainContext.Provider>
   )

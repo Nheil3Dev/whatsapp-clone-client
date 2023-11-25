@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { closeContain } from '../../../../actions/asideRightActions'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
 import { useAsideEffect } from '../../../../hooks/useAsideEffect'
@@ -10,18 +11,18 @@ import { GroupInfo } from './group-info/GroupInfo'
 import { SearchMsg } from './search-messages/SearchMsg'
 
 export function AsideRight () {
-  const { visible, closeContain } = useContext(MainContext)
+  const { asideRightState, dispatchAsideRight } = useContext(MainContext)
   const { chatState } = useContext(ChatContext)
-  const { className } = useAsideEffect('aside-right', 'visible-aside-right', visible.aside, closeContain)
+  const { className } = useAsideEffect('aside-right', 'visible-aside-right', asideRightState.aside, () => dispatchAsideRight(closeContain))
   const { chat } = chatState
 
   return (
     <aside className={className}>
       <HeaderAsideRight />
-      {visible.search && <SearchMsg />}
-      {visible.infoChat && chat?.admin && <GroupInfo />}
-      {visible.infoChat && !chat?.admin && <ChatContactInfo />}
-      {visible.infoUser && <ContactInfo />}
+      {asideRightState.search && <SearchMsg />}
+      {asideRightState.infoChat && chat?.admin && <GroupInfo />}
+      {asideRightState.infoChat && !chat?.admin && <ChatContactInfo />}
+      {asideRightState.infoUser && <ContactInfo />}
     </aside>
   )
 }

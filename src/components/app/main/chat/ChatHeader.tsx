@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { openInfo, openSearch } from '../../../../actions/asideRightActions'
 import { ChatContext } from '../../../../context/chatContext'
 import { MainContext } from '../../../../context/mainContext'
 import { UserContext } from '../../../../context/userContext'
@@ -15,7 +16,7 @@ import { ChatHeaderDropdown } from './ChatHeaderDropdown'
 export function ChatHeader () {
   const { user } = useContext(UserContext)
   const { chatState } = useContext(ChatContext)
-  const { openInfo, openSearch } = useContext(MainContext)
+  const { dispatchAsideRight } = useContext(MainContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
   const { chat, groupUsers } = chatState
   const { delay } = useDelay(3000, chat?.id)
@@ -30,7 +31,7 @@ export function ChatHeader () {
     <header className="chat-header-container">
       <div
         className='info-container-header'
-        onClick={openInfo}
+        onClick={() => dispatchAsideRight(openInfo)}
       >
         <ChatImg className='header-img' chat={chat} isHeader />
         <div className='info-header-container'>
@@ -47,7 +48,7 @@ export function ChatHeader () {
         </div>
       </div>
       <div className="icon-container-header">
-        <button className="icon-button" title="Buscar" onClick={openSearch}>
+        <button className="icon-button" title="Buscar" onClick={() => dispatchAsideRight(openSearch)}>
           <SearchIcon />
         </button>
         <button
