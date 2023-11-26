@@ -4,8 +4,6 @@ import { useChat } from '../hooks/useChat'
 import { useChats } from '../hooks/useChats'
 import { ChatAction, ChatState } from '../reducers/chatReducer'
 import { checkConversation } from '../services/checkConversation'
-import { createConversation } from '../services/createConversation'
-import { createGroup } from '../services/createGroup'
 import { deleteChat } from '../services/deleteChat'
 import { ChatType, IChat, IUser } from '../types/types'
 import { normalizeDate } from '../utils/normalizeDate'
@@ -25,9 +23,9 @@ interface IChatContext {
 export const ChatContext = createContext<IChatContext>({} as IChatContext)
 
 export function ChatProvider ({ children }: { children: JSX.Element }) {
-  const { lastMsg, delMsg, modMsg } = useContext(SocketContext)
+  const { lastMsg, delMsg, modMsg, addConversation, addGroup, createConversation, createGroup } = useContext(SocketContext)
   const { user } = useContext(UserContext)
-  const { chats, setChats } = useChats(lastMsg, delMsg, modMsg)
+  const { chats, setChats } = useChats(lastMsg, delMsg, modMsg, addConversation, addGroup)
   const { chatState, dispatchChat } = useChat(chats)
 
   const addNewChat = async (contact: IUser) => {
@@ -48,22 +46,15 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
       }
     }
 
-    // Creamos una conversación nueva
+    // Creamos nueva conversación
     const newChat = {
       id: String(crypto.randomUUID()),
-      name: contact.alias,
-      info: contact.info,
-      email: contact.email,
       date: normalizeDate(),
-      contactId: contact.id,
-      messages: []
+      usersId: [user?.id ?? '', contact?.id ?? '']
     }
-    const response = await createConversation(newChat.id, newChat.date, [user?.id ?? '', contact.id ?? ''])
 
-    if (response) {
-      setChats([newChat, ...chats])
-      dispatchChat(selectChat(newChat.id))
-    }
+    await createConversation(newChat.id, newChat.date, newChat.usersId)
+    dispatchChat(selectChat(newChat.id))
   }
 
   const addNewGroup = async (groupName: string, usersId: string[]) => {
@@ -71,22 +62,15 @@ export function ChatProvider ({ children }: { children: JSX.Element }) {
     const newGroup = {
       id: String(crypto.randomUUID()),
       name: groupName,
-      info: '',
       date: normalizeDate(),
-      admin: user?.id,
-      adminAlias: user?.alias,
-      messages: []
+      admin: user?.id
     }
 
     // Añadimos el id del propio usuario
     usersId.push(user.id)
 
-    const response = await createGroup(newGroup, usersId)
-
-    if (response) {
-      setChats([newGroup, ...chats])
-      dispatchChat(selectChat(newGroup.id))
-    }
+    await createGroup(newGroup.id, newGroup.name, newGroup.date, newGroup.admin, usersId)
+    dispatchChat(selectChat(newGroup.id))
   }
 
   const delChat = async (chatId: string, type: ChatType) => {

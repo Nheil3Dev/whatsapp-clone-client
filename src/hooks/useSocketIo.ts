@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import io, { Socket } from 'socket.io-client'
 import { URL_SERVER } from '../constants/url'
-import { IMessage, IUserMin } from '../types/types'
+import { ChatType, IMessage, IUserMin } from '../types/types'
 import { normalizeDate } from '../utils/normalizeDate'
 
 export function useSocketIo (user: IUserMin | undefined) {
@@ -10,14 +10,16 @@ export function useSocketIo (user: IUserMin | undefined) {
   const [messages, setMessages] = useState<IMessage[]>([])
   const [delMsg, setDelMsg] = useState({ msgId: 0, chatId: '' })
   const [modMsg, setModMsg] = useState({ msgId: 0, content: '', chatId: '' })
+  const [addConversation, setAddConversation] = useState({ conversationId: '', usersId: [] as string[] })
+  const [addGroup, setAddGroup] = useState({ groupId: '', usersId: [] as string[] })
   const lastMsg = messages[messages.length - 1]
 
-  const sendMessage = (content: string, chatId: string, type: 'conversation'|'group') => {
+  const sendMessage = (content: string, chatId: string, type: ChatType) => {
     const date = normalizeDate()
     if (type === 'conversation') {
-      return socket?.emit('whatsapp clone msg', content, date, null, chatId)
+      return socket?.emit('send msg', content, date, null, chatId)
     }
-    return socket?.emit('whatsapp clone msg', content, date, chatId, null)
+    return socket?.emit('send msg', content, date, chatId, null)
   }
 
   const deleteMessage = (msgId: number, chatId: string) => {
@@ -26,6 +28,14 @@ export function useSocketIo (user: IUserMin | undefined) {
 
   const modifyMessage = (msgId: number, content: string, chatId: string) => {
     return socket?.emit('modify msg', msgId, content, chatId)
+  }
+
+  const createConversation = (conversationId: string, date: Date | string, usersId: string[]) => {
+    return socket?.emit('create conversation', conversationId, date, usersId)
+  }
+
+  const createGroup = (id: string, name: string, date: Date | string, admin: string, usersId: string[]) => {
+    return socket?.emit('create group', id, name, date, admin, usersId)
   }
 
   useEffect(() => {
@@ -65,22 +75,36 @@ export function useSocketIo (user: IUserMin | undefined) {
       setModMsg(newModMsg)
     }
 
+    function onCreateConversation (conversationId: string, usersId: string[]) {
+      const newConversation = { conversationId, usersId }
+      setAddConversation(newConversation)
+    }
+
+    function onCreateGroup (groupId: string, usersId: string[]) {
+      const newGroup = { groupId, usersId }
+      setAddGroup(newGroup)
+    }
+
     newSocket.connect()
     newSocket.on('connect', onConnect)
     newSocket.on('disconnect', onDisconnect)
-    newSocket.on('whatsapp clone msg', onMessages)
+    newSocket.on('send msg', onMessages)
     newSocket.on('delete msg', onDeleteMsg)
     newSocket.on('modify msg', onModifyMsg)
+    newSocket.on('create conversation', onCreateConversation)
+    newSocket.on('create group', onCreateGroup)
 
     return () => {
       newSocket.off('connect', onConnect)
       newSocket.off('disconnect', onDisconnect)
-      newSocket.off('whatsapp clone msg', onMessages)
+      newSocket.off('send msg', onMessages)
       newSocket.off('delete msg', onDeleteMsg)
       newSocket.off('modify msg', onModifyMsg)
+      newSocket.off('create conversation', onCreateConversation)
+      newSocket.off('create group', onCreateGroup)
       newSocket.disconnect()
     }
   }, [user?.id])
 
-  return { messages, setMessages, lastMsg, isConnected, setIsConnected, socket, sendMessage, deleteMessage, delMsg, modMsg, modifyMessage }
+  return { messages, setMessages, lastMsg, isConnected, setIsConnected, socket, sendMessage, deleteMessage, delMsg, modMsg, modifyMessage, createConversation, createGroup, addConversation, addGroup }
 }

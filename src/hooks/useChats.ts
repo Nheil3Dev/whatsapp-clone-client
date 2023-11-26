@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/userContext'
 import { getAllChats } from '../services/getAllChats'
+import { getConversation } from '../services/getConversation'
+import { getGroup } from '../services/getGroup'
 import { IChat, IMessage } from '../types/types'
 import { sortChats } from '../utils/sortChats'
 
-export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chatId: string }, modMsg: { msgId: number, content: string, chatId: string }) {
+export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chatId: string }, modMsg: { msgId: number, content: string, chatId: string }, addConversation: { conversationId: string, usersId: string[] }, addGroup: { groupId: string, usersId: string[] }) {
   const [chats, setChats] = useState<IChat[]>([])
   const [lastMsg, setLastMsg] = useState<number>(0)
   const { user } = useContext(UserContext)
@@ -87,6 +89,32 @@ export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chat
       setChats(newChats)
     }
   }, [modMsg])
+
+  // Añadir nueva conversación
+  useEffect(() => {
+    const isMine = addConversation.usersId.filter(userId => userId === user?.id)[0]
+
+    if (isMine) {
+      getConversation(addConversation.conversationId, user?.id ?? '')
+        .then((chat: IChat) => {
+          const newChats = [{ ...chat, messages: [] }, ...chats]
+          setChats(newChats)
+        })
+    }
+  }, [addConversation.conversationId])
+
+  // Añadir nuevo grupo
+  useEffect(() => {
+    const isMine = addGroup.usersId.filter(userId => userId === user?.id)[0]
+
+    if (isMine) {
+      getGroup(addGroup.groupId)
+        .then(chat => {
+          const newChats = [{ ...chat, messages: [] }, ...chats]
+          setChats(newChats)
+        })
+    }
+  }, [addGroup.groupId])
 
   return { chats, setChats }
 }

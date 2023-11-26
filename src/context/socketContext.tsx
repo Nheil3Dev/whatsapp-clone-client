@@ -16,15 +16,19 @@ interface ISocketContext {
   modifyMessage: (msgId: number, content: string, chatId: string) => void
   delMsg: { msgId: number, chatId: string }
   modMsg: { msgId: number, content: string, chatId: string }
+  createConversation: (conversationId: string, date: Date | string, usersId: string[]) => void
+  createGroup: (id: string, name: string, date: Date | string, admin: string, usersId: string[]) => void
+  addConversation: { conversationId: string, usersId: string[] }
+  addGroup: { groupId: string, usersId: string[] }
 }
 
 export const SocketContext = createContext<ISocketContext>({} as ISocketContext)
 
 export function SocketProvider ({ children }: { children: JSX.Element}) {
   const { user } = useContext(UserContext)
-  const { socket, messages, setMessages, isConnected, setIsConnected, lastMsg, sendMessage, delMsg, deleteMessage, modMsg, modifyMessage } = useSocketIo(user)
+  const { socket, messages, setMessages, isConnected, setIsConnected, lastMsg, sendMessage, delMsg, deleteMessage, modMsg, modifyMessage, createConversation, createGroup, addConversation, addGroup } = useSocketIo(user)
   return (
-    <SocketContext.Provider value={{ messages, setMessages, isConnected, setIsConnected, socket, lastMsg, sendMessage, delMsg, deleteMessage, modMsg, modifyMessage }}>
+    <SocketContext.Provider value={{ messages, setMessages, isConnected, setIsConnected, socket, lastMsg, sendMessage, delMsg, deleteMessage, modMsg, modifyMessage, createConversation, createGroup, addConversation, addGroup }}>
     {children}
   </SocketContext.Provider>
   )
