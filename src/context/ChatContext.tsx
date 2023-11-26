@@ -23,9 +23,9 @@ interface IChatContext {
 export const ChatContext = createContext<IChatContext>({} as IChatContext)
 
 export function ChatProvider ({ children }: { children: JSX.Element }) {
-  const { lastMsg, delMsg, modMsg, addConversation, addGroup, createConversation, createGroup } = useContext(SocketContext)
+  const { lastMsg, delMsg, modMsg, addConversation, addGroup, createConversation, createGroup, modGroup } = useContext(SocketContext)
   const { user } = useContext(UserContext)
-  const { chats, setChats } = useChats(lastMsg, delMsg, modMsg, addConversation, addGroup)
+  const { chats, setChats } = useChats(lastMsg, delMsg, modMsg, addConversation, addGroup, modGroup)
   const { chatState, dispatchChat } = useChat(chats)
 
   const addNewChat = async (contact: IUser) => {

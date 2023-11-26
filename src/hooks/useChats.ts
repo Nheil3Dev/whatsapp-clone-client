@@ -6,7 +6,7 @@ import { getGroup } from '../services/getGroup'
 import { IChat, IMessage } from '../types/types'
 import { sortChats } from '../utils/sortChats'
 
-export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chatId: string }, modMsg: { msgId: number, content: string, chatId: string }, addConversation: { conversationId: string, usersId: string[] }, addGroup: { groupId: string, usersId: string[] }) {
+export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chatId: string }, modMsg: { msgId: number, content: string, chatId: string }, addConversation: { conversationId: string, usersId: string[] }, addGroup: { groupId: string, usersId: string[] }, modGroup: { groupId: string, name: string, info: string }) {
   const [chats, setChats] = useState<IChat[]>([])
   const [lastMsg, setLastMsg] = useState<number>(0)
   const { user } = useContext(UserContext)
@@ -115,6 +115,20 @@ export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chat
         })
     }
   }, [addGroup.groupId])
+
+  // Modificar un grupo (nombre e info)
+  useEffect(() => {
+    const isMine = chats.filter(chat => chat.id === modGroup.groupId)[0]
+
+    if (isMine) {
+      const newChat = { ...isMine, name: modGroup.name, info: modGroup.info }
+      const newChats = chats.map(chat => {
+        if (chat.id === modGroup.groupId) return newChat
+        return chat
+      })
+      setChats(newChats)
+    }
+  }, [modGroup])
 
   return { chats, setChats }
 }

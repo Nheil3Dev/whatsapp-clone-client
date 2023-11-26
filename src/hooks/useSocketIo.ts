@@ -12,6 +12,7 @@ export function useSocketIo (user: IUserMin | undefined) {
   const [modMsg, setModMsg] = useState({ msgId: 0, content: '', chatId: '' })
   const [addConversation, setAddConversation] = useState({ conversationId: '', usersId: [] as string[] })
   const [addGroup, setAddGroup] = useState({ groupId: '', usersId: [] as string[] })
+  const [modGroup, setModGroup] = useState({ groupId: '', name: '', info: '' })
   const lastMsg = messages[messages.length - 1]
 
   const sendMessage = (content: string, chatId: string, type: ChatType) => {
@@ -38,6 +39,9 @@ export function useSocketIo (user: IUserMin | undefined) {
     return socket?.emit('create group', id, name, date, admin, usersId)
   }
 
+  const modifyGroup = (groupId: string, name: string, info: string) => {
+    return socket?.emit('modify group', groupId, name, info)
+  }
   useEffect(() => {
     if (!user?.id) return
     const newSocket = io(URL_SERVER, {
@@ -85,6 +89,11 @@ export function useSocketIo (user: IUserMin | undefined) {
       setAddGroup(newGroup)
     }
 
+    function onModifyGroup (groupId: string, name: string, info: string) {
+      const newModGroup = { groupId, name, info }
+      setModGroup(newModGroup)
+    }
+
     newSocket.connect()
     newSocket.on('connect', onConnect)
     newSocket.on('disconnect', onDisconnect)
@@ -93,6 +102,7 @@ export function useSocketIo (user: IUserMin | undefined) {
     newSocket.on('modify msg', onModifyMsg)
     newSocket.on('create conversation', onCreateConversation)
     newSocket.on('create group', onCreateGroup)
+    newSocket.on('modify group', onModifyGroup)
 
     return () => {
       newSocket.off('connect', onConnect)
@@ -102,9 +112,10 @@ export function useSocketIo (user: IUserMin | undefined) {
       newSocket.off('modify msg', onModifyMsg)
       newSocket.off('create conversation', onCreateConversation)
       newSocket.off('create group', onCreateGroup)
+      newSocket.off('modify group', onModifyGroup)
       newSocket.disconnect()
     }
   }, [user?.id])
 
-  return { messages, setMessages, lastMsg, isConnected, setIsConnected, socket, sendMessage, deleteMessage, delMsg, modMsg, modifyMessage, createConversation, createGroup, addConversation, addGroup }
+  return { messages, setMessages, lastMsg, isConnected, setIsConnected, socket, sendMessage, deleteMessage, delMsg, modMsg, modifyMessage, createConversation, createGroup, addConversation, addGroup, modifyGroup, modGroup }
 }
