@@ -72,3 +72,30 @@ export interface INewGroup {
 }
 
 export type ChatType = 'conversation' | 'group'
+
+export interface IModMsg {
+  msgId: number
+  content: string
+  chatId: string
+}
+
+export interface IDelMsg {
+  msgId: number
+  chatId: string
+}
+
+export interface IAddConversation {
+  conversationId: string
+  usersId: string[]
+}
+
+export interface IAddGroup {
+  groupId: string
+  usersId: string[]
+}
+
+export interface IModGroup {
+  groupId: string
+  name: string
+  info: string
+}
