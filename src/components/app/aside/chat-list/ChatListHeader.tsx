@@ -14,13 +14,13 @@ import { ChatListHeaderDropdown } from './ChatListHeaderDropdown'
 
 export function ChatListHeader () {
   const { dispatch } = useContext(AsideContext)
-  const { isConnected } = useContext(SocketContext)
+  const { socketState } = useContext(SocketContext)
   const { user } = useContext(UserContext)
   const { dropdownOpened, dropdownRef, closeDropdown, toggleDropdown, buttonRef } = useDropdown()
 
   return (
     <header className="chat-list-header">
-        {isConnected
+        {socketState.isConnected
           ? <>
               <span onClick={() => dispatch(openProfile)} className='img'>
                 <UserImg className='img' user={user ?? {} as IUserMin} />

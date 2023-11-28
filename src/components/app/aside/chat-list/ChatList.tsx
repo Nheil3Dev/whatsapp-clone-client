@@ -8,9 +8,10 @@ import { ChatItem } from './ChatItem'
 import './ChatList.css'
 import { ChatListFiltered } from './ChatListFiltered'
 import { ChatListHeader } from './ChatListHeader'
+import { WithoutChats } from './WithoutChats'
 
 export function ChatList () {
-  const { isConnected } = useContext(SocketContext)
+  const { socketState } = useContext(SocketContext)
   const { chats } = useContext(ChatContext)
   const { filter, setFilter, isLoading, filteredUsers } = useSearchChatList()
 
@@ -18,7 +19,7 @@ export function ChatList () {
     <section className="principal-aside">
       <ChatListHeader />
       <section className="chat-list-container">
-        {isConnected &&
+        {socketState.isConnected &&
           <>
             <div className='chat-list-filter'>
               <Search
@@ -34,10 +35,12 @@ export function ChatList () {
             <ul className="chat-list">
               {
                 filter.length === 0
-                  ? chats.map(chat => (
-                    // Muestra las conversaciones con mensajes y los grupos con o sin mensajes
-                    (chat.messages.length > 0 || chat.admin) && <ChatItem key={chat.id} chat={chat} />
-                  ))
+                  ? chats.length === 0
+                    ? <WithoutChats />
+                    : chats.map(chat => (
+                      // Muestra las conversaciones con mensajes y los grupos con o sin mensajes
+                      (chat.messages.length > 0 || chat.admin) && <ChatItem key={chat.id} chat={chat} />
+                    ))
                   : <ChatListFiltered filteredUsers={filteredUsers} />
               }
             </ul>

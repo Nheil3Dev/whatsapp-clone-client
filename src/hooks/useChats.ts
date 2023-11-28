@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/userContext'
+import { SocketState } from '../reducers/socketReducer'
 import { getAllChats } from '../services/getAllChats'
 import { getConversation } from '../services/getConversation'
 import { getGroup } from '../services/getGroup'
-import { IChat, IMessage } from '../types/types'
+import { IChat } from '../types/types'
 import { sortChats } from '../utils/sortChats'
 
-export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chatId: string }, modMsg: { msgId: number, content: string, chatId: string }, addConversation: { conversationId: string, usersId: string[] }, addGroup: { groupId: string, usersId: string[] }, modGroup: { groupId: string, name: string, info: string }) {
+export function useChats (socketState: SocketState) {
   const [chats, setChats] = useState<IChat[]>([])
   const [lastMsg, setLastMsg] = useState<number>(0)
   const { user } = useContext(UserContext)
@@ -25,30 +26,30 @@ export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chat
 
   // Actualiza los chats cuando llegan nuevos mensajes a través de web socket
   useEffect(() => {
-    if (!user || !lastMsgSocket || (Number(lastMsgSocket?.id ?? 0)) <= lastMsg) return
-    setLastMsg(Number(lastMsgSocket?.id))
+    if (!user || !socketState.lastMsg || (Number(socketState.lastMsg?.id ?? 0)) <= lastMsg) return
+    setLastMsg(Number(socketState.lastMsg?.id))
 
-    const chatIndex = chats.findIndex(chat => chat.id === lastMsgSocket.conversationId || chat.id === lastMsgSocket.groupId)
+    const chatIndex = chats.findIndex(chat => chat.id === socketState.lastMsg.conversationId || chat.id === socketState.lastMsg.groupId)
 
     // TODO: No deberiamos traernos todos los mensajes, sólo los de los canales que nos interesan
     if (chatIndex === -1) return
 
     const updatedChat = {
       ...chats[chatIndex],
-      messages: [...chats[chatIndex].messages, lastMsgSocket]
+      messages: [...chats[chatIndex].messages, socketState.lastMsg]
     }
     const updatedChats = [updatedChat, ...chats.slice(0, chatIndex), ...chats.slice(chatIndex + 1)]
     setChats(updatedChats)
-  }, [lastMsgSocket])
+  }, [socketState.lastMsg])
 
   // Borrado de mensajes
   useEffect(() => {
-    if (delMsg?.msgId === 0) return
+    if (socketState.delMsg?.msgId === 0) return
 
-    const chat = chats.filter(chat => chat.id === delMsg.chatId)[0]
+    const chat = chats.filter(chat => chat.id === socketState.delMsg.chatId)[0]
 
     if (chat) {
-      const newMsgs = chat.messages.filter(message => message.id !== delMsg.msgId)
+      const newMsgs = chat.messages.filter(message => message.id !== socketState.delMsg.msgId)
       const newChat = { ...chat, messages: newMsgs }
 
       const newChats = chats.map(c => {
@@ -60,20 +61,20 @@ export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chat
       })
       setChats(newChats)
     }
-  }, [delMsg])
+  }, [socketState.delMsg])
 
   // Modificación de mensajes
   useEffect(() => {
-    if (modMsg.msgId === 0) return
+    if (socketState.modMsg.msgId === 0) return
 
-    const chat = chats.filter(chat => chat.id === modMsg.chatId)[0]
+    const chat = chats.filter(chat => chat.id === socketState.modMsg.chatId)[0]
 
     if (chat) {
       const newMsgs = chat.messages.map(message => {
-        if (message.id === modMsg.msgId) {
+        if (message.id === socketState.modMsg.msgId) {
           return {
             ...message,
-            content: modMsg.content
+            content: socketState.modMsg.content
           }
         }
         return message
@@ -88,47 +89,47 @@ export function useChats (lastMsgSocket: IMessage, delMsg: { msgId: number, chat
       })
       setChats(newChats)
     }
-  }, [modMsg])
+  }, [socketState.modMsg])
 
   // Añadir nueva conversación
   useEffect(() => {
-    const isMine = addConversation.usersId.filter(userId => userId === user?.id)[0]
+    const isMine = socketState.addConversation.usersId.filter(userId => userId === user?.id)[0]
 
     if (isMine) {
-      getConversation(addConversation.conversationId, user?.id ?? '')
+      getConversation(socketState.addConversation.conversationId, user?.id ?? '')
         .then((chat: IChat) => {
           const newChats = [{ ...chat, messages: [] }, ...chats]
           setChats(newChats)
         })
     }
-  }, [addConversation.conversationId])
+  }, [socketState.addConversation.conversationId])
 
   // Añadir nuevo grupo
   useEffect(() => {
-    const isMine = addGroup.usersId.filter(userId => userId === user?.id)[0]
+    const isMine = socketState.addGroup.usersId.filter(userId => userId === user?.id)[0]
 
     if (isMine) {
-      getGroup(addGroup.groupId)
+      getGroup(socketState.addGroup.groupId)
         .then(chat => {
           const newChats = [{ ...chat, messages: [] }, ...chats]
           setChats(newChats)
         })
     }
-  }, [addGroup.groupId])
+  }, [socketState.addGroup.groupId])
 
   // Modificar un grupo (nombre e info)
   useEffect(() => {
-    const isMine = chats.filter(chat => chat.id === modGroup.groupId)[0]
+    const isMine = chats.filter(chat => chat.id === socketState.modGroup.groupId)[0]
 
     if (isMine) {
-      const newChat = { ...isMine, name: modGroup.name, info: modGroup.info }
+      const newChat = { ...isMine, name: socketState.modGroup.name, info: socketState.modGroup.info }
       const newChats = chats.map(chat => {
-        if (chat.id === modGroup.groupId) return newChat
+        if (chat.id === socketState.modGroup.groupId) return newChat
         return chat
       })
       setChats(newChats)
     }
-  }, [modGroup])
+  }, [socketState.modGroup])
 
   return { chats, setChats }
 }

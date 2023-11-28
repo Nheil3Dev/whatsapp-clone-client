@@ -3,11 +3,11 @@ import { Socket } from 'socket.io-client'
 import { UserContext } from '../context/userContext'
 import { login } from '../services/login'
 
-export function useLogin (socket: Socket | undefined) {
+export function useLogin (socket: Socket | undefined, initialValues: { email: string, password: string }) {
   const { saveUser } = useContext(UserContext)
   const [auth, setAuth] = useState({
-    email: '',
-    password: '',
+    email: initialValues.email,
+    password: initialValues.password,
     error: ''
   })
 
@@ -31,7 +31,7 @@ export function useLogin (socket: Socket | undefined) {
 
   const test = async () => {
     const user = {
-      email: 'valeria@meloinvento.com',
+      email: 'usuario_prueba@meloinvento.com',
       password: '123456'
     }
     const response = await login(user)

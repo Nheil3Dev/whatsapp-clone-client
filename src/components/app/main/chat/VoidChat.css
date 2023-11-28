@@ -12,6 +12,8 @@
   text-align: center;
   padding: 1rem;
   z-index: 6;
+  color: var(--headeing-color);
+  cursor: default;
 
   &::before {
     position: absolute;

@@ -1,0 +1,151 @@
+.login-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-color-chat);
+  z-index: 10;
+  padding: 1rem 3rem;
+  border-radius: 20px;
+
+  & > h1 {
+    font-weight: 300;
+    font-size: 3rem;
+    margin: 0;
+    color: var(--heading-color);
+    cursor: default;
+  }
+
+  & .login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0 1rem 0;
+
+    & .input-container {
+      width: 100%;
+      position: relative;
+
+      & > input {
+        width: 100%;
+        min-width: 218px;
+        outline: none;
+        border: none;
+        border-bottom: 2px solid var(--heading-color);
+        font-size: 1rem;
+        background-color: transparent;
+        padding-bottom: 0.5rem;
+
+        &:focus {
+          border-bottom-color: var(--button-bg-color-hover);
+
+          & ~ label {
+            top: -1.2rem;
+            left: 0;
+            font-size: 0.75rem;
+            cursor: default;
+          }
+        }
+      }
+
+      & > label {
+        color: var(--text-color);
+        position: absolute;
+        top: 0;
+        left: 0.5rem;
+        transition: all linear 0.15s;
+        cursor: initial;
+
+        &.activated-input {
+          top: -1.2rem;
+          left: 0;
+          font-size: 0.75rem;
+          cursor: default;
+        }
+      }
+    }
+  }
+
+  & .login-error {
+    position: absolute;
+    text-align: center;
+    width: 270px;
+    bottom: -4.15rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background-color: #f15c6d;
+    font-size: 0.95rem;
+    z-index: -1;
+  }
+
+  & .sucesful-user {
+    position: absolute;
+    text-align: center;
+    width: 270px;
+    bottom: -4.15rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    background-color: var(--button-bg-color);
+    font-size: 0.95rem;
+    z-index: -1;
+    color: var(--button-text-color);
+  }
+
+  & .login-form-buttons-container {
+    width: 100%;
+    display: flex;
+    gap: 0.75rem;
+
+    & > button {
+      width: 100%;
+      position: relative;
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.85rem;
+
+      &:hover {
+        background-color: var(--button-bg-color-hover);
+      }
+
+      &:nth-child(2):hover {
+        &::before {
+          position: absolute;
+          top: 7rem;
+          right: -40%;
+          width: 270px;
+          content: "Inicia sesión con un usuario de prueba";
+          background-color: var(--button-bg-color);
+          border-radius: 10px;
+          padding: 1rem;
+        }
+      }
+    }
+  }
+
+  & .login-form-register {
+    width: 100%;
+    & > p {
+      margin: 0;
+      font-size: 0.9rem;
+      text-align: end;
+      color: var(--text-color);
+      cursor: default;
+
+      & > span {
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--button-bg-color);
+        }
+      }
+    }
+  }
+}

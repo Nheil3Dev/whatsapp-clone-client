@@ -12,7 +12,7 @@ import { MainProvider } from './context/mainContext'
 import { SocketContext } from './context/socketContext'
 
 function App () {
-  const { isConnected } = useContext(SocketContext)
+  const { socketState } = useContext(SocketContext)
 
   return (
     <>
@@ -22,8 +22,8 @@ function App () {
             <AsideLeft />
           </AsideProvider>
           <main>
-            {!isConnected && <Welcome />}
-            {isConnected &&
+            {!socketState.isConnected && <Welcome />}
+            {socketState.isConnected &&
                 <>
                   <ChatContainer />
                   <AsideRight />
@@ -33,7 +33,7 @@ function App () {
           <Dialog />
         </MainProvider>
       </ChatProvider>
-      {isConnected && <Loading />}
+      {socketState.isConnected && <Loading />}
     </>
   )
 }

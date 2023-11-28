@@ -1,0 +1,15 @@
+.without-chats {
+  height: calc(100vh - 60px - 47px - 19px - 19px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: var(--text-color);
+  gap: 1rem;
+
+  & > p {
+    margin: 0;
+    font-size: 0.9rem;
+    cursor: default;
+  }
+}

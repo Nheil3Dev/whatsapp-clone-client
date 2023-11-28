@@ -45,7 +45,9 @@ export const socketReducer = (state: SocketState = socketInitialState, action: S
     case 'disconnect':
       return {
         ...state,
-        isConnected: false
+        isConnected: false,
+        messages: [],
+        lastMsg: {} as IMessage
       }
 
     case 'get_msg':

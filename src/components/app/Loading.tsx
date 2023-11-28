@@ -11,7 +11,7 @@ export function Loading () {
       <span>
         <WhatsappIcon />
       </span>
-      <p>Cargando chats...</p>
+      <p>Cargando datos...</p>
       <div className='loading-bar-container'>
         <span className='loading-bar'></span>
       </div>

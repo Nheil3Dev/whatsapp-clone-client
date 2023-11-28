@@ -1,19 +1,14 @@
-import { useEffect, useState } from 'react'
+import { Reducer, useEffect, useReducer, useState } from 'react'
 import io, { Socket } from 'socket.io-client'
+import { addConversation, addGroup, connect, delMsg, disconnect, getMsg, modGroup, modMsg } from '../actions/socketActions'
 import { URL_SERVER } from '../constants/url'
-import { ChatType, IMessage, IUserMin } from '../types/types'
+import { SocketActions, SocketState, socketInitialState, socketReducer } from '../reducers/socketReducer'
+import { ChatType, IUserMin } from '../types/types'
 import { normalizeDate } from '../utils/normalizeDate'
 
 export function useSocketIo (user: IUserMin | undefined) {
   const [socket, setSocket] = useState<Socket>()
-  const [isConnected, setIsConnected] = useState(false)
-  const [messages, setMessages] = useState<IMessage[]>([])
-  const [delMsg, setDelMsg] = useState({ msgId: 0, chatId: '' })
-  const [modMsg, setModMsg] = useState({ msgId: 0, content: '', chatId: '' })
-  const [addConversation, setAddConversation] = useState({ conversationId: '', usersId: [] as string[] })
-  const [addGroup, setAddGroup] = useState({ groupId: '', usersId: [] as string[] })
-  const [modGroup, setModGroup] = useState({ groupId: '', name: '', info: '' })
-  const lastMsg = messages[messages.length - 1]
+  const [socketState, dispatchSocket] = useReducer<Reducer<SocketState, SocketActions>>(socketReducer, socketInitialState)
 
   const sendMessage = (content: string, chatId: string, type: ChatType) => {
     const date = normalizeDate()
@@ -44,6 +39,7 @@ export function useSocketIo (user: IUserMin | undefined) {
   }
   useEffect(() => {
     if (!user?.id) return
+
     const newSocket = io(URL_SERVER, {
       auth: {
         user,
@@ -52,46 +48,46 @@ export function useSocketIo (user: IUserMin | undefined) {
     })
 
     setSocket(newSocket)
-    setIsConnected(true)
+    dispatchSocket(connect)
 
     function onConnect () {
-      setIsConnected(true)
+      dispatchSocket(connect)
     }
 
     function onDisconnect () {
-      setIsConnected(false)
-      setMessages([])
+      dispatchSocket(disconnect)
     }
 
     function onMessages (id: number, alias: string, content: string, date: Date, userId: string, groupId: string, conversationId: string) {
-      if (id > (lastMsg?.id ?? 0)) {
-        setMessages(previous => [...previous, { id, alias, content, date, userId, groupId, conversationId }])
+      if (id > (socketState?.lastMsg?.id ?? 0)) {
+        const newMsg = { id, alias, content, date, userId, groupId, conversationId }
+        dispatchSocket(getMsg(newMsg))
       }
     }
 
     function onDeleteMsg (msgId: number, chatId: string) {
       const newDelMsg = { msgId, chatId }
-      setDelMsg(newDelMsg)
+      dispatchSocket(delMsg(newDelMsg))
     }
 
     function onModifyMsg (msgId: number, content: string, chatId: string) {
       const newModMsg = { msgId, content, chatId }
-      setModMsg(newModMsg)
+      dispatchSocket(modMsg(newModMsg))
     }
 
     function onCreateConversation (conversationId: string, usersId: string[]) {
       const newConversation = { conversationId, usersId }
-      setAddConversation(newConversation)
+      dispatchSocket(addConversation(newConversation))
     }
 
     function onCreateGroup (groupId: string, usersId: string[]) {
       const newGroup = { groupId, usersId }
-      setAddGroup(newGroup)
+      dispatchSocket(addGroup(newGroup))
     }
 
     function onModifyGroup (groupId: string, name: string, info: string) {
       const newModGroup = { groupId, name, info }
-      setModGroup(newModGroup)
+      dispatchSocket(modGroup(newModGroup))
     }
 
     newSocket.connect()
@@ -117,5 +113,5 @@ export function useSocketIo (user: IUserMin | undefined) {
     }
   }, [user?.id])
 
-  return { messages, setMessages, lastMsg, isConnected, setIsConnected, socket, sendMessage, deleteMessage, delMsg, modMsg, modifyMessage, createConversation, createGroup, addConversation, addGroup, modifyGroup, modGroup }
+  return { socketState, socket, sendMessage, deleteMessage, modifyMessage, createConversation, createGroup, modifyGroup }
 }

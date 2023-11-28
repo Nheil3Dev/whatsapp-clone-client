@@ -29,7 +29,12 @@ export function MessageDropdown ({ msg, isMyMessage, closeDropdown }: MessageDro
         : <p>Responder en privado</p>
       }
       {isMyMessage
-        ? <p onClick={() => openDialog('msg', () => deleteMessage(msg.id ?? 0, msg.conversationId || msg.groupId || ''))}>Eliminar mensaje</p>
+        ? <p onClick={() => {
+          openDialog('msg', () => deleteMessage(msg.id ?? 0, msg.conversationId || msg.groupId || ''))
+          dispatchChat(selectEditMsg(0))
+        }}>
+           Eliminar mensaje
+          </p>
         : <p>Enviar mensaje a {msg.alias}</p>}
     </>
   )
